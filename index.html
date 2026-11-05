@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NewsOuest - Bandeau TV d'Information Sportive</title>
-    <!-- Favicon en Data URL pour éviter l'erreur 404 dans la console -->
+    <title>NewsOuest - Bandeau TV d'Information Sportive (Mobile)</title>
+    <!-- Favicon en Data URL -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23dc2626%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>">
     <style>
         :root {
@@ -28,6 +28,7 @@
             height: 100%;
             background-color: var(--dark-bg);
             color: var(--text-main);
+            overflow-x: hidden;
         }
 
         body {
@@ -39,25 +40,34 @@
         header {
             background: linear-gradient(to right, #1e293b, #0f172a);
             border-bottom: 2px solid var(--border-color);
-            padding: 1rem 2rem;
+            padding: 0.75rem 1rem;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 0.75rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        @media(min-width: 640px) {
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 2rem;
+            }
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .live-badge {
             background-color: var(--primary-red);
             color: white;
             font-weight: 700;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 9999px;
             letter-spacing: 0.05em;
             text-transform: uppercase;
@@ -70,8 +80,12 @@
         }
 
         h1 {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 800;
+        }
+
+        @media(min-width: 640px) {
+            h1 { font-size: 1.25rem; }
         }
 
         h1 span {
@@ -80,23 +94,33 @@
 
         .header-controls {
             display: flex;
-            gap: 0.75rem;
+            justify-content: space-between;
             align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        @media(min-width: 640px) {
+            .header-controls {
+                width: auto;
+                justify-content: flex-end;
+            }
         }
 
         .btn {
             background-color: var(--card-bg);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0.75rem;
             border-radius: 0.375rem;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            white-space: nowrap;
         }
 
         .btn:hover {
@@ -108,7 +132,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 1rem;
             width: 100%;
         }
 
@@ -126,34 +150,52 @@
 
         .preview-card-header {
             background-color: #0f172a;
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
+            font-size: 0.75rem;
+        }
+
+        @media(min-width: 640px) {
+            .preview-card-header {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.85rem;
+            }
         }
 
         .sport-tag {
             background-color: var(--primary-red);
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            padding: 0.2rem 0.6rem;
+            padding: 0.15rem 0.5rem;
             border-radius: 0.25rem;
             text-transform: uppercase;
         }
 
         .preview-body {
-            padding: 2rem;
+            padding: 1.25rem;
             display: flex;
-            gap: 1.5rem;
-            align-items: center;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        @media(min-width: 640px) {
+            .preview-body {
+                padding: 2rem;
+                flex-direction: row;
+                gap: 1.5rem;
+                align-items: center;
+            }
         }
 
         .preview-icon-box {
             flex-shrink: 0;
-            width: 90px;
-            height: 90px;
+            width: 70px;
+            height: 70px;
             border-radius: 0.75rem;
             background: linear-gradient(135deg, #0f172a, #334155);
             border: 1px solid var(--border-color);
@@ -164,28 +206,50 @@
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
         }
 
+        @media(min-width: 640px) {
+            .preview-icon-box {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
         .preview-content h2 {
-            font-size: 1.5rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             line-height: 1.3;
+        }
+
+        @media(min-width: 640px) {
+            .preview-content h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
         }
 
         .preview-content p {
             color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.5;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        @media(min-width: 640px) {
+            .preview-content p { font-size: 1rem; }
         }
 
         .preview-footer {
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1rem;
             background-color: rgba(15, 23, 42, 0.5);
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
+        }
+
+        @media(min-width: 640px) {
+            .preview-footer {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.85rem;
+            }
         }
 
         /* TV NEWS TICKER BANNER */
@@ -194,11 +258,15 @@
             border-top: 3px solid var(--primary-red);
             border-bottom: 3px solid var(--border-color);
             width: 100%;
-            height: 56px;
+            height: 48px;
             overflow: hidden;
             position: relative;
             box-shadow: 0 -10px 20px rgba(0,0,0,0.4);
             flex-shrink: 0;
+        }
+
+        @media(min-width: 640px) {
+            .tv-ticker-container { height: 56px; }
         }
 
         .tv-ticker-label {
@@ -209,8 +277,8 @@
             background-color: var(--primary-red);
             color: white;
             font-weight: 900;
-            font-size: 0.9rem;
-            padding: 0 1.5rem;
+            font-size: 0.75rem;
+            padding: 0 0.75rem;
             display: flex;
             align-items: center;
             z-index: 10;
@@ -219,17 +287,31 @@
             box-shadow: 5px 0 15px rgba(0,0,0,0.5);
         }
 
+        @media(min-width: 640px) {
+            .tv-ticker-label {
+                font-size: 0.9rem;
+                padding: 0 1.5rem;
+            }
+        }
+
         .tv-ticker-track-wrapper {
             overflow: hidden;
             white-space: nowrap;
-            padding: 0.85rem 0;
-            margin-left: 140px;
+            padding: 0.6rem 0;
+            margin-left: 100px;
             cursor: pointer;
+        }
+
+        @media(min-width: 640px) {
+            .tv-ticker-track-wrapper {
+                padding: 0.85rem 0;
+                margin-left: 140px;
+            }
         }
 
         .tv-ticker-track {
             display: inline-flex;
-            gap: 3rem;
+            gap: 2rem;
             will-change: transform;
         }
 
@@ -245,13 +327,17 @@
         .ticker-item {
             display: inline-flex;
             align-items: center;
-            gap: 0.85rem;
-            font-size: 1rem;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+        }
+
+        @media(min-width: 640px) {
+            .ticker-item { font-size: 1rem; gap: 0.85rem; }
         }
 
         .ticker-icon {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -261,13 +347,17 @@
             border: 1px solid var(--border-color);
         }
 
+        @media(min-width: 640px) {
+            .ticker-icon { width: 28px; height: 28px; }
+        }
+
         .ticker-category {
             background-color: rgba(220, 38, 38, 0.2);
             color: #fca5a5;
             border: 1px solid rgba(220, 38, 38, 0.4);
-            padding: 0.15rem 0.5rem;
+            padding: 0.1rem 0.4rem;
             border-radius: 0.25rem;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
         }
@@ -280,17 +370,17 @@
         .ticker-separator {
             color: var(--primary-red);
             font-weight: bold;
-            margin-left: 1.5rem;
+            margin-left: 1rem;
         }
 
-        /* MODAL PANEL */
+        /* MODAL PANEL MOBILE OPTIMIZED */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
@@ -299,6 +389,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
+            padding: 0.5rem;
         }
 
         .modal-overlay.active {
@@ -310,16 +401,16 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 0.75rem;
-            width: 92%;
+            width: 100%;
             max-width: 950px;
-            max-height: 85vh;
+            height: 92vh;
             display: flex;
             flex-direction: column;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
         .modal-header {
-            padding: 1.25rem 1.5rem;
+            padding: 1rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -329,10 +420,23 @@
             border-top-right-radius: 0.75rem;
         }
 
+        .modal-header h3 {
+            font-size: 1rem;
+        }
+
+        @media(min-width: 640px) {
+            .modal-header { padding: 1.25rem 1.5rem; }
+            .modal-header h3 { font-size: 1.2rem; }
+        }
+
         .modal-body {
-            padding: 1.5rem;
+            padding: 1rem;
             overflow-y: auto;
             flex: 1;
+        }
+
+        @media(min-width: 640px) {
+            .modal-body { padding: 1.5rem; }
         }
 
         .close-btn {
@@ -355,7 +459,7 @@
         }
 
         .admin-table th, .admin-table td {
-            padding: 0.75rem;
+            padding: 0.5rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
             vertical-align: middle;
@@ -363,7 +467,7 @@
 
         .admin-table th {
             background-color: #0f172a;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             color: var(--text-muted);
             letter-spacing: 0.05em;
@@ -374,9 +478,9 @@
             background-color: #090d16;
             border: 1px solid var(--border-color);
             border-radius: 0.375rem;
-            padding: 0.5rem 0.75rem;
+            padding: 0.4rem 0.6rem;
             color: var(--text-main);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .admin-input:focus {
@@ -385,8 +489,8 @@
         }
 
         .admin-thumb {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -398,18 +502,30 @@
 
         .action-bar {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 0.75rem;
             margin-bottom: 1rem;
+        }
+
+        @media(min-width: 640px) {
+            .action-bar {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
         }
 
         .audio-toggle {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             cursor: pointer;
+        }
+
+        @media(min-width: 640px) {
+            .audio-toggle { font-size: 0.875rem; }
         }
 
         .audio-toggle input {
@@ -426,11 +542,11 @@
         </div>
         <div class="header-controls">
             <label class="audio-toggle">
-                <input type="checkbox" id="soundToggle" checked> Bip Flash Info
+                <input type="checkbox" id="soundToggle" checked> Bip Flash
             </label>
             <button class="btn" id="openAdminBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                Gérer les articles
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                Gérer
             </button>
         </div>
     </header>
@@ -439,7 +555,7 @@
         <div class="preview-card">
             <div class="preview-card-header">
                 <div class="sport-tag" id="previewCatName">FOOTBALL</div>
-                <div style="font-size: 0.85rem; color: var(--text-muted);" id="previewTime">05/11/2026 à 10:45</div>
+                <div style="color: var(--text-muted);" id="previewTime">05/11/2026 à 10:45</div>
             </div>
             <div class="preview-body">
                 <div class="preview-icon-box" id="previewBigIcon">
@@ -451,15 +567,15 @@
                 </div>
             </div>
             <div class="preview-footer">
-                <div>Source : newsouest.fr (Finistère & Bretagne)</div>
+                <div>newsouest.fr</div>
                 <div style="font-weight: 600; color: #fca5a5;" id="previewCounter">Article 1 / 10</div>
             </div>
         </div>
     </main>
 
     <!-- TV TICKER FOOTER -->
-    <div class="tv-ticker-container" id="tickerContainer" title="Survolez pour mettre en pause">
-        <div class="tv-ticker-label">NEWS / FLASH</div>
+    <div class="tv-ticker-container" id="tickerContainer" title="Survolez ou touchez pour mettre en pause">
+        <div class="tv-ticker-label">FLASH</div>
         <div class="tv-ticker-track-wrapper">
             <div class="tv-ticker-track" id="tickerTrack">
                 <!-- Généré dynamiquement -->
@@ -471,21 +587,20 @@
     <div class="modal-overlay" id="adminModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Gestion et Édition des 10 Articles</h3>
+                <h3>Gestion des Articles (Mobile)</h3>
                 <button class="close-btn" id="closeAdminBtn">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="action-bar">
-                    <p style="font-size: 0.875rem; color: var(--text-muted);">Modifiez instantanément les titres et résumés ci-dessous. Le focus et le défilement sont préservés.</p>
-                    <button class="btn" id="resetDataBtn">Réinitialiser par défaut</button>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Modifiez vos titres et résumés à la volée.</p>
+                    <button class="btn" id="resetDataBtn">Réinitialiser</button>
                 </div>
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th style="width: 50px;">Sport</th>
-                            <th style="width: 140px;">Catégorie</th>
-                            <th>Titre de l'article</th>
-                            <th>Résumé (1 ligne)</th>
+                            <th style="width: 40px;">Sp.</th>
+                            <th style="width: 110px;">Catégorie</th>
+                            <th>Titre & Résumé</th>
                         </tr>
                     </thead>
                     <tbody id="adminTableBody">
@@ -498,14 +613,14 @@
 
     <script>
         const sportSvgs = {
-            "FOOTBALL": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>`,
-            "CYCLISME": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 17.5l-3-7-4 3 2 4"/><path d="M12 10.5l3.5-3.5L19 11"/></svg>`,
-            "HANDBALL": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 0 20M2 12h20"/></svg>`,
-            "BASKET": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>`,
-            "RUGBY": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="9" ry="6" transform="rotate(-45 12 12)"/><path d="M7 12h10M12 7v10"/></svg>`,
-            "VOLLEY": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 0 0 20M6 6l12 12"/></svg>`,
-            "TENNIS DE TABLE": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>`,
-            "OMNISPORTS": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>`
+            "FOOTBALL": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>`,
+            "CYCLISME": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 17.5l-3-7-4 3 2 4"/><path d="M12 10.5l3.5-3.5L19 11"/></svg>`,
+            "HANDBALL": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 0 20M2 12h20"/></svg>`,
+            "BASKET": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>`,
+            "RUGBY": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="9" ry="6" transform="rotate(-45 12 12)"/><path d="M7 12h10M12 7v10"/></svg>`,
+            "VOLLEY": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 0 0 20M6 6l12 12"/></svg>`,
+            "TENNIS DE TABLE": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>`,
+            "OMNISPORTS": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>`
         };
 
         function getSportSvg(cat) {
@@ -569,15 +684,13 @@
             }
         ];
 
-        let articles = JSON.parse(localStorage.getItem('newsouest_tv_articles')) || defaultArticles;
+        let articles = JSON.parse(localStorage.getItem('newsouest_tv_articles_mobile')) || defaultArticles;
 
         function playBip() {
             if (!document.getElementById('soundToggle').checked) return;
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
+                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
@@ -598,3 +711,131 @@
                 return articles.map((art) => {
                     const svgIcon = getSportSvg(art.category);
                     return `
+                        <div class="ticker-item">
+                            <span class="ticker-icon">${svgIcon}</span>
+                            <span class="ticker-category">${escapeHtml(art.category)}</span>
+                            <span class="ticker-title">${escapeHtml(art.title)}</span>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">— ${escapeHtml(art.summary)}</span>
+                            <span class="ticker-separator">///</span>
+                        </div>
+                    `;
+                }).join('');
+            };
+
+            track.innerHTML = createItemsHtml() + createItemsHtml();
+            const duration = Math.max(25, articles.length * 5);
+            track.style.animation = `scrollTicker ${duration}s linear infinite`;
+        }
+
+        let currentPreviewIndex = 0;
+        function updatePreview() {
+            if (!articles || articles.length === 0) return;
+            const art = articles[currentPreviewIndex];
+            
+            document.getElementById('previewCatName').textContent = art.category;
+            document.getElementById('previewTitle').textContent = art.title;
+            document.getElementById('previewSummary').textContent = art.summary;
+            document.getElementById('previewCounter').textContent = `Article ${currentPreviewIndex + 1} / ${articles.length}`;
+            document.getElementById('previewBigIcon').innerHTML = getSportSvg(art.category);
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('previewTime').textContent = dateStr;
+
+            currentPreviewIndex = (currentPreviewIndex + 1) % articles.length;
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = articles.map((art, index) => {
+                const svgIcon = getSportSvg(art.category);
+                return `
+                    <tr data-index="${index}">
+                        <td><div class="admin-thumb">${svgIcon}</div></td>
+                        <td><input type="text" class="admin-input cat-input" value="${escapeHtml(art.category)}" data-index="${index}"></td>
+                        <td>
+                            <input type="text" class="admin-input title-input" value="${escapeHtml(art.title)}" data-index="${index}" style="margin-bottom: 4px;" placeholder="Titre">
+                            <input type="text" class="admin-input summary-input" value="${escapeHtml(art.summary)}" data-index="${index}" placeholder="Résumé">
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function escapeHtml(text) {
+            return (text || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        document.getElementById('adminTableBody').addEventListener('input', (e) => {
+            const target = e.target;
+            const index = parseInt(target.getAttribute('data-index'));
+            if (isNaN(index)) return;
+
+            if (target.classList.contains('cat-input')) {
+                articles[index].category = target.value.toUpperCase();
+            } else if (target.classList.contains('title-input')) {
+                articles[index].title = target.value;
+            } else if (target.classList.contains('summary-input')) {
+                articles[index].summary = target.value;
+            }
+
+            localStorage.setItem('newsouest_tv_articles_mobile', JSON.stringify(articles));
+            renderTicker();
+            updatePreview();
+            
+            const row = document.querySelector(`tr[data-index="${index}"]`);
+            if (row) {
+                row.querySelector('.admin-thumb').innerHTML = getSportSvg(articles[index].category);
+            }
+        });
+
+        const modal = document.getElementById('adminModal');
+        document.getElementById('openAdminBtn').addEventListener('click', () => {
+            renderAdminTable();
+            modal.classList.add('active');
+            playBip();
+        });
+        document.getElementById('closeAdminBtn').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        document.getElementById('resetDataBtn').addEventListener('click', () => {
+            if (confirm('Réinitialiser les articles par défaut ?')) {
+                articles = JSON.parse(JSON.stringify(defaultArticles));
+                localStorage.setItem('newsouest_tv_articles_mobile', JSON.stringify(articles));
+                renderAdminTable();
+                renderTicker();
+                updatePreview();
+            }
+        });
+
+        const tickerTrack = document.getElementById('tickerTrack');
+        const tickerContainer = document.getElementById('tickerContainer');
+        if (tickerContainer && tickerTrack) {
+            tickerContainer.addEventListener('mouseenter', () => tickerTrack.classList.add('paused'));
+            tickerContainer.addEventListener('mouseleave', () => tickerTrack.classList.remove('paused'));
+            // Support tactile pour mobile (pause au toucher)
+            tickerContainer.addEventListener('touchstart', () => tickerTrack.classList.toggle('paused'));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTicker();
+            updatePreview();
+
+            setInterval(() => {
+                updatePreview();
+            }, 6000);
+        });
+    </script>
+</body>
+</html>
