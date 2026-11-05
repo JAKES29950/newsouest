@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NewsOuest - Bandeau TV d'Information Sportive</title>
-    <!-- Favicon intégré en Data URL pour éviter toute erreur 404 dans la console -->
+    <!-- Favicon en Data URL pour éviter l'erreur 404 dans la console -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23dc2626%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>">
     <style>
         :root {
@@ -41,6 +41,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
         }
 
         .logo-area {
@@ -98,15 +99,6 @@
 
         .btn:hover {
             background-color: var(--border-color);
-        }
-
-        .btn-primary {
-            background-color: var(--primary-red);
-            border-color: var(--primary-red);
-        }
-
-        .btn-primary:hover {
-            background-color: #b91c1c;
         }
 
         main {
@@ -209,6 +201,7 @@
             overflow: hidden;
             position: relative;
             box-shadow: 0 -10px 20px rgba(0,0,0,0.4);
+            flex-shrink: 0;
         }
 
         .tv-ticker-label {
@@ -412,3 +405,353 @@
             align-items: center;
             margin-bottom: 1rem;
         }
+
+        .audio-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .audio-toggle input {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="live-badge">Direct TV</div>
+            <h1>NewsOuest <span>Bandeau Info</span></h1>
+        </div>
+        <div class="header-controls">
+            <label class="audio-toggle">
+                <input type="checkbox" id="soundToggle" checked> Bip Flash Info
+            </label>
+            <button class="btn" id="openAdminBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                Gérer les articles
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="preview-card">
+            <div class="preview-card-header">
+                <div class="sport-tag">
+                    <span id="previewCatName">FOOTBALL</span>
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);" id="previewTime">05/11/2026 à 10:45</div>
+            </div>
+            <div class="preview-body">
+                <div class="preview-icon-box" id="previewBigIcon">
+                    <!-- SVG dynamique -->
+                </div>
+                <div class="preview-content">
+                    <h2 id="previewTitle">Chargement des actualités...</h2>
+                    <p id="previewSummary">Veuillez patienter pendant le chargement des derniers titres.</p>
+                </div>
+            </div>
+            <div class="preview-footer">
+                <div>Source : newsouest.fr (Finistère & Bretagne)</div>
+                <div style="font-weight: 600; color: #fca5a5;" id="previewCounter">Article 1 / 10</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- TV TICKER FOOTER -->
+    <div class="tv-ticker-container" id="tickerContainer" title="Survolez pour mettre en pause">
+        <div class="tv-ticker-label">NEWS / FLASH</div>
+        <div class="tv-ticker-track-wrapper">
+            <div class="tv-ticker-track" id="tickerTrack">
+                <!-- Généré dynamiquement -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div class="modal-overlay" id="adminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Gestion et Édition des 10 Articles</h3>
+                <button class="close-btn" id="closeAdminBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="action-bar">
+                    <p style="font-size: 0.875rem; color: var(--text-muted);">Modifiez instantanément les titres et résumés ci-dessous. Le focus et le défilement sont préservés.</p>
+                    <button class="btn" id="resetDataBtn">Réinitialiser par défaut</button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">Sport</th>
+                            <th style="width: 140px;">Catégorie</th>
+                            <th>Titre de l'article</th>
+                            <th>Résumé (1 ligne)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        <!-- Généré dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Bibliothèque d'icônes SVG vectorielles thématiques pour chaque sport
+        const sportSvgs = {
+            "FOOTBALL": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>`,
+            "CYCLISME": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 17.5l-3-7-4 3 2 4"/><path d="M12 10.5l3.5-3.5L19 11"/></svg>`,
+            "HANDBALL": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 0 20M2 12h20"/></svg>`,
+            "BASKET": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>`,
+            "RUGBY": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="9" ry="6" transform="rotate(-45 12 12)"/><path d="M7 12h10M12 7v10"/></svg>`,
+            "VOLLEY": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 0 0 20M6 6l12 12"/></svg>`,
+            "TENNIS DE TABLE": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>`,
+            "OMNISPORTS": `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>`
+        };
+
+        function getSportSvg(cat) {
+            const upper = (cat || "").toUpperCase();
+            for (let key in sportSvgs) {
+                if (upper.includes(key)) return sportSvgs[key];
+            }
+            return sportSvgs["OMNISPORTS"];
+        }
+
+        const defaultArticles = [
+            {
+                category: "FOOTBALL",
+                title: "Tinael Guillaume, la jeune classe montante de l'Hermine Concarnoise",
+                summary: "Gabin Chauvel, Iwan Gourlaouen et Jessy Pizivin étincelants dans leurs percées balle au pied."
+            },
+            {
+                category: "FOOTBALL",
+                title: "Coupe de Bretagne : Le FC Odet arrache sa qualification au bout du suspense",
+                summary: "Une victoire héroïque acquise dans les derniers instants sous les ovations du public."
+            },
+            {
+                category: "HANDBALL",
+                title: "Roz Hand'Du 29 confirme sa dynamique en championnat national",
+                summary: "Les Finistériennes s'imposent à l'extérieur avec autorité et rigueur défensive."
+            },
+            {
+                category: "CYCLISME",
+                title: "Grand Prix cycliste de Pleuven : Le parcours dévoilé",
+                summary: "Plus de 120 coureurs attendus ce week-end sur les routes sinueuses du Pays Fouesnantais."
+            },
+            {
+                category: "BASKET",
+                title: "Béliers Kemper : Plein feu sur la prochaine confrontation à domicile",
+                summary: "Le staff technique insiste sur l'impact physique et l'adresse à 3 points."
+            },
+            {
+                category: "RUGBY",
+                title: "RC Quimpérois : Un déplacement périlleux mais crucial pour le haut de tableau",
+                summary: "Les avants quimpérois se préparent à une rude bataille dans les rucks."
+            },
+            {
+                category: "VOLLEY",
+                title: "Quimper Volley 29 : Solidité retrouvée pour les filles de l'Élite",
+                summary: "Un match maîtrisé de bout en bout face à un concurrent direct."
+            },
+            {
+                category: "FOOTBALL",
+                title: "US Concarneau : Les Thoniers affûtent leurs armes avant le derby",
+                summary: "Focus complet sur la récupération et l'animation offensive à l'entraînement."
+            },
+            {
+                category: "TENNIS DE TABLE",
+                title: "Quimper Cornouaille TT cartonne lors de la dernière journée par équipes",
+                summary: "Des performances remarquables de nos jeunes pousses locales."
+            },
+            {
+                category: "OMNISPORTS",
+                title: "Agenda sportif du week-end dans le Finistère Sud",
+                summary: "Plus de 45 rencontres au programme dans les salles et sur les terrains de la région."
+            }
+        ];
+
+        let articles = JSON.parse(localStorage.getItem('newsouest_tv_articles')) || defaultArticles;
+
+        // Synthèse audio bip flash info sur interaction utilisateur
+        function playBip() {
+            if (!document.getElementById('soundToggle').checked) return;
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } catch(e) {}
+        }
+
+        // Rendu du bandeau TV défilant
+        function renderTicker() {
+            const track = document.getElementById('tickerTrack');
+            if (!track) return;
+            const createItemsHtml = () => {
+                return articles.map((art) => {
+                    const svgIcon = getSportSvg(art.category);
+                    return `
+                        <div class="ticker-item">
+                            <span class="ticker-icon">${svgIcon}</span>
+                            <span class="ticker-category">${escapeHtml(art.category)}</span>
+                            <span class="ticker-title">${escapeHtml(art.title)}</span>
+                            <span style="color: var(--text-muted); font-size: 0.9rem;">— ${escapeHtml(art.summary)}</span>
+                            <span class="ticker-separator">///</span>
+                        </div>
+                    `;
+                }).join('');
+            };
+
+            track.innerHTML = createItemsHtml() + createItemsHtml();
+            const duration = Math.max(25, articles.length * 5);
+            track.style.animation = `scrollTicker ${duration}s linear infinite`;
+        }
+
+        // Mise à jour de la carte centrale d'aperçu
+        let currentPreviewIndex = 0;
+        function updatePreview() {
+            if (!articles || articles.length === 0) return;
+            const art = articles[currentPreviewIndex];
+            
+            document.getElementById('previewCatName').textContent = art.category;
+            document.getElementById('previewTitle').textContent = art.title;
+            document.getElementById('previewSummary').textContent = art.summary;
+            document.getElementById('previewCounter').textContent = `Article ${currentPreviewIndex + 1} / ${articles.length}`;
+            document.getElementById('previewBigIcon').innerHTML = getSportSvg(art.category);
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('previewTime').textContent = dateStr;
+
+            currentPreviewIndex = (currentPreviewIndex + 1) % articles.length;
+        }
+
+        // Rendu du tableau d'administration sans perte de focus ni de défilement
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            if (!tbody) return;
+            
+            if (tbody.children.length !== articles.length) {
+                tbody.innerHTML = articles.map((art, index) => {
+                    const svgIcon = getSportSvg(art.category);
+                    return `
+                        <tr data-index="${index}">
+                            <td><div class="admin-thumb" data-thumb-index="${index}">${svgIcon}</div></td>
+                            <td><input type="text" class="admin-input cat-input" value="${escapeHtml(art.category)}" data-index="${index}"></td>
+                            <td><input type="text" class="admin-input title-input" value="${escapeHtml(art.title)}" data-index="${index}"></td>
+                            <td><input type="text" class="admin-input summary-input" value="${escapeHtml(art.summary)}" data-index="${index}"></td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                articles.forEach((art, index) => {
+                    const row = tbody.children[index];
+                    if (row) {
+                        const catInput = row.querySelector('.cat-input');
+                        const titleInput = row.querySelector('.title-input');
+                        const summaryInput = row.querySelector('.summary-input');
+                        const thumbDiv = row.querySelector('.admin-thumb');
+                        
+                        if (document.activeElement !== catInput) catInput.value = art.category;
+                        if (document.activeElement !== titleInput) titleInput.value = art.title;
+                        if (document.activeElement !== summaryInput) summaryInput.value = art.summary;
+                        thumbDiv.innerHTML = getSportSvg(art.category);
+                    }
+                });
+            }
+        }
+
+        function escapeHtml(text) {
+            return (text || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Gestion de la saisie en direct
+        document.getElementById('adminTableBody').addEventListener('input', (e) => {
+            const target = e.target;
+            const index = parseInt(target.getAttribute('data-index'));
+            if (isNaN(index)) return;
+
+            if (target.classList.contains('cat-input')) {
+                articles[index].category = target.value.toUpperCase();
+            } else if (target.classList.contains('title-input')) {
+                articles[index].title = target.value;
+            } else if (target.classList.contains('summary-input')) {
+                articles[index].summary = target.value;
+            }
+
+            localStorage.setItem('newsouest_tv_articles', JSON.stringify(articles));
+            renderTicker();
+            updatePreview();
+            
+            const row = document.querySelector(`tr[data-index="${index}"]`);
+            if (row) {
+                row.querySelector('.admin-thumb').innerHTML = getSportSvg(articles[index].category);
+            }
+        });
+
+        // Contrôles modale
+        const modal = document.getElementById('adminModal');
+        document.getElementById('openAdminBtn').addEventListener('click', () => {
+            renderAdminTable();
+            modal.classList.add('active');
+            playBip();
+        });
+        document.getElementById('closeAdminBtn').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // Réinitialisation
+        document.getElementById('resetDataBtn').addEventListener('click', () => {
+            if (confirm('Voulez-vous réinitialiser les articles par défaut ?')) {
+                articles = JSON.parse(JSON.stringify(defaultArticles));
+                localStorage.setItem('newsouest_tv_articles', JSON.stringify(articles));
+                renderAdminTable();
+                renderTicker();
+                updatePreview();
+            }
+        });
+
+        // Pause au survol du bandeau
+        const tickerTrack = document.getElementById('tickerTrack');
+        const tickerContainer = document.getElementById('tickerContainer');
+        if (tickerContainer && tickerTrack) {
+            tickerContainer.addEventListener('mouseenter', () => tickerTrack.classList.add('paused'));
+            tickerContainer.addEventListener('mouseleave', () => tickerTrack.classList.remove('paused'));
+        }
+
+        // Initialisation immédiate au chargement du DOM
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTicker();
+            updatePreview();
+
+            // Rotation automatique de l'aperçu toutes les 6 secondes
+            setInterval(() => {
+                updatePreview();
+            }, 6000);
+        });
+    </script>
+</body>
+</html>
