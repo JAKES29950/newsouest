@@ -545,3 +545,216 @@
                 title: "RC Quimpérois : Un déplacement périlleux mais crucial pour le haut de tableau",
                 summary: "Les avants quimpérois se préparent à une rude bataille dans les rucks."
             },
+            {
+                category: "VOLLEY",
+                title: "Quimper Volley 29 : Solidité retrouvée pour les filles de l'Élite",
+                summary: "Un match maîtrisé de bout en bout face à un concurrent direct."
+            },
+            {
+                category: "FOOTBALL",
+                title: "US Concarneau : Les Thoniers affûtent leurs armes avant le derby",
+                summary: "Focus complet sur la récupération et l'animation offensive à l'entraînement."
+            },
+            {
+                category: "TENNIS DE TABLE",
+                title: "Quimper Cornouaille TT cartonne lors de la dernière journée par équipes",
+                summary: "Des performances remarquables de nos jeunes pousses locales."
+            },
+            {
+                category: "OMNISPORTS",
+                title: "Agenda sportif du week-end dans le Finistère Sud",
+                summary: "Plus de 45 rencontres au programme dans les salles et sur les terrains de la région."
+            }
+        ];
+
+        let articles = JSON.parse(localStorage.getItem('newsouest_tv_articles')) || defaultArticles;
+
+        // Synthèse audio bip flash info
+        function playBip() {
+            if (!document.getElementById('soundToggle').checked) return;
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime); // La5
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } catch(e) {}
+        }
+
+        // Rendu du bandeau TV défilant (avec doublement pour boucle infinie fluide)
+        function renderTicker() {
+            const track = document.getElementById('tickerTrack');
+            let htmlContent = '';
+
+            const createItemsHtml = () => {
+                return articles.map((art, idx) => {
+                    const imgUrl = sportImages[art.category] || sportImages["OMNISPORTS"];
+                    return `
+                        <div class="ticker-item">
+                            <img src="${imgUrl}" alt="${art.category}">
+                            <span class="ticker-category">${art.category}</span>
+                            <span class="ticker-title">${escapeHtml(art.title)}</span>
+                            <span style="color: var(--text-muted); font-size: 0.9rem;">— ${escapeHtml(art.summary)}</span>
+                            <span class="ticker-separator">///</span>
+                        </div>
+                    `;
+                }).join('');
+            };
+
+            // Duplication pour effet de boucle fluide infini
+            track.innerHTML = createItemsHtml() + createItemsHtml();
+
+            // Ajustement dynamique de la vitesse selon le nombre d'articles
+            const totalItems = articles.length;
+            const duration = Math.max(25, totalItems * 5);
+            track.style.animation = `scrollTicker ${duration}s linear infinite`;
+        }
+
+        // Mise à jour de la carte centrale d'aperçu
+        let currentPreviewIndex = 0;
+        function updatePreview() {
+            if (articles.length === 0) return;
+            const art = articles[currentPreviewIndex];
+            
+            document.getElementById('previewCatName').textContent = art.category;
+            document.getElementById('previewTitle').textContent = art.title;
+            document.getElementById('previewSummary').textContent = art.summary;
+            document.getElementById('previewCounter').textContent = `Article ${currentPreviewIndex + 1} / ${articles.length}`;
+            
+            const imgUrl = sportImages[art.category] || sportImages["OMNISPORTS"];
+            document.getElementById('previewImg').src = imgUrl;
+
+            // Date du jour formatée
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('previewTime').textContent = dateStr;
+
+            currentPreviewIndex = (currentPreviewIndex + 1) % articles.length;
+        }
+
+        // Rendu du tableau d'administration sans perdre le focus ni le scroll
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            
+            // Si le tableau est vide ou nécessite une création initiale complète
+            if (tbody.children.length !== articles.length) {
+                tbody.innerHTML = articles.map((art, index) => {
+                    const imgUrl = sportImages[art.category] || sportImages["OMNISPORTS"];
+                    return `
+                        <tr data-index="${index}">
+                            <td><img src="${imgUrl}" class="admin-thumb" alt="Miniature"></td>
+                            <td>
+                                <input type="text" class="admin-input cat-input" value="${escapeHtml(art.category)}" data-index="${index}">
+                            </td>
+                            <td>
+                                <input type="text" class="admin-input title-input" value="${escapeHtml(art.title)}" data-index="${index}">
+                            </td>
+                            <td>
+                                <input type="text" class="admin-input summary-input" value="${escapeHtml(art.summary)}" data-index="${index}">
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            } else {
+                // Mise à jour ciblée si les éléments existent déjà pour préserver le focus absolu
+                articles.forEach((art, index) => {
+                    const row = tbody.children[index];
+                    if (row) {
+                        const catInput = row.querySelector('.cat-input');
+                        const titleInput = row.querySelector('.title-input');
+                        const summaryInput = row.querySelector('.summary-input');
+                        
+                        if (document.activeElement !== catInput) catInput.value = art.category;
+                        if (document.activeElement !== titleInput) titleInput.value = art.title;
+                        if (document.activeElement !== summaryInput) summaryInput.value = art.summary;
+                    }
+                });
+            }
+        }
+
+        // Échappement HTML sécurisé
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Gestionnaires d'événements de saisie dans l'administration
+        document.getElementById('adminTableBody').addEventListener('input', (e) => {
+            const target = e.target;
+            const index = parseInt(target.getAttribute('data-index'));
+            if (isNaN(index)) return;
+
+            if (target.classList.contains('cat-input')) {
+                articles[index].category = target.value.toUpperCase();
+            } else if (target.classList.contains('title-input')) {
+                articles[index].title = target.value;
+            } else if (target.classList.contains('summary-input')) {
+                articles[index].summary = target.value;
+            }
+
+            // Sauvegarde locale persistante
+            localStorage.setItem('newsouest_tv_articles', JSON.stringify(articles));
+            
+            // Mise à jour immédiate du bandeau et de la miniature sans perturber le DOM actif
+            renderTicker();
+            updatePreview();
+        });
+
+        // Contrôles de la modale Admin
+        const modal = document.getElementById('adminModal');
+        document.getElementById('openAdminBtn').addEventListener('click', () => {
+            renderAdminTable();
+            modal.classList.add('active');
+        });
+        document.getElementById('closeAdminBtn').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // Réinitialisation
+        document.getElementById('resetDataBtn').addEventListener('click', () => {
+            if (confirm('Voulez-vous réinitialiser les articles par défaut ?')) {
+                articles = JSON.parse(JSON.stringify(defaultArticles));
+                localStorage.setItem('newsouest_tv_articles', JSON.stringify(articles));
+                renderAdminTable();
+                renderTicker();
+                updatePreview();
+            }
+        });
+
+        // Pause au survol du bandeau
+        const tickerTrack = document.getElementById('tickerTrack');
+        const tickerContainer = document.getElementById('tickerContainer');
+        tickerContainer.addEventListener('mouseenter', () => {
+            tickerTrack.classList.add('paused');
+        });
+        tickerContainer.addEventListener('mouseleave', () => {
+            tickerTrack.classList.remove('paused');
+        });
+
+        // Initialisation au chargement de la page
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTicker();
+            updatePreview();
+            playBip();
+
+            // Rotation automatique de la carte d'aperçu toutes les 6 secondes
+            setInterval(() => {
+                updatePreview();
+            }, 6000);
+        });
+    </script>
+</body>
+</html>
