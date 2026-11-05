@@ -1,9 +1,10 @@
+HTML
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NewsOuest - Bandeau TV d'Information Sportive (Mobile)</title>
+    <title>NewsOuest - Bandeau TV d'Information Sportive (Portable & Ajout)</title>
     <!-- Favicon en Data URL -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23dc2626%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>">
     <style>
@@ -14,6 +15,7 @@
             --border-color: #334155;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --success-green: #16a34a;
         }
 
         * {
@@ -125,6 +127,23 @@
 
         .btn:hover {
             background-color: var(--border-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-green);
+            border-color: #15803d;
+        }
+        .btn-success:hover {
+            background-color: #15803d;
+        }
+
+        .btn-danger {
+            background-color: rgba(220, 38, 38, 0.2);
+            border-color: rgba(220, 38, 38, 0.4);
+            color: #fca5a5;
+        }
+        .btn-danger:hover {
+            background-color: rgba(220, 38, 38, 0.4);
         }
 
         main {
@@ -587,13 +606,18 @@
     <div class="modal-overlay" id="adminModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Gestion des Articles (Mobile)</h3>
+                <h3>Gestion et Ajout d'Articles</h3>
                 <button class="close-btn" id="closeAdminBtn">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="action-bar">
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Modifiez vos titres et résumés à la volée.</p>
-                    <button class="btn" id="resetDataBtn">Réinitialiser</button>
+                    <button class="btn btn-success" id="addArticleBtn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Ajouter un article
+                    </button>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-danger" id="resetDataBtn">Réinitialiser</button>
+                    </div>
                 </div>
                 <table class="admin-table">
                     <thead>
@@ -601,6 +625,7 @@
                             <th style="width: 40px;">Sp.</th>
                             <th style="width: 110px;">Catégorie</th>
                             <th>Titre & Résumé</th>
+                            <th style="width: 40px;"></th>
                         </tr>
                     </thead>
                     <tbody id="adminTableBody">
@@ -684,7 +709,7 @@
             }
         ];
 
-        let articles = JSON.parse(localStorage.getItem('newsouest_tv_articles_mobile')) || defaultArticles;
+        let articles = JSON.parse(localStorage.getItem('newsouest_tv_articles_mobile_v2')) || defaultArticles;
 
         function playBip() {
             if (!document.getElementById('soundToggle').checked) return;
@@ -730,6 +755,7 @@
         let currentPreviewIndex = 0;
         function updatePreview() {
             if (!articles || articles.length === 0) return;
+            if (currentPreviewIndex >= articles.length) currentPreviewIndex = 0;
             const art = articles[currentPreviewIndex];
             
             document.getElementById('previewCatName').textContent = art.category;
@@ -759,6 +785,9 @@
                             <input type="text" class="admin-input title-input" value="${escapeHtml(art.title)}" data-index="${index}" style="margin-bottom: 4px;" placeholder="Titre">
                             <input type="text" class="admin-input summary-input" value="${escapeHtml(art.summary)}" data-index="${index}" placeholder="Résumé">
                         </td>
+                        <td>
+                            <button class="btn btn-danger delete-btn" data-index="${index}" title="Supprimer" style="padding: 0.3rem 0.5rem;">&times;</button>
+                        </td>
                     </tr>
                 `;
             }).join('');
@@ -773,6 +802,7 @@
                 .replace(/'/g, "&#039;");
         }
 
+        // Écoute des modifications et suppressions dans le tableau
         document.getElementById('adminTableBody').addEventListener('input', (e) => {
             const target = e.target;
             const index = parseInt(target.getAttribute('data-index'));
@@ -786,14 +816,44 @@
                 articles[index].summary = target.value;
             }
 
-            localStorage.setItem('newsouest_tv_articles_mobile', JSON.stringify(articles));
+            localStorage.setItem('newsouest_tv_articles_mobile_v2', JSON.stringify(articles));
             renderTicker();
-            updatePreview();
             
             const row = document.querySelector(`tr[data-index="${index}"]`);
             if (row) {
                 row.querySelector('.admin-thumb').innerHTML = getSportSvg(articles[index].category);
             }
+        });
+
+        document.getElementById('adminTableBody').addEventListener('click', (e) => {
+            const btn = e.target.closest('.delete-btn');
+            if (!btn) return;
+            const index = parseInt(btn.getAttribute('data-index'));
+            if (isNaN(index)) return;
+
+            if (articles.length <= 1) {
+                alert("Vous devez garder au moins un article dans le bandeau.");
+                return;
+            }
+
+            if (confirm("Supprimer cet article ?")) {
+                articles.splice(index, 1);
+                localStorage.setItem('newsouest_tv_articles_mobile_v2', JSON.stringify(articles));
+                renderAdminTable();
+                renderTicker();
+            }
+        });
+
+        // Bouton d'ajout d'un nouvel article
+        document.getElementById('addArticleBtn').addEventListener('click', () => {
+            articles.push({
+                category: "FOOTBALL",
+                title: "Nouvel article d'information sportive",
+                summary: "Résumé rapide de la rencontre ou de l'événement à venir."
+            });
+            localStorage.setItem('newsouest_tv_articles_mobile_v2', JSON.stringify(articles));
+            renderAdminTable();
+            renderTicker();
         });
 
         const modal = document.getElementById('adminModal');
@@ -810,9 +870,9 @@
         });
 
         document.getElementById('resetDataBtn').addEventListener('click', () => {
-            if (confirm('Réinitialiser les articles par défaut ?')) {
+            if (confirm('Réinitialiser tous les articles par défaut ?')) {
                 articles = JSON.parse(JSON.stringify(defaultArticles));
-                localStorage.setItem('newsouest_tv_articles_mobile', JSON.stringify(articles));
+                localStorage.setItem('newsouest_tv_articles_mobile_v2', JSON.stringify(articles));
                 renderAdminTable();
                 renderTicker();
                 updatePreview();
@@ -824,7 +884,6 @@
         if (tickerContainer && tickerTrack) {
             tickerContainer.addEventListener('mouseenter', () => tickerTrack.classList.add('paused'));
             tickerContainer.addEventListener('mouseleave', () => tickerTrack.classList.remove('paused'));
-            // Support tactile pour mobile (pause au toucher)
             tickerContainer.addEventListener('touchstart', () => tickerTrack.classList.toggle('paused'));
         }
 
