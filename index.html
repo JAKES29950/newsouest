@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NewsOuest - Pixar Wood Edition (Avec Source)</title>
+    <title>NewsOuest - Pixar Wood Edition</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23f59e0b%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>">
     <style>
         :root {
             --pixar-amber: #f59e0b;
             --pixar-orange: #ea580c;
             --pixar-wood-dark: #1a1008;
-            --pixar-wood-deep: #0f0905;
-            --pixar-card: rgba(35, 22, 14, 0.92);
-            --pixar-border: #573a24;
+            --pixar-wood-deep: #22140a;
+            --pixar-card: rgba(45, 28, 18, 0.94);
+            --pixar-border: #6b4429;
             --text-main: #fef3c7;
             --text-muted: #fcd34d;
         }
@@ -27,11 +27,21 @@
         html, body {
             width: 100%;
             height: 100%;
-            background-color: var(--pixar-wood-deep);
+            /* Texture de panneau en bois riche (veines et lattes de bois verticales avec dégradés chauds) */
+            background-color: #2b180f;
             background-image: 
-                radial-gradient(circle at 50% 30%, rgba(120, 53, 15, 0.25) 0%, transparent 60%),
-                linear-gradient(90deg, rgba(20, 12, 6, 0.8) 0%, rgba(45, 26, 14, 0.6) 50%, rgba(20, 12, 6, 0.8) 100%),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='woodNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04 0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.3 0 0 0 0.1 0.2 0 0 0 0.05 0.1 0 0 0 0.02 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23woodNoise)' opacity='0.55'/%3E%3C/svg%3E");
+                linear-gradient(90deg, 
+                    rgba(15, 9, 5, 0.6) 0%, 
+                    rgba(60, 35, 20, 0.15) 25%, 
+                    rgba(30, 16, 8, 0.4) 50%, 
+                    rgba(60, 35, 20, 0.15) 75%, 
+                    rgba(15, 9, 5, 0.6) 100%),
+                repeating-linear-gradient(0deg, 
+                    transparent, 
+                    transparent 40px, 
+                    rgba(0, 0, 0, 0.15) 40px, 
+                    rgba(0, 0, 0, 0.15) 42px),
+                radial-gradient(circle at 50% 20%, rgba(217, 119, 6, 0.2) 0%, transparent 70%);
             color: var(--text-main);
             overflow-x: hidden;
         }
@@ -647,7 +657,6 @@
             return sportSvgs["OMNISPORTS"];
         }
 
-        /* 5 DERNIERS ARTICLES DE NEWSOUEST.FR AVEC SOURCE */
         const defaultArticles = [
             {
                 category: "FOOTBALL",
@@ -681,8 +690,8 @@
             }
         ];
 
-        let articles = JSON.parse(localStorage.getItem('newsouest_wood_articles_v2')) || defaultArticles;
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_speed_v2')) || 30;
+        let articles = JSON.parse(localStorage.getItem('newsouest_wood_articles_v3')) || defaultArticles;
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_speed_v3')) || 30;
 
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
@@ -731,7 +740,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_speed_v2', tickerSpeed);
+            localStorage.setItem('newsouest_wood_speed_v3', tickerSpeed);
             renderTicker();
         });
 
@@ -802,7 +811,7 @@
                 articles[index].source = target.value;
             }
 
-            localStorage.setItem('newsouest_wood_articles_v2', JSON.stringify(articles));
+            localStorage.setItem('newsouest_wood_articles_v3', JSON.stringify(articles));
             renderTicker();
             
             const row = document.querySelector(`tr[data-index="${index}"]`);
@@ -824,7 +833,7 @@
 
             if (confirm("Supprimer cet article ?")) {
                 articles.splice(index, 1);
-                localStorage.setItem('newsouest_wood_articles_v2', JSON.stringify(articles));
+                localStorage.setItem('newsouest_wood_articles_v3', JSON.stringify(articles));
                 renderAdminTable();
                 renderTicker();
             }
@@ -837,7 +846,7 @@
                 summary: "Résumé des temps forts et de l'ambiance sur les terrains bretons.",
                 source: "newsouest.fr"
             });
-            localStorage.setItem('newsouest_wood_articles_v2', JSON.stringify(articles));
+            localStorage.setItem('newsouest_wood_articles_v3', JSON.stringify(articles));
             renderAdminTable();
             renderTicker();
         });
@@ -858,7 +867,7 @@
         document.getElementById('resetDataBtn').addEventListener('click', () => {
             if (confirm('Restaurer les 5 derniers articles par défaut de NewsOuest ?')) {
                 articles = JSON.parse(JSON.stringify(defaultArticles));
-                localStorage.setItem('newsouest_wood_articles_v2', JSON.stringify(articles));
+                localStorage.setItem('newsouest_wood_articles_v3', JSON.stringify(articles));
                 renderAdminTable();
                 renderTicker();
                 updatePreview();
