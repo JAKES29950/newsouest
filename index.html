@@ -1,145 +1,652 @@
-<html class="dark" lang="fr"><head>    <meta charset="UTF-8">    <meta content="width=device-width, initial-scale=1.0" name="viewport">    <title>Flux en Direct - NewsOuest</title>    <!-- Tailwind CSS -->    <script src="https://cdn.tailwindcss.com"></script>    <script>        tailwind.config = {            darkMode: 'class',            theme: {                extend: {                    colors: {                        darkbg: '#0b0f19',                        cardbg: '#111827',                        accent: '#3b82f6',                        accentglow: '#60a5fa',                        neonpurple: '#8b5cf6'                    },                    fontFamily: {                        sans: ['Inter', 'sans-serif'],                    },                    animation: {                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',                        'float': 'float 6s ease-in-out infinite',                    }                }            }        }    </script>    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">    <style>        body {            font-family: 'Inter', sans-serif;            background-color: #0b0f19;            color: #f3f4f6;            overflow-x: hidden;        }        .glow-effect {            box-shadow: 0 0 25px rgba(59, 130, 246, 0.15);        }        .glow-card:hover {            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);            border-color: rgba(59, 130, 246, 0.5);        }    </style></head><body class="min-h-screen flex flex-col justify-between bg-gradient-to-br from-darkbg via-[#111827] to-[#0f172a] text-slate-100">
-    <!-- En-tête -->    <header class="w-full border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50 px-6 py-4">        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">            <div class="flex items-center space-x-3">                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/30 animate-pulse-slow">                    <i class="fa-solid fa-newspaper text-white text-xl"></i>                </div>                <div>                    <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">                        NewsOuest Live Feed                    </h1>                    <p class="text-xs text-slate-400">Diffusion continue de l'actualité</p>                </div>            </div>
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsOuest.fr - Bandeau TV Actualités en Direct</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for TV Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Roboto Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                    },
+                    colors: {
+                        tvred: {
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                        },
+                        tvblue: {
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom animations for TV studio look */
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
 
-            <div class="flex items-center space-x-4">                <div class="flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 text-xs text-slate-300">                    <span class="relative flex h-2.5 w-2.5">                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>                    </span>                    <span id="sync-status">Synchro active (<span id="countdown">02:00</span>)</span>                </div>
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: ticker linear infinite;
+        }
 
-                <button class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer" onclick="manualRefresh()" title="Actualiser maintenant">                    <i class="fa-solid fa-rotate" id="refresh-icon"></i>                </button>            </div>        </div>    </header>
+        .ticker-paused {
+            animation-play-state: paused !important;
+        }
 
-    <!-- Contenu Principal -->    <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 flex-grow flex flex-col justify-center">                
-        <div class="mb-6 p-4 rounded-xl bg-blue-950/40 border border-blue-800/50 text-blue-300 text-sm flex items-center justify-between" id="error-banner">            
-            <div class="flex items-center space-x-3">                
-                <i class="fa-solid fa-circle-info text-lg"></i>                
-                <span>Mode d'accès direct et sécurisé activé pour NewsOuest.</span>            </div>            
-            <button class="text-xs bg-blue-900/60 hover:bg-blue-900 px-3 py-1.5 rounded-lg border border-blue-700 transition cursor-pointer" onclick="loadDashboard()">Actualiser</button>        
+        @keyframes pulse-fast {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.95); }
+        }
+
+        .live-pulse {
+            animation: pulse-fast 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* TV scanlines subtle effect */
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.15) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.03),
+                rgba(0, 255, 0, 0.01),
+                rgba(0, 0, 255, 0.03)
+            );
+            background-size: 100% 4px, 6px 100%;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans h-full flex flex-col justify-between selection:bg-red-600 selection:text-white">
+
+    <!-- Top Studio Header -->
+    <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 shadow-xl relative z-20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Brand & Logo -->
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-r from-red-600 to-red-700 text-white font-black px-4 py-2 rounded-lg tracking-wider text-xl shadow-lg border border-red-500/30 flex items-center space-x-2">
+                    <i class="fa-solid fa-satellite-dish animate-pulse"></i>
+                    <span>NEWSOUEST</span>
+                    <span class="text-xs bg-black/40 px-1.5 py-0.5 rounded text-red-200">TV</span>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-tight text-slate-100 flex items-center gap-2">
+                        FLASH INFO CONTINU 
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-500/20 text-red-400 border border-red-500/30">
+                            <span class="w-1.5 h-1.5 mr-1.5 bg-red-500 rounded-full live-pulse"></span>
+                            DIRECT 24/7
+                        </span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Le fil d'actualité sportive et régionale en Bretagne et Finistère</p>
+                </div>
+            </div>
+
+            <!-- Studio Controls (Speed, Sound, Add, Refresh) -->
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Sound Toggle -->
+                <button id="soundToggleBtn" onclick="toggleSound()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg text-xs font-medium border border-slate-700 transition flex items-center gap-2 shadow" title="Activer/Désactiver l'effet sonore">
+                    <i id="soundIcon" class="fa-solid fa-volume-xmark text-red-400"></i>
+                    <span class="hidden sm:inline">Son Flash</span>
+                </button>
+
+                <!-- Speed Control -->
+                <div class="bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-1.5 flex items-center gap-2 text-xs">
+                    <span class="text-slate-400"><i class="fa-solid fa-gauge-high mr-1"></i> Vitesse:</span>
+                    <input type="range" id="speedRange" min="10" max="60" value="25" class="w-20 accent-red-600 cursor-pointer" oninput="changeSpeed(this.value)">
+                    <span id="speedVal" class="font-mono font-bold text-red-400 w-6">25s</span>
+                </div>
+
+                <!-- Open Modal Button -->
+                <button onclick="openModal()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-xs font-bold tracking-wide transition shadow-lg shadow-red-900/30 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>Éditer & Gérer le Flux</span>
+                </button>
+            </div>
         </div>
+    </header>
 
-        <!-- Le chargement initial est masqué pour forcer l'affichage immédiat -->
-        <div class="flex flex-col items-center justify-center py-24 space-y-4 hidden" id="loading-state">            
-            <div class="w-16 h-16 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>            
-            <p class="text-slate-400 text-sm font-medium animate-pulse">Chargement de NewsOuest...</p>        
+    <!-- Main Content Stage: TV Broadcast Mock Screen -->
+    <main class="flex-1 flex flex-col justify-center items-center px-4 relative overflow-hidden scanlines">
+        
+        <!-- Decorative Background Glow -->
+        <div class="absolute inset-0 bg-radial from-slate-900/50 via-slate-950 to-slate-950 pointer-events-none"></div>
+
+        <div class="max-w-5xl w-full mx-auto relative z-10 space-y-8">
+            
+            <!-- Featured Breaking News Card (Currently Highlighted in Ticker) -->
+            <div id="activeCardContainer" class="bg-slate-900/90 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 shadow-2xl transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-2 h-full bg-red-600"></div>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-3">
+                    <div class="flex items-center space-x-3">
+                        <span id="currentCategory" class="bg-red-600 text-white font-bold text-xs uppercase px-2.5 py-1 rounded shadow">FOOTBALL</span>
+                        <span id="currentTime" class="text-slate-400 font-mono text-xs flex items-center gap-1">
+                            <i class="fa-regular fa-clock"></i> 05/11/2026 à 10:45
+                        </span>
+                    </div>
+                    <div class="text-xs text-slate-400 font-mono bg-slate-950/60 px-3 py-1 rounded-full border border-slate-800">
+                        Article <span id="currentIndexBadge" class="text-red-400 font-bold">1</span> / <span id="totalIndexBadge">10</span>
+                    </div>
+                </div>
+                
+                <h2 id="currentTitle" class="text-xl md:text-2xl font-extrabold text-white tracking-tight mb-2 group-hover:text-red-400 transition-colors">
+                    Tinael Guillaume, la jeune classe montante de l'Hermine Concarnoise
+                </h2>
+                <p id="currentSummary" class="text-slate-300 text-sm md:text-base leading-relaxed">
+                    Gabin Chauvel, Iwan Gourlaouen et Jessy Pizivin étincelants dans leurs percées balle au pied face à Tinténiac Saint-Domineuc au 6ème tour.
+                </p>
+                
+                <div class="mt-4 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-red-500"></i> Source : newsouest.fr (Finistère & Bretagne)</span>
+                    <a id="currentLink" href="https://newsouest.fr" target="_blank" class="text-red-400 hover:text-red-300 font-semibold flex items-center gap-1 transition">
+                        Lire l'article complet <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Hint / Notice -->
+            <div class="text-center text-xs text-slate-500 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-circle-info text-red-500"></i>
+                <span>Survolez le bandeau défilant en bas pour le mettre en pause et cliquer sur un titre.</span>
+            </div>
+
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="articles-container"></div>
-
-        <div class="mt-8 bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-slate-900/60 border border-blue-900/40 rounded-2xl p-6 glow-effect transition-all" id="featured-article-banner">            
-            <div class="flex items-center justify-between mb-3">                
-                <span class="inline-flex items-center space-x-1.5 text-xs font-semibold uppercase tracking-wider bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full border border-blue-500/30">                    <i class="fa-solid fa-bolt text-xs"></i> Portail Principal NewsOuest                </span>                
-                <span class="text-xs text-slate-400" id="featured-date">--</span>            </div>            
-            <h2 class="text-xl sm:text-2xl font-bold text-white mb-2 hover:text-blue-400 transition" id="featured-title">--</h2>            
-            <p class="text-slate-300 text-sm sm:text-base line-clamp-2 mb-4" id="featured-snippet">--</p>            
-            <a class="inline-flex items-center space-x-2 text-sm font-semibold text-blue-400 hover:text-blue-300 transition group" href="#" id="featured-link" target="_blank">                
-                <span>Accéder au site complet</span>                
-                <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition"></i>            
-            </a>        
-        </div>    
     </main>
 
-    <!-- Pied de page -->    <footer class="w-full border-t border-slate-800 bg-slate-900/40 py-4 px-6 text-center text-xs text-slate-500">        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">            <p>NewsOuest Dashboard • Connecté à <a class="text-slate-400 hover:underline" href="https://www.newsouest.fr" target="_blank">newsouest.fr</a></p>            <p id="last-update-time">Dernière mise à jour : --:--:--</p>        </div>    </footer>
-
-    <!-- Script de rendu immédiat -->    <script>
-        let countdownInterval = null;        
-        const INTERVAL_DURATION = 120; // 2 minutes        
-        let timeLeft = INTERVAL_DURATION;        
-
-        function formatDate(dateString) {            
-            try {                
-                const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };                
-                return new Date(dateString).toLocaleDateString('fr-FR', options);            
-            } catch (e) {                
-                return 'Récemment';            
-            }        }
-
-        function resetTimer() {            
-            clearInterval(countdownInterval);            
-            timeLeft = INTERVAL_DURATION;            
-            updateCountdownDisplay();                        
-            countdownInterval = setInterval(() => {                
-                timeLeft--;                
-                updateCountdownDisplay();                
-                if (timeLeft <= 0) {                    
-                    timeLeft = INTERVAL_DURATION;                    
-                    loadDashboard();                
-                }            }, 1000);        }
-
-        function updateCountdownDisplay() {            
-            const minutes = Math.floor(timeLeft / 60).toString().padStart(2, '0');            
-            const seconds = (timeLeft % 60).toString().padStart(2, '0');            
-            const el = document.getElementById('countdown');            
-            if (el) el.textContent = `${minutes}:${seconds}`;        }
-
-        function loadDashboard() {            
-            const refreshIcon = document.getElementById('refresh-icon');            
-            refreshIcon.classList.add('fa-spin');
-
-            // Données de base intégrées garantissant l'affichage instantané de l'application
-            const articles = [
-                {
-                    title: "Portail d'Actualités NewsOuest",
-                    pubDate: new Date().toISOString(),
-                    link: "https://www.newsouest.fr",
-                    description: "Accédez directement à la page d'accueil de NewsOuest pour consulter l'intégralité des reportages et actualités locales en direct."
-                },
-                {
-                    title: "Fil d'information en continu",
-                    pubDate: new Date().toISOString(),
-                    link: "https://www.newsouest.fr",
-                    description: "Suivez les dernières publications, rubriques et mises à jour publiées sur le site officiel."
-                },
-                {
-                    title: "Région et Actualités Locales",
-                    pubDate: new Date().toISOString(),
-                    link: "https://www.newsouest.fr",
-                    description: "Retrouvez tous les articles thématiques, annonces et informations de votre région."
-                }
-            ];
-
-            const now = new Date();            
-            document.getElementById('last-update-time').textContent = `Dernière mise à jour : ${now.toLocaleTimeString('fr-FR')}`;                        
-            refreshIcon.classList.remove('fa-spin');
-
-            // Mise à jour du bandeau vedette
-            const latest = articles[0];
-            document.getElementById('featured-title').textContent = latest.title;            
-            document.getElementById('featured-snippet').textContent = latest.description;            
-            document.getElementById('featured-link').href = latest.link;            
-            document.getElementById('featured-date').textContent = formatDate(latest.pubDate);
-
-            // Mise à jour de la grille des articles
-            const container = document.getElementById('articles-container');
-            container.innerHTML = '';
+    <!-- TV News Broadcast Ticker Footer (The Core Request) -->
+    <footer class="bg-slate-900 border-t-2 border-red-600 shadow-2xl relative z-30 select-none">
+        <div class="flex items-center h-16 w-full overflow-hidden">
             
-            articles.forEach((art, index) => {                
-                const date = formatDate(art.pubDate);                
-                const card = document.createElement('div');                
-                card.className = `glow-card bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 relative overflow-hidden group`;                                
+            <!-- Fixed LIVE TV Badge Box -->
+            <div class="bg-red-600 text-white px-4 md:px-6 h-full flex items-center justify-center font-black tracking-wider text-sm md:text-base shadow-lg z-10 shrink-0 uppercase border-r-4 border-red-700">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 bg-white rounded-full live-pulse inline-block"></span>
+                    <span>FLASH INFO</span>
+                </div>
+            </div>
+
+            <!-- Scrolling Ticker Container -->
+            <div id="tickerWrapper" class="overflow-hidden flex-1 relative h-full flex items-center cursor-pointer" onmouseenter="pauseTicker()" onmouseleave="resumeTicker()">
+                <div id="tickerTrack" class="ticker-track whitespace-nowrap py-2">
+                    <!-- Dynamic Items Injected via JS -->
+                </div>
+            </div>
+            
+            <!-- Pause / Play indicator badge -->
+            <div id="pauseIndicator" class="hidden px-4 bg-slate-950 text-amber-400 text-xs font-mono font-bold items-center gap-1.5 shrink-0 border-l border-slate-800 h-full">
+                <i class="fa-solid fa-pause"></i> EN PAUSE
+            </div>
+        </div>
+    </footer>
+    <!-- Modal for Managing / Adding / Editing Articles -->
+    <div id="manageModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-red-500"></i> Gestion et Édition des Actualités NewsOuest.fr
+                </h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white transition p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="py-4 overflow-y-auto flex-1 space-y-6 pr-1">
                 
-                card.innerHTML = `                    
-                    <div>                        
-                        <div class="flex items-center justify-between mb-3">                            
-                            <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-slate-800 text-blue-400 border border-slate-700">#0${index + 1}</span>                            
-                            <span class="text-xs text-slate-400 flex items-center space-x-1">                                
-                                <i class="fa-regular fa-clock text-[10px]"></i>                                
-                                <span>${date}</span>                            
-                            </span>                        
-                        </div>                        
-                        <h3 class="text-base font-bold text-white mb-2 group-hover:text-blue-400 transition line-clamp-2">${art.title}</h3>                        
-                        <p class="text-xs sm:text-sm text-slate-400 line-clamp-3 mb-4">${art.description}</p>                    
-                    </div>                    
-                    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">                        
-                        <a href="${art.link}" target="_blank" class="inline-flex items-center space-x-2 text-xs font-semibold text-blue-400 hover:text-blue-300 transition">                            
-                            <span>Accéder au site</span>                            
-                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>                        
-                        </a>                        
-                        <span class="w-2 h-2 rounded-full bg-blue-500 opacity-0 group-hover:opacity-100 transition"></span>                    
-                    </div>                `;                
-                container.appendChild(card);            });        }
+                <!-- Form to Add Custom Article -->
+                <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-4">
+                    <h4 class="text-sm font-bold text-red-400 uppercase tracking-wide flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle"></i> Ajouter une nouvelle brève
+                    </h4>
+                    <form id="addArticleForm" onsubmit="handleAddArticle(event)" class="space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Catégorie / Thème</label>
+                                <input type="text" id="newCategory" required placeholder="Ex: FOOTBALL, CYCLISME" value="FOOTBALL" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-red-600">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Date / Heure</label>
+                                <input type="text" id="newDate" required placeholder="Ex: 05/11/2026 à 15:00" value="05/11/2026 à 15:00" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-red-600">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Titre de l'article</label>
+                            <input type="text" id="newTitle" required placeholder="Titre de l'actualité..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-red-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Résumé d'une ligne</label>
+                            <input type="text" id="newSummary" required placeholder="Résumé court..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-red-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Lien URL source</label>
+                            <input type="url" id="newLink" value="https://newsouest.fr" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-red-600">
+                        </div>
+                        <div class="flex justify-end pt-2">
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs uppercase px-4 py-2 rounded-lg transition shadow">
+                                Ajouter au bandeau
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
-        function manualRefresh() {            
-            loadDashboard();
-            resetTimer();        }
+                <!-- List of current articles for direct editing / deleting -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-bold text-slate-300 uppercase tracking-wide">
+                            Modifier les articles actifs (<span id="modalArticlesCount">10</span>)
+                        </h4>
+                        <button onclick="resetDefaultArticles()" class="text-xs text-slate-400 hover:text-red-400 underline transition">
+                            Restaurer les articles d'origine
+                        </button>
+                    </div>
+                    <div id="modalEditableList" class="space-y-3">
+                        <!-- Populated dynamically by JS with inputs for each article -->
+                    </div>
+                </div>
 
-        window.onload = function() {            
-            loadDashboard();            
-            resetTimer();        };    
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
+                <span class="text-xs text-slate-400"><i class="fa-solid fa-circle-info text-red-500"></i> Les modifications s'appliquent en direct.</span>
+                <button onclick="closeModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-5 py-2.5 rounded-lg transition shadow">
+                    Enregistrer & Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Default 10 realistic articles based on newsouest.fr (Finistère / Brittany local sports & news)
+        const defaultArticles = [
+            {
+                category: "FOOTBALL",
+                date: "05/11/2026 à 10:45",
+                title: "Tinael Guillaume, la jeune classe montante de l'Hermine Concarnoise",
+                summary: "Gabin Chauvel, Iwan Gourlaouen et Jessy Pizivin étincelants dans leurs percées balle au pied face à Tinténiac Saint-Domineuc.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "FOOTBALL",
+                date: "05/11/2026 à 09:59",
+                title: "La réaction complète de Sébastien Clément (coach de l'Hermine Concarneau)",
+                summary: "Par tranche de cinq journées, l'Hermine Concarneau réussit son entrée dans le top 5 en relevant ses compteurs contre Guidel.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "MORBIHAN",
+                date: "03/11/2026 à 18:24",
+                title: "Le tirage complet du 4ème tour du trophée du Morbihan",
+                summary: "En complément de la coupe de Bretagne et Chaton, le district du Morbihan dévoile les affiches de ce nouveau tour.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "MORBIHAN",
+                date: "03/11/2026 à 17:51",
+                title: "Le tirage complet du 5ème tour de la coupe de Bretagne dans le Morbihan",
+                summary: "19 matchs officiels sortis ce mardi matin au siège du district pour le prochain tour de coupe.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "MERCATO",
+                date: "03/11/2026 à 13:44",
+                title: "Benoît Matte revient à Plougastel FC pour dynamiser le groupe",
+                summary: "Un retour remarqué observé ce samedi soir à Ergué-Gabéric, montant crescendo dans le rythme des vingt premières minutes.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "MERCATO",
+                date: "03/11/2026 à 12:31",
+                title: "Max-Henry Nicolas rejoint la Saint-Colomban Locminé",
+                summary: "Arrivé aux Paotred Dispount en début de saison, son passage à Ergué-Gabéric aura marqué les esprits.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "CYCLISME",
+                date: "03/11/2026 à 11:15",
+                title: "Cyclo-cross d'Ergué-Gabéric : Enzo Conan roi de l'épreuve reine",
+                summary: "Une édition mémorable qui confirme la vitalité des épreuves finistériennes en cette fin d'année.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "FOOTBALL",
+                date: "03/11/2026 à 10:51",
+                title: "Alexis Kerangouarec (Guidel) : « Un match sans, ça arrivera à toutes les équipes »",
+                summary: "Le coach revient sur le déplacement difficile mais formateur de son équipe sur la pelouse de Concarneau.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "HANDBALL",
+                date: "01/11/2026 à 18:00",
+                title: "Première historique réussie pour les Roz Hand'Du face à Besançon à Quimper",
+                summary: "Devant son public à la grande salle de Quimper, le Roz Hand'Du 29 a dominé Besançon (27-20) avec panache.",
+                link: "https://newsouest.fr/"
+            },
+            {
+                category: "VOLLEY",
+                date: "31/10/2026 à 21:00",
+                title: "Coup d'arrêt pour le Quimper Volley face à sa bête noire, la Stella Calais",
+                summary: "À la Halle des Sports d'Ergué-Armel, les joueuses de Steven Platteau ont payé cher leur manque de réalisme.",
+                link: "https://newsouest.fr/"
+            }
+        ];
+
+        let articles = JSON.parse(localStorage.getItem('newsouest_articles')) || defaultArticles;
+        let soundEnabled = false;
+        let activeArticleIndex = 0;
+        let tickerSpeed = 25; // seconds per loop
+
+        // Initialize App on Load
+        window.onload = function() {
+            renderTicker();
+            updateActiveCard(0);
+            
+            // Periodically switch active broadcast card to match ticker progression
+            setInterval(() => {
+                if(!document.getElementById('tickerTrack').classList.contains('ticker-paused')) {
+                    activeArticleIndex = (activeArticleIndex + 1) % articles.length;
+                    updateActiveCard(activeArticleIndex);
+                }
+            }, (tickerSpeed * 1000) / articles.length);
+        };
+
+        // Render ticker items (duplicated for infinite seamless CSS scroll)
+        function renderTicker() {
+            const track = document.getElementById('tickerTrack');
+            track.style.animationDuration = tickerSpeed + 's';
+            
+            let htmlContent = '';
+            for(let i = 0; i < 2; i++) {
+                articles.forEach((art, index) => {
+                    htmlContent += `
+                        <div onclick="selectArticle(${index})" class="inline-flex items-center px-6 py-2 cursor-pointer group hover:bg-slate-800/60 transition h-full border-r border-slate-800/80">
+                            <span class="bg-red-600/20 text-red-400 border border-red-500/30 font-bold text-xs uppercase px-2 py-0.5 rounded mr-3 shrink-0">${art.category}</span>
+                            <span class="text-sm font-bold text-slate-100 group-hover:text-red-400 transition-colors mr-3">${art.title}</span>
+                            <span class="text-xs text-slate-400 truncate max-w-md hidden lg:inline mr-3"> — ${art.summary}</span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-slate-950 px-2 py-0.5 rounded">${art.date}</span>
+                        </div>
+                    `;
+                });
+            }
+            track.innerHTML = htmlContent;
+            updateModalList();
+        }
+
+        // Update the main featured card on screen
+        function updateActiveCard(index) {
+            if(articles.length === 0) return;
+            activeArticleIndex = index % articles.length;
+            const art = articles[activeArticleIndex];
+            if(!art) return;
+
+            document.getElementById('currentCategory').textContent = art.category;
+            document.getElementById('currentTime').innerHTML = `<i class="fa-regular fa-clock"></i> ${art.date}`;
+            document.getElementById('currentTitle').textContent = art.title;
+            document.getElementById('currentSummary').textContent = art.summary;
+            document.getElementById('currentLink').href = art.link;
+            document.getElementById('currentIndexBadge').textContent = activeArticleIndex + 1;
+            document.getElementById('totalIndexBadge').textContent = articles.length;
+
+            playBeepSound();
+        }
+
+        // Click on ticker item
+        function selectArticle(index) {
+            updateActiveCard(index);
+            const card = document.getElementById('activeCardContainer');
+            card.classList.add('ring-2', 'ring-red-500', 'scale-[1.01]');
+            setTimeout(() => {
+                card.classList.remove('ring-2', 'ring-red-500', 'scale-[1.01]');
+            }, 500);
+        }
+
+        // Ticker Hover Pause
+        function pauseTicker() {
+            document.getElementById('tickerTrack').classList.add('ticker-paused');
+            document.getElementById('pauseIndicator').classList.remove('hidden');
+            document.getElementById('pauseIndicator').classList.add('flex');
+        }
+
+        function resumeTicker() {
+            document.getElementById('tickerTrack').classList.remove('ticker-paused');
+            document.getElementById('pauseIndicator').classList.remove('flex');
+            document.getElementById('pauseIndicator').classList.add('hidden');
+        }
+
+        // Change Speed
+        function changeSpeed(val) {
+            tickerSpeed = parseInt(val);
+            document.getElementById('speedVal').textContent = val + 's';
+            const track = document.getElementById('tickerTrack');
+            track.style.animationDuration = tickerSpeed + 's';
+        }
+
+        // Web Audio API Synthesized Flash Beep
+        function playBeepSound() {
+            if(!soundEnabled) return;
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.15);
+                
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } catch(e) {
+                console.log("Audio not allowed yet");
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            const btn = document.getElementById('soundToggleBtn');
+            if(soundEnabled) {
+                icon.className = "fa-solid fa-volume-high text-green-400";
+                btn.classList.add('border-green-500/50', 'bg-slate-800');
+                playBeepSound();
+            } else {
+                icon.className = "fa-solid fa-volume-xmark text-red-400";
+                btn.classList.remove('border-green-500/50');
+            }
+        }
+
+        // Modal Management
+        function openModal() {
+            document.getElementById('manageModal').classList.remove('hidden');
+            updateModalList();
+        }
+
+        function closeModal() {
+            document.getElementById('manageModal').classList.add('hidden');
+            renderTicker();
+        }
+
+        // Populate the editable list inside the modal
+        function updateModalList(preserveFocusIndex = null, preserveField = null) {
+            const listContainer = document.getElementById('modalEditableList');
+            document.getElementById('modalArticlesCount').textContent = articles.length;
+            
+            let html = '';
+            articles.forEach((art, idx) => {
+                html += `
+                    <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3 relative group">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono font-bold text-red-400">#${idx + 1} - ${art.category}</span>
+                            <button onclick="deleteArticle(${idx})" class="text-slate-500 hover:text-red-400 p-1.5 transition rounded bg-slate-900 border border-slate-800" title="Supprimer cet article">
+                                <i class="fa-solid fa-trash-can text-xs"></i> Supprimer
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-[10px] text-slate-400 mb-1">Catégorie</label>
+                                <input type="text" id="edit-cat-${idx}" value="${art.category}" oninput="updateArticleField(${idx}, 'category', this.value, 'cat')" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-xs text-white focus:border-red-600 focus:outline-none">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-[10px] text-slate-400 mb-1">Date / Heure</label>
+                                <input type="text" id="edit-date-${idx}" value="${art.date}" oninput="updateArticleField(${idx}, 'date', this.value, 'date')" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-xs text-white focus:border-red-600 focus:outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 mb-1">Titre de l'article</label>
+                            <input type="text" id="edit-title-${idx}" value="${art.title.replace(/"/g, '&quot;')}" oninput="updateArticleField(${idx}, 'title', this.value, 'title')" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-xs text-white font-semibold focus:border-red-600 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-slate-400 mb-1">Résumé d'une ligne</label>
+                            <input type="text" id="edit-summary-${idx}" value="${art.summary.replace(/"/g, '&quot;')}" oninput="updateArticleField(${idx}, 'summary', this.value, 'summary')" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1.5 text-xs text-slate-300 focus:border-red-600 focus:outline-none">
+                        </div>
+                    </div>
+                `;
+            });
+            listContainer.innerHTML = html;
+
+            // Restore focus and cursor position if specified
+            if(preserveFocusIndex !== null && preserveField !== null) {
+                const inputId = `edit-${preserveField}-${preserveFocusIndex}`;
+                const inputEl = document.getElementById(inputId);
+                if(inputEl) {
+                    inputEl.focus();
+                    // Place cursor at the end of input
+                    const valLength = inputEl.value.length;
+                    inputEl.setSelectionRange(valLength, valLength);
+                }
+            }
+        }
+
+        // Direct real-time update when editing input fields while maintaining focus & scroll
+        function updateArticleField(index, field, value, fieldKey) {
+            if(articles[index]) {
+                articles[index][field] = value;
+                localStorage.setItem('newsouest_articles', JSON.stringify(articles));
+                
+                // Update ticker and preview instantly in background without full modal rebuild reset
+                renderTickerWithoutModalReset();
+                if(index === activeArticleIndex) {
+                    updateActiveCard(activeArticleIndex);
+                }
+            }
+        }
+
+        // Render ticker without destroying modal DOM focus
+        function renderTickerWithoutModalReset() {
+            const track = document.getElementById('tickerTrack');
+            track.style.animationDuration = tickerSpeed + 's';
+            
+            let htmlContent = '';
+            for(let i = 0; i < 2; i++) {
+                articles.forEach((art, index) => {
+                    htmlContent += `
+                        <div onclick="selectArticle(${index})" class="inline-flex items-center px-6 py-2 cursor-pointer group hover:bg-slate-800/60 transition h-full border-r border-slate-800/80">
+                            <span class="bg-red-600/20 text-red-400 border border-red-500/30 font-bold text-xs uppercase px-2 py-0.5 rounded mr-3 shrink-0">${art.category}</span>
+                            <span class="text-sm font-bold text-slate-100 group-hover:text-red-400 transition-colors mr-3">${art.title}</span>
+                            <span class="text-xs text-slate-400 truncate max-w-md hidden lg:inline mr-3"> — ${art.summary}</span>
+                            <span class="text-[10px] font-mono text-slate-500 bg-slate-950 px-2 py-0.5 rounded">${art.date}</span>
+                        </div>
+                    `;
+                });
+            }
+            track.innerHTML = htmlContent;
+        }
+
+        function handleAddArticle(e) {
+            e.preventDefault();
+            const newArt = {
+                category: document.getElementById('newCategory').value.toUpperCase(),
+                date: document.getElementById('newDate').value,
+                title: document.getElementById('newTitle').value,
+                summary: document.getElementById('newSummary').value,
+                link: document.getElementById('newLink').value
+            };
+
+            articles.unshift(newArt);
+            localStorage.setItem('newsouest_articles', JSON.stringify(articles));
+            
+            renderTicker();
+            updateActiveCard(0);
+            
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newSummary').value = '';
+            
+            updateModalList();
+            alertBox("Nouvelle brève ajoutée au bandeau avec succès !");
+        }
+
+        function deleteArticle(index) {
+            if(articles.length <= 1) {
+                alertBox("Le bandeau doit conserver au moins un article.");
+                return;
+            }
+            articles.splice(index, 1);
+            localStorage.setItem('newsouest_articles', JSON.stringify(articles));
+            renderTicker();
+            updateModalList();
+            updateActiveCard(0);
+        }
+
+        function resetDefaultArticles() {
+            if(confirm("Voulez-vous réinitialiser toutes les brèves avec la liste initiale de NewsOuest.fr ?")) {
+                articles = JSON.parse(JSON.stringify(defaultArticles));
+                localStorage.setItem('newsouest_articles', JSON.stringify(articles));
+                renderTicker();
+                updateModalList();
+                updateActiveCard(0);
+                alertBox("Liste réinitialisée avec succès !");
+            }
+        }
+
+        // Custom notification toast
+        function alertBox(msg) {
+            const banner = document.createElement('div');
+            banner.className = "fixed top-6 right-6 z-50 bg-red-600 text-white font-bold text-xs px-4 py-3 rounded-xl shadow-2xl border border-red-500 animate-bounce flex items-center gap-2";
+            banner.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${msg}</span>`;
+            document.body.appendChild(banner);
+            setTimeout(() => banner.remove(), 3000);
+        }
     </script>
-</body></html>
+</body>
+</html>
