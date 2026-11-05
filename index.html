@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NewsOuest - Pixar Wood Edition</title>
+    <title>NewsOuest - Pixar Wood Edition (Avec Source)</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23f59e0b%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>">
     <style>
         :root {
@@ -27,7 +27,6 @@
         html, body {
             width: 100%;
             height: 100%;
-            /* Texture d'arrière-plan panneau en bois sombre et chaleureux (générée en SVG haute qualité) */
             background-color: var(--pixar-wood-deep);
             background-image: 
                 radial-gradient(circle at 50% 30%, rgba(120, 53, 15, 0.25) 0%, transparent 60%),
@@ -43,7 +42,6 @@
             justify-content: space-between;
         }
 
-        /* HEADER STYLE PIXAR BOIS */
         header {
             background: linear-gradient(135deg, rgba(61, 39, 29, 0.95) 0%, rgba(26, 16, 8, 0.95) 100%);
             border-bottom: 4px solid var(--pixar-amber);
@@ -116,7 +114,6 @@
             }
         }
 
-        /* CONTRÔLE DE LA VITESSE */
         .speed-control {
             display: flex;
             align-items: center;
@@ -135,7 +132,6 @@
             width: 80px;
         }
 
-        /* BOUTONS EFFET 3D BOIS / AMBRE */
         .btn {
             background: linear-gradient(to bottom, #78350f, #451a03);
             color: #fef3c7;
@@ -179,7 +175,6 @@
             width: 100%;
         }
 
-        /* CARTE DE PRÉVISULATION PANNEAU BOIS PIXAR */
         .preview-card {
             background: var(--pixar-card);
             border: 3px solid var(--pixar-border);
@@ -279,7 +274,6 @@
             color: var(--text-muted);
         }
 
-        /* BANDEAU TV DÉFILANT PIXAR */
         .tv-ticker-container {
             background: linear-gradient(to bottom, #1a1008, #0f0905);
             border-top: 4px solid var(--pixar-amber);
@@ -393,7 +387,6 @@
             margin-left: 1.5rem;
         }
 
-        /* MODALE D'ADMINISTRATION */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -422,7 +415,7 @@
             border: 3px solid var(--pixar-amber);
             border-radius: 1rem;
             width: 100%;
-            max-width: 950px;
+            max-width: 1050px;
             height: 92vh;
             display: flex;
             flex-direction: column;
@@ -553,7 +546,6 @@
             <h1>NewsOuest <span>Bandeau Sport</span></h1>
         </div>
         <div class="header-controls">
-            <!-- Réglage de la vitesse de défilement -->
             <div class="speed-control" title="Ajuster la vitesse de défilement">
                 <span>Vitesse :</span>
                 <input type="range" id="speedRange" min="10" max="60" value="30" step="2">
@@ -565,7 +557,7 @@
             </label>
             <button class="btn" id="openAdminBtn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                Gérer les 5 Actus
+                Gérer les Actus
             </button>
         </div>
     </header>
@@ -574,7 +566,7 @@
         <div class="preview-card">
             <div class="preview-card-header">
                 <div class="sport-tag" id="previewCatName">FOOTBALL</div>
-                <div style="color: var(--text-muted);" id="previewTime">05/11/2026 à 16:42</div>
+                <div style="color: var(--text-muted);" id="previewTime">05/11/2026 à 16:50</div>
             </div>
             <div class="preview-body">
                 <div class="preview-icon-box" id="previewBigIcon">
@@ -586,7 +578,7 @@
                 </div>
             </div>
             <div class="preview-footer">
-                <div>newsouest.fr (Finistère & Bretagne)</div>
+                <div id="previewSource">Source : newsouest.fr</div>
                 <div style="font-weight: 700; color: var(--pixar-amber);" id="previewCounter">Article 1 / 5</div>
             </div>
         </div>
@@ -606,7 +598,7 @@
     <div class="modal-overlay" id="adminModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Gestion des 5 Derniers Articles NewsOuest</h3>
+                <h3>Gestion des Articles et Sources NewsOuest</h3>
                 <button class="close-btn" id="closeAdminBtn">&times;</button>
             </div>
             <div class="modal-body">
@@ -621,8 +613,9 @@
                     <thead>
                         <tr>
                             <th style="width: 40px;">Sp.</th>
-                            <th style="width: 120px;">Sport / Catégorie</th>
+                            <th style="width: 110px;">Catégorie</th>
                             <th>Titre & Résumé en ligne</th>
+                            <th style="width: 130px;">Source</th>
                             <th style="width: 40px;"></th>
                         </tr>
                     </thead>
@@ -654,37 +647,42 @@
             return sportSvgs["OMNISPORTS"];
         }
 
-        /* 5 DERNIERS ARTICLES MIS EN LIGNE SUR NEWSOUEST.FR */
+        /* 5 DERNIERS ARTICLES DE NEWSOUEST.FR AVEC SOURCE */
         const defaultArticles = [
             {
                 category: "FOOTBALL",
                 title: "L'US Saint-Evarzec s'affiche en tête au cap des cinq journées",
-                summary: "Etre en tête, après cinq journées est déjà une belle performance, acquise à l'extérieur."
+                summary: "Etre en tête, après cinq journées est déjà une belle performance, acquise à l'extérieur.",
+                source: "newsouest.fr"
             },
             {
                 category: "FOOTBALL",
                 title: "Le Quimper Italia organise un tournoi de foot en marchant ce samedi",
-                summary: "Rendez-vous à la halle des sports de Penhars pour la 7ème édition de l'événement."
+                summary: "Rendez-vous à la halle des sports de Penhars pour la 7ème édition de l'événement.",
+                source: "newsouest.fr"
             },
             {
                 category: "FOOTBALL",
                 title: "Tinael Guillaume, la jeune classe montante de l'Hermine Concarnoise",
-                summary: "Gabin Chauvel, Iwan Gourlaouen et Jessy Pizivin étincelants dans leurs percées."
+                summary: "Gabin Chauvel, Iwan Gourlaouen et Jessy Pizivin étincelants dans leurs percées.",
+                source: "newsouest.fr"
             },
             {
                 category: "FOOTBALL",
                 title: "La réaction complète de Sébastien Clément (coach de l'Hermine Concarneau)",
-                summary: "Par tranche de cinq journées, l'Hermine Concarneau a réussi son entrée dans le top 5."
+                summary: "Par tranche de cinq journées, l'Hermine Concarneau a réussi son entrée dans le top 5.",
+                source: "newsouest.fr"
             },
             {
                 category: "FOOTBALL",
                 title: "Le tirage complet du 4ème tour du trophée du Morbihan",
-                summary: "En complément de la coupe de Bretagne et Chaton, le district a officialisé les oppositions."
+                summary: "En complément de la coupe de Bretagne et Chaton, le district a officialisé les oppositions.",
+                source: "newsouest.fr"
             }
         ];
 
-        let articles = JSON.parse(localStorage.getItem('newsouest_wood_articles')) || defaultArticles;
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_speed')) || 30;
+        let articles = JSON.parse(localStorage.getItem('newsouest_wood_articles_v2')) || defaultArticles;
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_speed_v2')) || 30;
 
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
@@ -719,6 +717,7 @@
                             <span class="ticker-category">${escapeHtml(art.category)}</span>
                             <span class="ticker-title">${escapeHtml(art.title)}</span>
                             <span style="color: var(--text-muted); font-size: 0.85rem;">— ${escapeHtml(art.summary)}</span>
+                            <span style="color: var(--pixar-amber); font-size: 0.8rem; opacity: 0.8;">[${escapeHtml(art.source || 'newsouest.fr')}]</span>
                             <span class="ticker-separator">///</span>
                         </div>
                     `;
@@ -726,15 +725,13 @@
             };
 
             track.innerHTML = createItemsHtml() + createItemsHtml();
-            // Utilisation de la vitesse dynamique réglée par le curseur (plus la valeur est petite, plus ça va vite)
             track.style.animation = `scrollTicker ${tickerSpeed}s linear infinite`;
         }
 
-        // Contrôle du curseur de vitesse
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_speed', tickerSpeed);
+            localStorage.setItem('newsouest_wood_speed_v2', tickerSpeed);
             renderTicker();
         });
 
@@ -747,6 +744,7 @@
             document.getElementById('previewCatName').textContent = art.category;
             document.getElementById('previewTitle').textContent = art.title;
             document.getElementById('previewSummary').textContent = art.summary;
+            document.getElementById('previewSource').textContent = `Source : ${art.source || 'newsouest.fr'}`;
             document.getElementById('previewCounter').textContent = `Article ${currentPreviewIndex + 1} / ${articles.length}`;
             document.getElementById('previewBigIcon').innerHTML = getSportSvg(art.category);
 
@@ -771,6 +769,7 @@
                             <input type="text" class="admin-input title-input" value="${escapeHtml(art.title)}" data-index="${index}" style="margin-bottom: 4px;" placeholder="Titre">
                             <input type="text" class="admin-input summary-input" value="${escapeHtml(art.summary)}" data-index="${index}" placeholder="Résumé">
                         </td>
+                        <td><input type="text" class="admin-input source-input" value="${escapeHtml(art.source || 'newsouest.fr')}" data-index="${index}" placeholder="Source"></td>
                         <td>
                             <button class="btn btn-danger delete-btn" data-index="${index}" title="Supprimer" style="padding: 0.3rem 0.5rem;">&times;</button>
                         </td>
@@ -799,9 +798,11 @@
                 articles[index].title = target.value;
             } else if (target.classList.contains('summary-input')) {
                 articles[index].summary = target.value;
+            } else if (target.classList.contains('source-input')) {
+                articles[index].source = target.value;
             }
 
-            localStorage.setItem('newsouest_wood_articles', JSON.stringify(articles));
+            localStorage.setItem('newsouest_wood_articles_v2', JSON.stringify(articles));
             renderTicker();
             
             const row = document.querySelector(`tr[data-index="${index}"]`);
@@ -823,7 +824,7 @@
 
             if (confirm("Supprimer cet article ?")) {
                 articles.splice(index, 1);
-                localStorage.setItem('newsouest_wood_articles', JSON.stringify(articles));
+                localStorage.setItem('newsouest_wood_articles_v2', JSON.stringify(articles));
                 renderAdminTable();
                 renderTicker();
             }
@@ -833,9 +834,10 @@
             articles.push({
                 category: "FOOTBALL",
                 title: "Nouvel article d'actualité sportive en Finistère",
-                summary: "Résumé des temps forts et de l'ambiance sur les terrains bretons."
+                summary: "Résumé des temps forts et de l'ambiance sur les terrains bretons.",
+                source: "newsouest.fr"
             });
-            localStorage.setItem('newsouest_wood_articles', JSON.stringify(articles));
+            localStorage.setItem('newsouest_wood_articles_v2', JSON.stringify(articles));
             renderAdminTable();
             renderTicker();
         });
@@ -856,7 +858,7 @@
         document.getElementById('resetDataBtn').addEventListener('click', () => {
             if (confirm('Restaurer les 5 derniers articles par défaut de NewsOuest ?')) {
                 articles = JSON.parse(JSON.stringify(defaultArticles));
-                localStorage.setItem('newsouest_wood_articles', JSON.stringify(articles));
+                localStorage.setItem('newsouest_wood_articles_v2', JSON.stringify(articles));
                 renderAdminTable();
                 renderTicker();
                 updatePreview();
