@@ -1,0 +1,525 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"></meta>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+    <title>Clubizz Studio - Générateur d'Annonces Magiques Pixar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"></link>
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"></link>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        pixar: ['Fredoka', 'sans-serif'],
+                    },
+                    colors: {
+                        pixarSalmon: '#fa8072',
+                        pixarDark: '#1A2A3A',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            hyphens: manual !important;
+            -webkit-hyphens: manual !important;
+            word-break: normal !important;
+            overflow-wrap: break-word !important;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, rgba(250, 128, 114, 0.75), rgba(233, 100, 85, 0.85)), 
+                        url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat fixed;
+            min-height: 100vh;
+        }
+
+        .pixar-card {
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            border: 4px solid #ffeae6;
+        }
+
+        .pixar-input {
+            border: 2px solid #fca59b;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .pixar-input:focus {
+            border-color: #e11d48;
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.2);
+            outline: none;
+        }
+
+        .pixar-btn {
+            border-radius: 1.5rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 5px 0 #991b1b;
+            white-space: normal;
+        }
+
+        .pixar-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #991b1b;
+        }
+
+        .tab-btn {
+            border-radius: 1.25rem;
+            border: 2px solid #fca59b;
+            transition: all 0.25s ease;
+        }
+
+        .tab-btn.active {
+            background-color: #dc2626;
+            border-color: #dc2626;
+            color: white;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.35);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="py-6 px-3 sm:py-10 sm:px-6 overflow-x-hidden">
+
+    <!-- En-tête -->
+    <header class="max-w-4xl mx-auto text-center mb-8 sm:mb-12">
+        <div class="inline-flex items-center justify-center bg-white p-4 sm:p-5 rounded-full shadow-xl mb-3 animate-float border-4 border-rose-200">
+            <i class="fa-solid fa-bullhorn text-3xl sm:text-4xl text-red-600"></i>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-bold text-white drop-shadow-md mb-2">Clubizz Studio</h1>
+        <p class="text-white text-base sm:text-xl font-medium opacity-95 drop-shadow">Générez vos annonces sportives en un clic ! 🌟</p>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-6 sm:space-y-8 w-full">
+
+        <!-- Carte Formulaire -->
+        <div class="pixar-card p-4 sm:p-8 w-full max-w-full">
+
+            <!-- Section 1 -->
+            <section class="mb-6 sm:mb-8">
+                <h2 class="text-xl sm:text-2xl font-bold text-pixarDark mb-4 flex items-center">
+                    <span class="bg-red-600 text-white w-8 h-8 rounded-full inline-flex items-center justify-center text-sm mr-2.5 shadow shrink-0">1</span>
+                    Informations Générales
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                    <div>
+                        <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Nom du demandeur *</label>
+                        <input class="pixar-input w-full px-3.5 py-2.5 text-sm sm:text-base text-gray-800 bg-rose-50/30" id="demandeur" placeholder="Ex: Thomas Leroy" type="text" />
+                    </div>
+                    <div>
+                        <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Numéro de téléphone *</label>
+                        <input class="pixar-input w-full px-3.5 py-2.5 text-sm sm:text-base text-gray-800 bg-rose-50/30" id="telephone" placeholder="Ex: 06 12 34 56 78" type="tel" />
+                    </div>
+                    <div>
+                        <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Nom du club émetteur *</label>
+                        <input class="pixar-input w-full px-3.5 py-2.5 text-sm sm:text-base text-gray-800 bg-rose-50/30" id="club" placeholder="Ex: Étoile Sportive de Brest" type="text" />
+                    </div>
+                    <div>
+                        <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Adresse e-mail du destinataire *</label>
+                        <input class="pixar-input w-full px-3.5 py-2.5 text-sm sm:text-base text-gray-800 bg-rose-50/30" id="emailDestinataire" placeholder="Ex: contact@ligue-sport.fr" type="email" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2 -->
+            <section class="mb-6 sm:mb-8">
+                <h2 class="text-xl sm:text-2xl font-bold text-pixarDark mb-4 flex items-center">
+                    <span class="bg-red-600 text-white w-8 h-8 rounded-full inline-flex items-center justify-center text-sm mr-2.5 shadow shrink-0">2</span>
+                    Type d'Annonce
+                </h2>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 mb-5">
+                    <button class="tab-btn active py-2.5 px-2 font-semibold text-xs sm:text-sm flex flex-col items-center justify-center gap-1 bg-rose-50/50 text-gray-700" id="tab-joueur" onclick="switchCategory('joueur')" type="button">
+                        <i class="fa-solid fa-user-plus text-lg text-red-600"></i> Joueur(s)
+                    </button>
+                    <button class="tab-btn py-2.5 px-2 font-semibold text-xs sm:text-sm flex flex-col items-center justify-center gap-1 bg-rose-50/50 text-gray-700" id="tab-arbitre" onclick="switchCategory('arbitre')" type="button">
+                        <i class="fa-solid fa-flag text-lg text-red-600"></i> Arbitre
+                    </button>
+                    <button class="tab-btn py-2.5 px-2 font-semibold text-xs sm:text-sm flex flex-col items-center justify-center gap-1 bg-rose-50/50 text-gray-700" id="tab-entraineur" onclick="switchCategory('entraineur')" type="button">
+                        <i class="fa-solid fa-clipboard-user text-lg text-red-600"></i> Entraîneur
+                    </button>
+                    <button class="tab-btn py-2.5 px-2 font-semibold text-xs sm:text-sm flex flex-col items-center justify-center gap-1 bg-rose-50/50 text-gray-700" id="tab-match" onclick="switchCategory('match')" type="button">
+                        <i class="fa-solid fa-handshake-simple text-lg text-red-600"></i> Match amical
+                    </button>
+                    <button class="tab-btn py-2.5 px-2 font-semibold text-xs sm:text-sm flex flex-col items-center justify-center gap-1 bg-rose-50/50 text-gray-700 col-span-2 sm:col-span-1" id="tab-autre" onclick="switchCategory('autre')" type="button">
+                        <i class="fa-solid fa-star text-lg text-red-600"></i> Autre annonce
+                    </button>
+                </div>
+
+                <div class="bg-rose-50/60 p-4 rounded-2xl border-2 border-rose-200" id="dynamic-fields"></div>
+            </section>
+
+            <!-- Section 3 -->
+            <section class="mb-6 sm:mb-8">
+                <h2 class="text-xl sm:text-2xl font-bold text-pixarDark mb-4 flex items-center">
+                    <span class="bg-red-600 text-white w-8 h-8 rounded-full inline-flex items-center justify-center text-sm mr-2.5 shadow shrink-0">3</span>
+                    Précisions Libres
+                </h2>
+                <textarea class="pixar-input w-full px-3.5 py-2.5 text-sm sm:text-base text-gray-800 resize-none bg-rose-50/30" id="messageLibre" placeholder="Ajoutez une touche personnelle, l'ambiance recherchée, les horaires..." rows="3"></textarea>
+            </section>
+
+            <!-- Bouton Générer -->
+            <div class="text-center w-full">
+                <button class="pixar-btn bg-red-600 hover:bg-red-700 text-white text-base sm:text-lg px-4 sm:px-8 py-3.5 w-full sm:w-auto shadow-lg flex items-center justify-center mx-auto gap-2 text-center" onclick="genererAnnonce()" type="button">
+                    <i class="fa-solid fa-wand-magic-sparkles shrink-0"></i> 
+                    <span>Générer mon annonce littéraire !</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Section Résultat (Modifiable) -->
+        <section class="pixar-card p-4 sm:p-8 hidden w-full max-w-full" id="result-section">
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-2 border-b pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-rose-100 rounded-2xl flex items-center justify-center text-2xl shadow-sm border border-rose-300 shrink-0" id="result-symbol">
+                        ⚽
+                    </div>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-pixarDark">Annonce prête à diffuser</h2>
+                        <p class="text-xs text-gray-500">Vous pouvez modifier le texte librement ci-dessous</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-bold bg-red-600 text-white shadow-sm" id="badge-type">Joueur</span>
+            </div>
+
+            <!-- Textarea éditable -->
+            <div class="mb-5">
+                <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Texte rédigé (Éditable) :</label>
+                <textarea class="pixar-input w-full p-4 text-gray-900 bg-amber-50/70 border-2 border-amber-300 rounded-2xl font-medium leading-relaxed text-sm sm:text-base shadow-inner focus:bg-white resize-y" id="texteGenere" rows="6"></textarea>
+            </div>
+
+            <!-- Actions d'envoi et copie -->
+            <div class="bg-rose-50 p-4 rounded-2xl border-2 border-rose-200 flex flex-col sm:flex-row gap-3 justify-between items-center">
+                <div class="flex items-center gap-2 text-pixarDark font-semibold text-xs sm:text-sm break-all w-full sm:w-auto">
+                    <i class="fa-solid fa-paper-plane text-red-600 text-base shrink-0"></i>
+                    <span>Destinataire : <span class="font-normal text-gray-700 underline" id="display-email"></span></span>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2.5 w-full sm:w-auto">
+                    <button class="pixar-btn bg-red-600 hover:bg-red-700 text-white px-5 py-3 flex items-center justify-center gap-2 text-xs sm:text-sm shadow-md w-full sm:w-auto" onclick="copierTexte()" type="button">
+                        <i class="fa-regular fa-copy"></i> Copier
+                    </button>
+                    <button class="pixar-btn bg-red-600 hover:bg-red-700 text-white px-5 py-3 flex items-center justify-center gap-2 text-xs sm:text-sm shadow-md w-full sm:w-auto" onclick="envoyerEmail()" type="button">
+                        <i class="fa-solid fa-envelope"></i> Envoyer par mail
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historique -->
+        <section class="pixar-card p-4 sm:p-8 w-full max-w-full">
+            <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                <h2 class="text-lg sm:text-xl font-bold text-pixarDark flex items-center">
+                    <span class="bg-red-600 text-white w-7 h-7 sm:w-8 sm:h-8 rounded-full inline-flex items-center justify-center text-xs sm:text-sm mr-2 shadow shrink-0">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </span>
+                    Historique Local
+                </h2>
+                <button class="text-xs font-semibold text-red-600 hover:text-red-800 bg-red-50 px-3 py-1.5 rounded-xl border border-red-200 transition" onclick="viderHistorique()" type="button">
+                    <i class="fa-solid fa-trash-can mr-1"></i> Tout effacer
+                </button>
+            </div>
+            
+            <div class="space-y-3 max-h-80 overflow-y-auto pr-1" id="history-container"></div>
+        </section>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div class="fixed bottom-4 right-4 left-4 sm:left-auto bg-gray-900 text-white px-5 py-3 rounded-2xl shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 z-50 flex items-center justify-center gap-2.5 border border-gray-700" id="toast">
+        <i class="fa-solid fa-circle-check text-green-400 text-base shrink-0" id="toast-icon"></i>
+        <span class="font-medium text-xs sm:text-sm" id="toast-message">Action réussie !</span>
+    </div>
+
+    <!-- Script JavaScript -->
+    <script>
+        let currentCategory = 'joueur';
+
+        function switchCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`tab-${category}`);
+            if (activeBtn) activeBtn.classList.add('active');
+            renderDynamicFields();
+        }
+
+        function renderDynamicFields() {
+            const container = document.getElementById('dynamic-fields');
+            if (currentCategory === 'match') {
+                container.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Date souhaitée *</label>
+                            <input type="date" id="matchDate" class="pixar-input w-full px-3 py-2 text-xs sm:text-sm bg-white text-gray-800">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Niveau adverse *</label>
+                            <select id="matchNiveau" class="pixar-input w-full px-3 py-2 text-xs sm:text-sm bg-white text-gray-800">
+                                <option value="Loisir / Débutant">Loisir / Débutant</option>
+                                <option value="Départemental">Départemental</option>
+                                <option value="Régional">Régional</option>
+                                <option value="National">National</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Lieu *</label>
+                            <select id="matchLieu" class="pixar-input w-full px-3 py-2 text-xs sm:text-sm bg-white text-gray-800">
+                                <option value="à domicile">À domicile 🏟️</option>
+                                <option value="à l'extérieur">À l'extérieur 🚌</option>
+                                <option value="à domicile ou à l'extérieur">À domicile ou à l'extérieur 🌍</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+            } else if (currentCategory === 'autre') {
+                container.innerHTML = `
+                    <div>
+                        <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Objet / Intitulé de l'annonce *</label>
+                        <input type="text" id="autreObjet" placeholder="Ex: Recherche de sponsors, tournoi caritatif..." class="pixar-input w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white text-gray-800">
+                    </div>
+                `;
+            } else {
+                let libPlaceholder = 'Ex: Attaquant, Gardien...';
+                if (currentCategory === 'entraineur') libPlaceholder = 'Ex: Coach U17, Entraîneur principal...';
+                if (currentCategory === 'arbitre') libPlaceholder = 'Ex: Arbitre officiel, Section jeune...';
+
+                container.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Poste / rôle recherché *</label>
+                            <input type="text" id="posteRecherche" placeholder="${libPlaceholder}" class="pixar-input w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white text-gray-800">
+                        </div>
+                        <div>
+                            <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Catégorie d'âge / Section *</label>
+                            <input type="text" id="sectionAge" placeholder="Ex: Seniors M1, Féminines, U15..." class="pixar-input w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white text-gray-800">
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        window.onload = function() {
+            renderDynamicFields();
+            chargerHistorique();
+        };
+
+        function getInputValue(id) {
+            const el = document.getElementById(id);
+            return el ? el.value.trim() : '';
+        }
+
+        function genererAnnonce() {
+            const demandeur = getInputValue('demandeur');
+            const telephone = getInputValue('telephone');
+            const club = getInputValue('club');
+            const emailDestinataire = getInputValue('emailDestinataire');
+            const messageLibre = getInputValue('messageLibre');
+
+            if (!demandeur || !telephone || !club || !emailDestinataire) {
+                showToast("Veuillez remplir toutes les informations générales.", "error");
+                return;
+            }
+
+            let texte = "";
+            let emojiSymbole = "🌟";
+            let titreTypeBadge = "";
+
+            if (currentCategory === 'match') {
+                const date = getInputValue('matchDate');
+                const niveau = getInputValue('matchNiveau');
+                const lieu = getInputValue('matchLieu');
+
+                if (!date) {
+                    showToast("Veuillez sélectionner la date souhaitée.", "error");
+                    return;
+                }
+
+                emojiSymbole = "⚽";
+                titreTypeBadge = "Match Amical";
+                const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateFormatee = new Date(date).toLocaleDateString('fr-FR', optionsDate);
+
+                texte = `Le club sportif ${club} est actuellement à la recherche d'une belle rencontre amicale à disputer ${lieu} le ${dateFormatee}. Nous souhaitons affronter une équipe affichant un niveau ${niveau.toLowerCase()} afin de partager un moment sportif chaleureux et constructif. ${messageLibre ? messageLibre + ' ' : ''}Si votre formation est disponible et motivée pour relever le défi, n'hésitez pas à contacter dès à présent notre représentant ${demandeur} par téléphone au ${telephone}. Sportivement vôtre !`;
+
+            } else if (currentCategory === 'autre') {
+                const objet = getInputValue('autreObjet');
+                if (!objet) {
+                    showToast("Veuillez renseigner l'intitulé de votre annonce.", "error");
+                    return;
+                }
+
+                emojiSymbole = "🌟";
+                titreTypeBadge = "Annonce Officielle";
+                texte = `Avis important émis par le club ${club} concernant le sujet suivant : ${objet}. ${messageLibre ? messageLibre + ' ' : ''}Pour toute question ou information complémentaire liée à cette annonce, merci de bien vouloir vous rapprocher de notre contact officiel ${demandeur} au numéro suivant : ${telephone}. Nous vous remercions pour votre attention et votre esprit sportif !`;
+
+            } else {
+                let typeRecherche = "joueur";
+                emojiSymbole = "🎯";
+                titreTypeBadge = "Recherche Joueur";
+
+                if (currentCategory === 'entraineur') {
+                    typeRecherche = "entraîneur";
+                    emojiSymbole = "📋";
+                    titreTypeBadge = "Recherche Coach";
+                } else if (currentCategory === 'arbitre') {
+                    typeRecherche = "arbitre";
+                    emojiSymbole = "🚩";
+                    titreTypeBadge = "Recherche Arbitre";
+                }
+
+                const poste = getInputValue('posteRecherche');
+                const section = getInputValue('sectionAge');
+
+                if (!poste || !section) {
+                    showToast("Veuillez renseigner le poste et la catégorie.", "error");
+                    return;
+                }
+
+                texte = `Le club ${club} recherche activement un profil talentueux et motivé pour renforcer son effectif au poste de ${poste} au sein de la section ${section}. Nous sommes à la recherche d'un ${typeRecherche} passionné et prêt à s'investir pleinement dans notre projet d'équipe. ${messageLibre ? messageLibre + ' ' : ''}Pour toute information complémentaire ou pour candidater, veuillez prendre contact directement avec ${demandeur} au ${telephone}. Rejoignez notre aventure humaine et sportive dès aujourd'hui !`;
+            }
+
+            document.getElementById('result-symbol').innerText = emojiSymbole;
+            document.getElementById('badge-type').innerText = titreTypeBadge;
+            document.getElementById('texteGenere').value = texte;
+            document.getElementById('display-email').innerText = emailDestinataire;
+            
+            const resultSection = document.getElementById('result-section');
+            resultSection.classList.remove('hidden');
+            resultSection.style.display = 'block';
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+
+            sauvegarderDansHistorique({
+                id: Date.now(),
+                date: new Date().toLocaleDateString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+                club: club,
+                type: titreTypeBadge,
+                symbole: emojiSymbole,
+                texte: texte
+            });
+            
+            showToast("✨ Annonce générée !", "success");
+        }
+
+        function copierTexte() {
+            const texte = document.getElementById('texteGenere').value;
+            fallbackCopy(texte);
+        }
+
+        function fallbackCopy(texte) {
+            const textarea = document.createElement('textarea');
+            textarea.value = texte;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast("📋 Texte copié dans le presse-papier !", "success");
+            } catch (err) {
+                showToast("Échec de la copie.", "error");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function envoyerEmail() {
+            const emailDest = getInputValue('emailDestinataire');
+            const club = getInputValue('club') || "Club Sportif";
+            const sujet = encodeURIComponent(`Annonce officielle - ${club}`);
+            const corps = encodeURIComponent(document.getElementById('texteGenere').value);
+
+            window.location.href = `mailto:${emailDest}?subject=${sujet}&body=${corps}`;
+            showToast("💌 Ouverture de la messagerie...", "success");
+        }
+
+        function sauvegarderDansHistorique(annonce) {
+            let hist = JSON.parse(localStorage.getItem('clubizz_history') || '[]');
+            hist.unshift(annonce);
+            if (hist.length > 15) hist = hist.slice(0, 15);
+            localStorage.setItem('clubizz_history', JSON.stringify(hist));
+            chargerHistorique();
+        }
+
+        function chargerHistorique() {
+            const container = document.getElementById('history-container');
+            const hist = JSON.parse(localStorage.getItem('clubizz_history') || '[]');
+
+            if (hist.length === 0) {
+                container.innerHTML = `<p class="text-gray-400 text-center py-3 text-xs italic">Aucune annonce générée pour le moment.</p>`;
+                return;
+            }
+
+            container.innerHTML = hist.map(item => `
+                <div class="bg-rose-50/40 border border-rose-200 p-3 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <div class="flex items-start gap-2.5">
+                        <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-base shrink-0 border border-rose-200">
+                            ${item.symbole}
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1.5 mb-0.5 flex-wrap">
+                                <span class="font-bold text-pixarDark text-xs sm:text-sm">${item.club}</span>
+                                <span class="text-[10px] bg-red-600 text-white px-2 py-0.5 rounded-full font-semibold">${item.type}</span>
+                                <span class="text-[10px] text-gray-400">${item.date}</span>
+                            </div>
+                            <p class="text-xs text-gray-600 line-clamp-2">${item.texte}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 shrink-0 w-full sm:w-auto justify-end mt-1 sm:mt-0">
+                        <button onclick="copierHistoriqueText('${encodeURIComponent(item.texte)}')" class="px-2.5 py-1 bg-white text-red-600 border border-red-200 rounded-lg text-xs font-semibold hover:bg-red-600 hover:text-white transition">
+                            Copier
+                        </button>
+                        <button onclick="supprimerItemHistorique(${item.id})" class="px-2 py-1 bg-white text-red-500 border border-red-200 rounded-lg text-xs hover:bg-red-500 hover:text-white transition">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function copierHistoriqueText(encodedText) {
+            fallbackCopy(decodeURIComponent(encodedText));
+        }
+
+        function supprimerItemHistorique(id) {
+            let hist = JSON.parse(localStorage.getItem('clubizz_history') || '[]');
+            hist = hist.filter(item => item.id !== id);
+            localStorage.setItem('clubizz_history', JSON.stringify(hist));
+            chargerHistorique();
+            showToast("Annonce supprimée.", "success");
+        }
+
+        function viderHistorique() {
+            localStorage.removeItem('clubizz_history');
+            chargerHistorique();
+            showToast("Historique vidé !", "success");
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMessage.innerText = message;
+            toastIcon.className = type === 'success' ? "fa-solid fa-circle-check text-green-400 text-base shrink-0" : "fa-solid fa-circle-exclamation text-red-400 text-base shrink-0";
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
