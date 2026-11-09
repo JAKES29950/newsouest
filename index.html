@@ -139,7 +139,6 @@
             width: 80px;
         }
 
-        /* Effet 3D et rebond cartoon sur les boutons */
         .btn {
             background: linear-gradient(to bottom, #b45309, #451a03);
             color: #fef3c7;
@@ -172,18 +171,12 @@
             border-color: #4ade80;
             box-shadow: 0 6px 0 #052e16, 0 10px 15px rgba(0,0,0,0.6);
         }
-        .btn-success:hover {
-            box-shadow: 0 8px 0 #052e16, 0 14px 20px rgba(74, 222, 128, 0.4);
-        }
 
         .btn-danger {
             background: linear-gradient(to bottom, #dc2626, #7f1d1d);
             border-color: #f87171;
             color: #fee2e2;
             box-shadow: 0 6px 0 #450a0a, 0 10px 15px rgba(0,0,0,0.6);
-        }
-        .btn-danger:hover {
-            box-shadow: 0 8px 0 #450a0a, 0 14px 20px rgba(248, 113, 113, 0.4);
         }
 
         main {
@@ -195,7 +188,6 @@
             width: 100%;
         }
 
-        /* Carte de prévisualisation avec relief accentué */
         .preview-card {
             background: var(--pixar-card);
             border: 4px solid var(--pixar-amber);
@@ -505,6 +497,13 @@
             letter-spacing: 0.05em;
         }
 
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 4px;
+        }
+
         .admin-input {
             width: 100%;
             background-color: #120803;
@@ -519,6 +518,37 @@
             outline: none;
             border-color: var(--pixar-amber);
             box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+        }
+
+        .mic-btn {
+            background: linear-gradient(to bottom, #78350f, #451a03);
+            border: 1px solid var(--pixar-amber);
+            color: var(--pixar-amber);
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .mic-btn:hover {
+            background: linear-gradient(to bottom, #b45309, #78350f);
+            color: #fff;
+        }
+
+        .mic-btn.listening {
+            background: #dc2626;
+            color: white;
+            border-color: #f87171;
+            animation: pulseMic 1s infinite;
+        }
+
+        @keyframes pulseMic {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .admin-thumb {
@@ -592,15 +622,13 @@
         <div class="preview-card">
             <div class="preview-card-header">
                 <div class="sport-tag" id="previewCatName">FOOTBALL</div>
-                <div style="color: var(--text-muted);" id="previewTime">05/11/2026 à 17:05</div>
+                <div style="color: var(--text-muted);" id="previewTime">—</div>
             </div>
             <div class="preview-body">
-                <div class="preview-icon-box" id="previewBigIcon">
-                    <!-- SVG dynamique -->
-                </div>
+                <div class="preview-icon-box" id="previewBigIcon"></div>
                 <div class="preview-content">
-                    <h2 id="previewTitle">Chargement des actualités...</h2>
-                    <p id="previewSummary">Veuillez patienter pendant le chargement des derniers titres.</p>
+                    <h2 id="previewTitle">Chargement...</h2>
+                    <p id="previewSummary">Chargement des actualités en cours...</p>
                 </div>
             </div>
             <div class="preview-footer">
@@ -610,17 +638,13 @@
         </div>
     </main>
 
-    <!-- TV TICKER FOOTER -->
     <div class="tv-ticker-container" id="tickerContainer" title="Survolez ou touchez pour mettre en pause">
         <div class="tv-ticker-label">NEWS FLASH</div>
         <div class="tv-ticker-track-wrapper">
-            <div class="tv-ticker-track" id="tickerTrack">
-                <!-- Généré dynamiquement -->
-            </div>
+            <div class="tv-ticker-track" id="tickerTrack"></div>
         </div>
     </div>
 
-    <!-- ADMIN MODAL -->
     <div class="modal-overlay" id="adminModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -640,14 +664,12 @@
                         <tr>
                             <th style="width: 40px;">Sp.</th>
                             <th style="width: 110px;">Catégorie</th>
-                            <th>Titre & Résumé en ligne</th>
+                            <th>Titre & Résumé en ligne (avec saisie vocale 🎤)</th>
                             <th style="width: 130px;">Source</th>
                             <th style="width: 40px;"></th>
                         </tr>
                     </thead>
-                    <tbody id="adminTableBody">
-                        <!-- Généré dynamiquement -->
-                    </tbody>
+                    <tbody id="adminTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -791,8 +813,14 @@
                         <td><div class="admin-thumb">${svgIcon}</div></td>
                         <td><input type="text" class="admin-input cat-input" value="${escapeHtml(art.category)}" data-index="${index}"></td>
                         <td>
-                            <input type="text" class="admin-input title-input" value="${escapeHtml(art.title)}" data-index="${index}" style="margin-bottom: 4px;" placeholder="Titre">
-                            <input type="text" class="admin-input summary-input" value="${escapeHtml(art.summary)}" data-index="${index}" placeholder="Résumé">
+                            <div class="input-group">
+                                <input type="text" class="admin-input title-input" value="${escapeHtml(art.title)}" data-index="${index}" placeholder="Titre">
+                                <button type="button" class="mic-btn speech-btn" data-field="title" data-index="${index}" title="Saisie vocale">🎤</button>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" class="admin-input summary-input" value="${escapeHtml(art.summary)}" data-index="${index}" placeholder="Résumé">
+                                <button type="button" class="mic-btn speech-btn" data-field="summary" data-index="${index}" title="Saisie vocale">🎤</button>
+                            </div>
                         </td>
                         <td><input type="text" class="admin-input source-input" value="${escapeHtml(art.source || 'newsouest.fr')}" data-index="${index}" placeholder="Source"></td>
                         <td>
@@ -836,7 +864,49 @@
             }
         });
 
+        // Gestion de la reconnaissance vocale (SpeechRecognition API)
         document.getElementById('adminTableBody').addEventListener('click', (e) => {
+            const micBtn = e.target.closest('.speech-btn');
+            if (micBtn) {
+                const index = parseInt(micBtn.getAttribute('data-index'));
+                const field = micBtn.getAttribute('data-field');
+                
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    alert("La saisie vocale n'est pas prise en charge par ce navigateur.");
+                    return;
+                }
+
+                const recognition = new SpeechRecognition();
+                recognition.lang = 'fr-FR';
+                recognition.interimResults = false;
+
+                micBtn.classList.add('listening');
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    if (field === 'title') {
+                        articles[index].title = transcript;
+                    } else if (field === 'summary') {
+                        articles[index].summary = transcript;
+                    }
+                    localStorage.setItem('newsouest_wood_articles_v4', JSON.stringify(articles));
+                    renderAdminTable();
+                    renderTicker();
+                };
+
+                recognition.onerror = () => {
+                    micBtn.classList.remove('listening');
+                };
+
+                recognition.onend = () => {
+                    micBtn.classList.remove('listening');
+                };
+
+                recognition.start();
+                return;
+            }
+
             const btn = e.target.closest('.delete-btn');
             if (!btn) return;
             const index = parseInt(btn.getAttribute('data-index'));
