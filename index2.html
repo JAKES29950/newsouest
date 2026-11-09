@@ -127,13 +127,20 @@
                 <i class="fa-solid fa-mobile-screen-button"></i>
             </div>
             <h3 class="text-2xl font-bold text-pixarDark mb-2">Installer Clubizz Studio</h3>
-            <p class="text-gray-600 text-sm sm:text-base mb-6">
+            <p class="text-gray-600 text-sm sm:text-base mb-4">
                 Installez l'application sur votre écran d'accueil pour y accéder en un clin d'œil comme une application native ! 📱✨
             </p>
-            <div id="install-instructions" class="bg-rose-50 p-4 rounded-2xl text-left text-xs sm:text-sm text-gray-700 mb-6 space-y-2 border border-rose-200">
+            <div id="install-instructions" class="bg-rose-50 p-4 rounded-2xl text-left text-xs sm:text-sm text-gray-700 mb-4 space-y-2 border border-rose-200">
                 <p class="font-bold text-red-600 mb-1"><i class="fa-solid fa-circle-info mr-1"></i> Astuce d'installation :</p>
                 <p id="install-guide-text">Appuyez sur le menu du navigateur (les 3 points en haut à droite) puis sélectionnez <b>« Ajouter à l'écran d'accueil »</b>.</p>
             </div>
+            
+            <!-- Case à cocher : Ne plus afficher ce message -->
+            <div class="flex items-center justify-start gap-2 mb-6 px-1">
+                <input type="checkbox" id="nePlusAfficher" class="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer">
+                <label for="nePlusAfficher" class="text-xs sm:text-sm text-gray-600 cursor-pointer select-none">Ne plus afficher ce message</label>
+            </div>
+
             <div class="flex flex-col sm:flex-row gap-3">
                 <button id="btn-install-pwa" class="pixar-btn bg-red-600 hover:bg-red-700 text-white py-3 px-5 text-sm flex-1 hidden items-center justify-center gap-2">
                     <i class="fa-solid fa-download"></i> Installer maintenant
@@ -320,26 +327,27 @@
         });
 
         function verifierAffichageModalInstall() {
-            // 1. Vérifie si l'application est en mode autonome (lancée depuis l'écran d'accueil)
             const estInstalleeEnModeAutonome = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-            
-            // 2. Vérifie si l'utilisateur a déjà cliqué sur fermer dans localStorage (persistant)
             const dejaFermePermanent = localStorage.getItem('clubizz_install_dismissed') === 'true';
 
             if (estInstalleeEnModeAutonome || dejaFermePermanent) {
-                return; // On ne fait rien, la popup ne s'affichera pas
+                return;
             }
 
-            // Sinon, affichage de la popup après un court délai
             setTimeout(() => {
                 document.getElementById('install-modal').classList.remove('hidden');
             }, 800);
         }
 
         function fermerModalInstall() {
+            const caseNePlusAfficher = document.getElementById('nePlusAfficher');
+            
+            // Si la case "Ne plus afficher ce message" est cochée, on enregistre de façon permanente
+            if (caseNePlusAfficher && caseNePlusAfficher.checked) {
+                localStorage.setItem('clubizz_install_dismissed', 'true');
+            }
+
             document.getElementById('install-modal').classList.add('hidden');
-            // Mémorisation permanente pour ne plus jamais l'afficher sur cet appareil
-            localStorage.setItem('clubizz_install_dismissed', 'true');
         }
 
         function adapterGuideInstallation() {
