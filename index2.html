@@ -6,7 +6,7 @@
     <!-- Favicon universel (Haut-parleur SVG en Data URI) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23dc2626' d='M215.4 96L140.1 192H48C21.5 192 0 213.5 0 240v32c0 26.5 21.5 48 48 48h92.1l75.3 96c14.7 18.8 42.6 21.8 61.4 7c7.1-5.6 11.2-14.1 11.2-23V112c0-23.7-19.3-43-43-43-8.9 0-17.4 4.1-23 11.2zm216.7 34.3l-28.3 28.3C425.4 186.7 448 219.1 448 256s-22.6 69.3-44.2 97.4l28.3 28.3C462.3 338.5 496 299 496 256s-33.7-82.5-63.9-125.7z'/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23dc2626' d='M215.4 96L140.1 192H48C21.5 192 0 213.5 0 240v32c0 26.5 21.5 48 48 48h92.1l75.3 96c14.7 18.8 42.6 21.8 61.4 7c7.1-5.6 11.2-14.1 11.2-23V112c0-23.7-19.3-43-43-43-8.9 0-17.4 4.1-23 11.2zm216.7 34.3l-28.3 28.3C425.4 186.7 448 219.1 448 256s-22.6 69.3-44.2 97.4l28.3 28.3C462.3 338.5 496 299 496 256s-33.7-82.5-63.9-125.7z'/%3E%3C/svg%3E">
-    <!-- Configuration Tailwind pour désactiver le message de production -->
+    <!-- Configuration Tailwind -->
     <script>
         tailwind = {
             config: {
@@ -25,9 +25,8 @@
             }
         }
     </script>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Fredoka & Permanent Marker (effet craie) -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
     <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -321,20 +320,26 @@
         });
 
         function verifierAffichageModalInstall() {
+            // 1. Vérifie si l'application est en mode autonome (lancée depuis l'écran d'accueil)
             const estInstalleeEnModeAutonome = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-            if (estInstalleeEnModeAutonome) return;
+            
+            // 2. Vérifie si l'utilisateur a déjà cliqué sur fermer dans localStorage (persistant)
+            const dejaFermePermanent = localStorage.getItem('clubizz_install_dismissed') === 'true';
 
-            const dejaFerme = sessionStorage.getItem('clubizz_install_dismissed');
-            if (!dejaFerme) {
-                setTimeout(() => {
-                    document.getElementById('install-modal').classList.remove('hidden');
-                }, 800);
+            if (estInstalleeEnModeAutonome || dejaFermePermanent) {
+                return; // On ne fait rien, la popup ne s'affichera pas
             }
+
+            // Sinon, affichage de la popup après un court délai
+            setTimeout(() => {
+                document.getElementById('install-modal').classList.remove('hidden');
+            }, 800);
         }
 
         function fermerModalInstall() {
             document.getElementById('install-modal').classList.add('hidden');
-            sessionStorage.setItem('clubizz_install_dismissed', 'true');
+            // Mémorisation permanente pour ne plus jamais l'afficher sur cet appareil
+            localStorage.setItem('clubizz_install_dismissed', 'true');
         }
 
         function adapterGuideInstallation() {
