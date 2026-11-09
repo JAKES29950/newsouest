@@ -1,23 +1,24 @@
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"></meta>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Clubizz Studio - Générateur d'Annonces Magiques </title>
     <!-- Favicon universel (Haut-parleur SVG en Data URI) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23dc2626' d='M215.4 96L140.1 192H48C21.5 192 0 213.5 0 240v32c0 26.5 21.5 48 48 48h92.1l75.3 96c14.7 18.8 42.6 21.8 61.4 7c7.1-5.6 11.2-14.1 11.2-23V112c0-23.7-19.3-43-43-43-8.9 0-17.4 4.1-23 11.2zm216.7 34.3l-28.3 28.3C425.4 186.7 448 219.1 448 256s-22.6 69.3-44.2 97.4l28.3 28.3C462.3 338.5 496 299 496 256s-33.7-82.5-63.9-125.7z'/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23dc2626' d='M215.4 96L140.1 192H48C21.5 192 0 213.5 0 240v32c0 26.5 21.5 48 48 48h92.1l75.3 96c14.7 18.8 42.6 21.8 61.4 7c7.1-5.6 11.2-14.1 11.2-23V112c0-23.7-19.3-43-43-43-8.9 0-17.4 4.1-23 11.2zm216.7 34.3l-28.3 28.3C425.4 186.7 448 219.1 448 256s-22.6 69.3-44.2 97.4l28.3 28.3C462.3 338.5 496 299 496 256s-33.7-82.5-63.9-125.7z'/%3E%3C/svg%3E">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Fredoka -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"></link>
+    <!-- Google Fonts: Fredoka & Permanent Marker (effet craie) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
     <!-- FontAwesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"></link>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         pixar: ['Fredoka', 'sans-serif'],
+                        chalk: ['Permanent Marker', 'cursive'],
                     },
                     colors: {
                         pixarSalmon: '#fa8072',
@@ -88,6 +89,24 @@
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.35);
         }
 
+        /* Style Tableau Noir & Craie */
+        .chalkboard {
+            background-color: #1e293b;
+            background-image: radial-gradient(#334155 0.75px, transparent 0.75px);
+            background-size: 16px 16px;
+            border: 8px solid #78350f;
+            border-radius: 1.5rem;
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8), 0 10px 25px rgba(0,0,0,0.3);
+            color: #f8fafc;
+        }
+
+        .chalk-text {
+            font-family: 'Permanent Marker', cursive;
+            letter-spacing: 0.05em;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3), 0 0 8px rgba(255, 255, 255, 0.2);
+            line-height: 1.6;
+        }
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-8px); }
@@ -99,6 +118,31 @@
     </style>
 </head>
 <body class="py-6 px-3 sm:py-10 sm:px-6 overflow-x-hidden">
+
+    <!-- Modal Popup Installation PWA -->
+    <div id="install-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border-4 border-rose-200 text-center animate-float">
+            <div class="w-16 h-16 bg-red-100 text-red-600 rounded-2xl mx-auto flex items-center justify-center text-3xl mb-4 shadow-inner">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-pixarDark mb-2">Installer Clubizz Studio</h3>
+            <p class="text-gray-600 text-sm sm:text-base mb-6">
+                Installez l'application sur votre écran d'accueil pour y accéder en un clin d'œil comme une application native ! 📱✨
+            </p>
+            <div id="install-instructions" class="bg-rose-50 p-4 rounded-2xl text-left text-xs sm:text-sm text-gray-700 mb-6 space-y-2 border border-rose-200">
+                <p class="font-bold text-red-600 mb-1"><i class="fa-solid fa-circle-info mr-1"></i> Astuce d'installation :</p>
+                <p id="install-guide-text">Appuyez sur le menu du navigateur (les 3 points en haut à droite) puis sélectionnez <b>"Ajouter à l'écran d'accueil"</b>.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button id="btn-install-pwa" class="pixar-btn bg-red-600 hover:bg-red-700 text-white py-3 px-5 text-sm flex-1 hidden items-center justify-center gap-2">
+                    <i class="fa-solid fa-download"></i> Installer maintenant
+                </button>
+                <button onclick="fermerModalInstall()" class="pixar-btn bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-5 text-sm flex-1">
+                    Continuer sur le Web
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- En-tête -->
     <header class="max-w-4xl mx-auto text-center mb-8 sm:mb-12">
@@ -187,7 +231,7 @@
 
         </div>
 
-        <!-- Section Résultat (Modifiable) -->
+        <!-- Section Résultat (Tableau Noir / Craie & Synthèse Vocale) -->
         <section class="pixar-card p-4 sm:p-8 hidden w-full max-w-full" id="result-section">
             <div class="flex items-center justify-between mb-4 flex-wrap gap-2 border-b pb-3">
                 <div class="flex items-center gap-3">
@@ -196,16 +240,32 @@
                     </div>
                     <div>
                         <h2 class="text-lg sm:text-xl font-bold text-pixarDark">Annonce prête à diffuser</h2>
-                        <p class="text-xs text-gray-500">Vous pouvez modifier le texte librement ci-dessous</p>
+                        <p class="text-xs text-gray-500">Visualisation sur tableau noir et écoute vocale</p>
                     </div>
                 </div>
                 <span class="px-3 py-1 rounded-full text-xs font-bold bg-red-600 text-white shadow-sm" id="badge-type">Joueur</span>
             </div>
 
-            <!-- Textarea éditable -->
+            <!-- Affichage Tableau Noir avec Police Effet Craie -->
             <div class="mb-5">
-                <label class="block text-xs sm:text-sm font-semibold text-gray-700 mb-2">Texte rédigé (Éditable) :</label>
-                <textarea class="pixar-input w-full p-4 text-gray-900 bg-amber-50/70 border-2 border-amber-300 rounded-2xl font-medium leading-relaxed text-sm sm:text-base shadow-inner focus:bg-white resize-y" id="texteGenere" rows="6"></textarea>
+                <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs sm:text-sm font-semibold text-gray-700">Annonce sur le tableau noir :</label>
+                    <!-- Bouton Écouter l'annonce (Voix féminine IA) -->
+                    <button onclick="lireAnnonceVocalement()" class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-md transition transform active:scale-95">
+                        <i class="fa-solid fa-volume-high animate-bounce"></i> Écouter l'annonce (Voix IA)
+                    </button>
+                </div>
+                
+                <div class="chalkboard p-5 sm:p-8 relative">
+                    <!-- Cadre intérieur aspect craie -->
+                    <div class="absolute top-2 right-3 text-slate-500 text-xs font-mono opacity-60">Clubizz Audio AI v1.0</div>
+                    <div id="tableauNoirTexte" class="chalk-text text-amber-100 text-base sm:text-lg min-h-[140px] whitespace-pre-wrap outline-none focus:ring-2 focus:ring-amber-300/40 rounded-lg p-2" contenteditable="true" spellcheck="false">
+                        <!-- Le texte généré apparaîtra ici en écriture craie et éditable -->
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-slate-700 text-[11px] text-slate-400 italic text-right">
+                        💡 Astuce : Vous pouvez aussi modifier directement le texte ci-dessus.
+                    </div>
+                </div>
             </div>
 
             <!-- Actions d'envoi et copie -->
@@ -253,6 +313,59 @@
     <!-- Script JavaScript -->
     <script>
         let currentCategory = 'joueur';
+        let deferredPrompt = null;
+
+        // Gestion de l'installation PWA / Mobile
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('btn-install-pwa');
+            if (installBtn) installBtn.classList.remove('hidden');
+        });
+
+        function verifierAffichageModalInstall() {
+            // Afficher la popup d'installation si ce n'est pas déjà fermé dans la session
+            const dejaFerme = sessionStorage.getItem('clubizz_install_dismissed');
+            if (!dejaFerme) {
+                setTimeout(() => {
+                    document.getElementById('install-modal').classList.remove('hidden');
+                }, 800);
+            }
+        }
+
+        function fermerModalInstall() {
+            document.getElementById('install-modal').classList.add('hidden');
+            sessionStorage.setItem('clubizz_install_dismissed', 'true');
+        }
+
+        // Détection du type d'appareil pour adapter le guide
+        function adapterGuideInstallation() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const guideText = document.getElementById('install-guide-text');
+            const installBtn = document.getElementById('btn-install-pwa');
+
+            if (/android/i.test(ua)) {
+                guideText.innerHTML = `Sur Android : Appuyez sur le menu (les 3 points verticaux <b>⋮</b> en haut à droite) puis touchez <b>"Ajouter à l'écran d'accueil"</b> ou <b>"Installer l'application"</b>.`;
+            } else if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+                guideText.innerHTML = `Sur iPhone / iPad : Appuyez sur le bouton de partage <b><i class="fa-solid fa-arrow-up-from-bracket"></i></b> en bas de votre écran Safari, puis faites défiler et touchez <b>"Sur l'écran d'accueil"</b>.`;
+            } else {
+                guideText.innerHTML = `Cliquez sur le bouton d'installation ci-dessous ou sur l'icône dans la barre d'adresse de votre navigateur.`;
+            }
+
+            if (installBtn) {
+                installBtn.addEventListener('click', async () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        if (outcome === 'accepted') {
+                            showToast("Merci d'avoir installé Clubizz Studio !", "success");
+                        }
+                        deferredPrompt = null;
+                    }
+                    fermerModalInstall();
+                });
+            }
+        }
 
         function switchCategory(category) {
             currentCategory = category;
@@ -320,6 +433,8 @@
         window.onload = function() {
             renderDynamicFields();
             chargerHistorique();
+            adapterGuideInstallation();
+            verifierAffichageModalInstall();
         };
 
         function getInputValue(id) {
@@ -399,7 +514,7 @@
 
             document.getElementById('result-symbol').innerText = emojiSymbole;
             document.getElementById('badge-type').innerText = titreTypeBadge;
-            document.getElementById('texteGenere').value = texte;
+            document.getElementById('tableauNoirTexte').innerText = texte;
             document.getElementById('display-email').innerText = emailDestinataire;
             
             const resultSection = document.getElementById('result-section');
@@ -419,8 +534,60 @@
             showToast("✨ Annonce générée !", "success");
         }
 
+        // Fonction de synthèse vocale (Voix féminine IA)
+        function lireAnnonceVocalement() {
+            if (!('speechSynthesis' in window)) {
+                showToast("La synthèse vocale n'est pas supportée par votre navigateur.", "error");
+                return;
+            }
+
+            window.speechSynthesis.cancel(); // Arrêter toute lecture en cours
+
+            const texteAlea = document.getElementById('tableauNoirTexte').innerText;
+            if (!texteAlea) return;
+
+            const utterance = new SpeechSynthesisUtterance(texteAlea);
+            utterance.lang = 'fr-FR';
+            utterance.rate = 1.0;
+            utterance.pitch = 1.1; // Voix légèrement plus aiguë/féminine
+
+            // Sélectionner une voix féminine française si disponible
+            const voices = window.speechSynthesis.getVoices();
+            const voixFeminine = voices.find(v => v.lang.startsWith('fr') && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('hortense') || v.name.toLowerCase().includes('amelie') || v.name.toLowerCase().includes('marie') || v.name.toLowerCase().includes('google français')));
+            
+            if (voixFeminine) {
+                utterance.voice = voixFeminine;
+            } else {
+                // S'assurer de prendre une voix française par défaut
+                const voixFr = voices.find(v => v.lang.startsWith('fr'));
+                if (voixFr) utterance.voice = voixFr;
+            }
+
+            utterance.onstart = () => {
+                showToast("🔊 Lecture audio en cours...", "success");
+            };
+
+            utterance.onerror = () => {
+                showToast("Erreur lors de la lecture audio.", "error");
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Charger les voix au chargement pour éviter le délai
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+
+        function recupererTexteActuel() {
+            const el = document.getElementById('tableauNoirTexte');
+            return el ? el.innerText : '';
+        }
+
         function copierTexte() {
-            const texte = document.getElementById('texteGenere').value;
+            const texte = recupererTexteActuel();
             fallbackCopy(texte);
         }
 
@@ -442,7 +609,7 @@
             const emailDest = getInputValue('emailDestinataire');
             const club = getInputValue('club') || "Club Sportif";
             const sujet = encodeURIComponent(`Annonce officielle - ${club}`);
-            const corps = encodeURIComponent(document.getElementById('texteGenere').value);
+            const corps = encodeURIComponent(recupererTexteActuel());
 
             window.location.href = `mailto:${emailDest}?subject=${sujet}&body=${corps}`;
             showToast("💌 Ouverture de la messagerie...", "success");
