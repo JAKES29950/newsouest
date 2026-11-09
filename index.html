@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NewsOuest - Pixar Wood Edition</title>
+    <title>NewsOuest - Pellicule Photo Edition</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23f59e0b%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>">
     <style>
         :root {
             --pixar-amber: #f59e0b;
             --pixar-orange: #ea580c;
-            --pixar-card: rgba(45, 25, 12, 0.95);
-            --pixar-border: #854d0e;
+            --film-dark: #120904;
+            --film-border: #451a03;
             --text-main: #fef3c7;
             --text-muted: #fcd34d;
         }
@@ -25,20 +25,19 @@
         html, body {
             width: 100%;
             height: 100%;
-            background-color: #3b2211;
+            background-color: #261307;
             background-image: 
                 linear-gradient(90deg, 
-                    rgba(20, 10, 5, 0.75) 0%, 
-                    rgba(90, 50, 25, 0.25) 25%, 
-                    rgba(40, 20, 10, 0.6) 50%, 
-                    rgba(90, 50, 25, 0.25) 75%, 
-                    rgba(20, 10, 5, 0.75) 100%),
+                    rgba(10, 5, 2, 0.9) 0%, 
+                    rgba(60, 30, 12, 0.3) 25%, 
+                    rgba(25, 12, 5, 0.8) 50%, 
+                    rgba(60, 30, 12, 0.3) 75%, 
+                    rgba(10, 5, 2, 0.9) 100%),
                 repeating-linear-gradient(0deg, 
                     transparent, 
                     transparent 35px, 
-                    rgba(0, 0, 0, 0.25) 35px, 
-                    rgba(0, 0, 0, 0.25) 38px),
-                radial-gradient(circle at 50% 25%, rgba(245, 158, 11, 0.3) 0%, transparent 70%);
+                    rgba(0, 0, 0, 0.3) 35px, 
+                    rgba(0, 0, 0, 0.3) 38px);
             color: var(--text-main);
             overflow-x: hidden;
         }
@@ -50,14 +49,14 @@
         }
 
         header {
-            background: linear-gradient(135deg, rgba(78, 43, 24, 0.98) 0%, rgba(35, 18, 8, 0.98) 100%);
+            background: linear-gradient(135deg, rgba(56, 30, 15, 0.98) 0%, rgba(20, 9, 3, 0.98) 100%);
             border-bottom: 4px solid var(--pixar-amber);
             padding: 0.75rem 1rem;
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            z-index: 10;
         }
 
         @media(min-width: 768px) {
@@ -125,10 +124,10 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(20, 10, 5, 0.8);
+            background: rgba(15, 7, 2, 0.9);
             padding: 0.35rem 0.75rem;
             border-radius: 0.5rem;
-            border: 1px solid var(--pixar-border);
+            border: 1px solid var(--film-border);
             font-size: 0.8rem;
             color: var(--text-muted);
         }
@@ -152,18 +151,18 @@
             display: flex;
             align-items: center;
             gap: 0.4rem;
-            box-shadow: 0 6px 0 #270e02, 0 10px 15px rgba(0,0,0,0.6);
+            box-shadow: 0 6px 0 #1b0901, 0 10px 15px rgba(0,0,0,0.6);
             white-space: nowrap;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 0 #270e02, 0 14px 20px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 8px 0 #1b0901, 0 14px 20px rgba(245, 158, 11, 0.4);
         }
 
         .btn:active {
             transform: translateY(3px);
-            box-shadow: 0 2px 0 #270e02, 0 4px 6px rgba(0,0,0,0.6);
+            box-shadow: 0 2px 0 #1b0901, 0 4px 6px rgba(0,0,0,0.6);
         }
 
         .btn-success {
@@ -179,40 +178,72 @@
             box-shadow: 0 6px 0 #450a0a, 0 10px 15px rgba(0,0,0,0.6);
         }
 
+        /* --- VUE PELLICULE PHOTO ARGENTIQUE --- */
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            padding: 1rem 0.5rem;
             width: 100%;
+        }
+
+        .film-strip {
+            background: #0a0402;
+            border-top: 6px solid #1f0b04;
+            border-bottom: 6px solid #1f0b04;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Perforations de la pellicule en haut et en bas */
+        .film-perforations {
+            height: 24px;
+            background-color: #050201;
+            background-image: repeating-linear-gradient(90deg, 
+                transparent, 
+                transparent 20px, 
+                #261307 20px, 
+                #261307 42px);
+            border-top: 1px solid #3b1b0a;
+            border-bottom: 1px solid #3b1b0a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+
+        .perforation-hole {
+            width: 18px;
+            height: 12px;
+            background: #1a0c05;
+            border-radius: 2px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.9), 0 1px 0 rgba(255,255,255,0.05);
         }
 
         .preview-card {
-            background: var(--pixar-card);
+            background: rgba(38, 19, 7, 0.95);
             border: 4px solid var(--pixar-amber);
-            border-radius: 1.25rem;
-            width: 100%;
-            max-width: 820px;
-            box-shadow: 0 20px 0 rgba(20, 10, 5, 0.8), 0 35px 60px rgba(0, 0, 0, 0.9), inset 0 2px 10px rgba(255,255,255,0.15);
+            border-radius: 0.5rem;
+            margin: 10px 16px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 10px 25px rgba(0,0,0,0.6);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(8px);
             transition: transform 0.3s ease;
         }
 
-        .preview-card:hover {
-            transform: translateY(-4px);
-        }
-
         .preview-card-header {
-            background: rgba(20, 10, 5, 0.9);
+            background: rgba(15, 7, 2, 0.95);
             padding: 0.75rem 1.25rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--pixar-border);
+            border-bottom: 2px solid var(--film-border);
             font-size: 0.8rem;
         }
 
@@ -248,14 +279,14 @@
             flex-shrink: 0;
             width: 80px;
             height: 80px;
-            border-radius: 1rem;
-            background: linear-gradient(135deg, #572304, #231106);
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #421b05, #140702);
             border: 2px solid var(--pixar-amber);
             display: flex;
             justify-content: center;
             align-items: center;
             color: var(--pixar-amber);
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.7), 0 6px 12px rgba(0,0,0,0.5);
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.8), 0 6px 12px rgba(0,0,0,0.5);
         }
 
         @media(min-width: 640px) {
@@ -283,8 +314,8 @@
 
         .preview-footer {
             padding: 0.75rem 1.25rem;
-            background: rgba(20, 10, 5, 0.95);
-            border-top: 2px solid var(--pixar-border);
+            background: rgba(15, 7, 2, 0.95);
+            border-top: 2px solid var(--film-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -293,9 +324,9 @@
         }
 
         .tv-ticker-container {
-            background: linear-gradient(to bottom, #231106, #120803);
+            background: linear-gradient(to bottom, #1f0b04, #0a0402);
             border-top: 4px solid var(--pixar-amber);
-            border-bottom: 3px solid var(--pixar-border);
+            border-bottom: 3px solid var(--film-border);
             width: 100%;
             height: 52px;
             overflow: hidden;
@@ -411,7 +442,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(20, 10, 5, 0.9);
+            background: rgba(10, 4, 2, 0.9);
             backdrop-filter: blur(6px);
             display: flex;
             justify-content: center;
@@ -429,26 +460,26 @@
         }
 
         .modal-content {
-            background: linear-gradient(160deg, #3b2211, #120803);
+            background: linear-gradient(160deg, #261307, #0a0402);
             border: 4px solid var(--pixar-amber);
-            border-radius: 1.25rem;
+            border-radius: 1rem;
             width: 100%;
             max-width: 1050px;
             height: 92vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 25px 0 rgba(10, 5, 2, 0.9), 0 35px 60px rgba(0, 0, 0, 0.95);
+            box-shadow: 0 25px 0 rgba(5, 2, 1, 0.9), 0 35px 60px rgba(0, 0, 0, 0.95);
         }
 
         .modal-header {
             padding: 1.25rem 1.5rem;
-            border-bottom: 2px solid var(--pixar-border);
+            border-bottom: 2px solid var(--film-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #120803;
-            border-top-left-radius: 1rem;
-            border-top-right-radius: 1rem;
+            background: #0a0402;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
         }
 
         .modal-header h3 {
@@ -485,12 +516,12 @@
         .admin-table th, .admin-table td {
             padding: 0.6rem;
             text-align: left;
-            border-bottom: 1px solid var(--pixar-border);
+            border-bottom: 1px solid var(--film-border);
             vertical-align: middle;
         }
 
         .admin-table th {
-            background-color: #120803;
+            background-color: #0a0402;
             font-size: 0.75rem;
             text-transform: uppercase;
             color: var(--pixar-amber);
@@ -506,8 +537,8 @@
 
         .admin-input {
             width: 100%;
-            background-color: #120803;
-            border: 1px solid var(--pixar-border);
+            background-color: #0a0402;
+            border: 1px solid var(--film-border);
             border-radius: 0.375rem;
             padding: 0.5rem 0.75rem;
             color: var(--text-main);
@@ -521,7 +552,7 @@
         }
 
         .mic-btn {
-            background: linear-gradient(to bottom, #78350f, #451a03);
+            background: linear-gradient(to bottom, #572304, #231106);
             border: 1px solid var(--pixar-amber);
             color: var(--pixar-amber);
             border-radius: 0.375rem;
@@ -535,7 +566,7 @@
         }
 
         .mic-btn:hover {
-            background: linear-gradient(to bottom, #b45309, #78350f);
+            background: linear-gradient(to bottom, #b45309, #572304);
             color: #fff;
         }
 
@@ -557,7 +588,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #120803;
+            background: #0a0402;
             border-radius: 6px;
             border: 1px solid var(--pixar-amber);
             color: var(--pixar-amber);
@@ -598,8 +629,8 @@
 
     <header>
         <div class="logo-area">
-            <div class="live-badge">Pixar TV Live</div>
-            <h1>NewsOuest <span>Bandeau Sport</span></h1>
+            <div class="live-badge">Film Live</div>
+            <h1>NewsOuest <span>Pellicule Photo</span></h1>
         </div>
         <div class="header-controls">
             <div class="speed-control" title="Ajuster la vitesse de défilement">
@@ -609,7 +640,7 @@
             </div>
             
             <label class="audio-toggle">
-                <input type="checkbox" id="soundToggle" checked> Bip Flash
+                <input type="checkbox" id="soundToggle" checked> Clic Photo 📸
             </label>
             <button class="btn" id="openAdminBtn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
@@ -619,21 +650,33 @@
     </header>
 
     <main>
-        <div class="preview-card">
-            <div class="preview-card-header">
-                <div class="sport-tag" id="previewCatName">FOOTBALL</div>
-                <div style="color: var(--text-muted);" id="previewTime">—</div>
+        <div class="film-strip">
+            <!-- Perforations haut -->
+            <div class="film-perforations">
+                <div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div>
             </div>
-            <div class="preview-body">
-                <div class="preview-icon-box" id="previewBigIcon"></div>
-                <div class="preview-content">
-                    <h2 id="previewTitle">Chargement...</h2>
-                    <p id="previewSummary">Actualités sportives en direct du Finistère.</p>
+
+            <div class="preview-card">
+                <div class="preview-card-header">
+                    <div class="sport-tag" id="previewCatName">FOOTBALL</div>
+                    <div style="color: var(--text-muted);" id="previewTime">—</div>
+                </div>
+                <div class="preview-body">
+                    <div class="preview-icon-box" id="previewBigIcon"></div>
+                    <div class="preview-content">
+                        <h2 id="previewTitle">Chargement...</h2>
+                        <p id="previewSummary">Actualités sportives en direct du Finistère.</p>
+                    </div>
+                </div>
+                <div class="preview-footer">
+                    <div id="previewSource">Source : newsouest.fr</div>
+                    <div style="font-weight: 700; color: var(--pixar-amber);" id="previewCounter">Article 1 / 5</div>
                 </div>
             </div>
-            <div class="preview-footer">
-                <div id="previewSource">Source : newsouest.fr</div>
-                <div style="font-weight: 700; color: var(--pixar-amber);" id="previewCounter">Article 1 / 5</div>
+
+            <!-- Perforations bas -->
+            <div class="film-perforations">
+                <div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div>
             </div>
         </div>
     </main>
@@ -657,7 +700,7 @@
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         Ajouter un article
                     </button>
-                    <button class="btn btn-danger" id="resetDataBtn">Forcer la mise à jour des actus</button>
+                    <button class="btn btn-danger" id="resetDataBtn">Restaurer les articles de référence</button>
                 </div>
                 <table class="admin-table">
                     <thead>
@@ -695,7 +738,6 @@
             return sportSvgs["OMNISPORTS"];
         }
 
-        // Dernières actualités en direct de newsouest.fr
         const freshArticles = [
             {
                 category: "FOOTBALL",
@@ -723,39 +765,72 @@
             },
             {
                 category: "FOOTBALL",
-                title: "L'US Concarneau reprend sa marche en avant face à Fleury",
-                summary: "Dans un stade Guy-Piriou rempli par près de 2 000 spectateurs, les Concarnois ont livré une solide prestation.",
+                title: "Le tirage complet du 4ème tour du trophée du Morbihan",
+                summary: "En complément de la coupe de Bretagne et Chaton, le district a officialisé les oppositions.",
                 source: "newsouest.fr"
             }
         ];
 
-        // Nettoyage radical du vieux cache et application directe des nouvelles actus (v9)
-        const STORAGE_KEY = 'newsouest_wood_articles_v9';
+        const STORAGE_KEY = 'newsouest_film_articles_v1';
         let articles = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (!articles || articles.length === 0 || articles[0].title.includes("Saint-Evarzec s'affiche en tête")) {
+        if (!articles || articles.length === 0) {
             articles = freshArticles;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
         }
 
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_speed_v9')) || 30;
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_film_speed_v1')) || 30;
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
 
-        function playBip() {
+        // Synthèse audio d'un déclic d'appareil photo argentique (clic-clac réaliste)
+        function playCameraClick() {
             if (!document.getElementById('soundToggle').checked) return;
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-                const osc = audioCtx.createOscillator();
+
+                const now = audioCtx.currentTime;
+
+                // 1. Bruit sec d'obturation (bref bruit blanc filtré)
+                const bufferSize = audioCtx.sampleRate * 0.04;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const output = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    output[i] = Math.random() * 2 - 1;
+                }
+
+                const whiteNoise = audioCtx.createBufferSource();
+                whiteNoise.buffer = buffer;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(1400, now);
+                filter.Q.setValueAtTime(3, now);
+
                 const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-                osc.connect(gain);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+                whiteNoise.connect(filter);
+                filter.connect(gain);
                 gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.12);
+                whiteNoise.start(now);
+
+                // 2. Claquement mécanique de fin (clic bas)
+                const osc = audioCtx.createOscillator();
+                const oscGain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(320, now + 0.03);
+                osc.frequency.exponentialRampToValueAtTime(80, now + 0.07);
+
+                oscGain.gain.setValueAtTime(0.15, now + 0.03);
+                oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+
+                osc.connect(oscGain);
+                oscGain.connect(audioCtx.destination);
+                osc.start(now + 0.03);
+                osc.stop(now + 0.07);
+
             } catch(e) {}
         }
 
@@ -785,7 +860,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_speed_v9', tickerSpeed);
+            localStorage.setItem('newsouest_film_speed_v1', tickerSpeed);
             renderTicker();
         });
 
@@ -805,6 +880,9 @@
             const now = new Date();
             const dateStr = now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
             document.getElementById('previewTime').textContent = dateStr;
+
+            // Déclenchement du bruit d'appareil photo à chaque changement de vue
+            playCameraClick();
 
             currentPreviewIndex = (currentPreviewIndex + 1) % articles.length;
         }
@@ -947,7 +1025,7 @@
         document.getElementById('openAdminBtn').addEventListener('click', () => {
             renderAdminTable();
             modal.classList.add('active');
-            playBip();
+            playCameraClick();
         });
         document.getElementById('closeAdminBtn').addEventListener('click', () => {
             modal.classList.remove('active');
@@ -957,7 +1035,7 @@
         });
 
         document.getElementById('resetDataBtn').addEventListener('click', () => {
-            if (confirm('Forcer la mise à jour des actus avec les derniers articles du site ?')) {
+            if (confirm('Restaurer les articles de référence ?')) {
                 articles = JSON.parse(JSON.stringify(freshArticles));
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
                 currentPreviewIndex = 0;
@@ -979,6 +1057,7 @@
             renderTicker();
             updatePreview();
 
+            // Rotation automatique toutes les 6 secondes avec son de déclic photo
             setInterval(() => {
                 updatePreview();
             }, 6000);
