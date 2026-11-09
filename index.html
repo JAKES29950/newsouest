@@ -953,10 +953,10 @@
             if (confirm('Restaurer les 5 derniers articles par défaut de NewsOuest ?')) {
                 articles = JSON.parse(JSON.stringify(defaultArticles));
                 localStorage.setItem('newsouest_wood_articles_v4', JSON.stringify(articles));
-                currentPreviewIndex = 0; // Réinitialise l'index de prévisualisation
+                currentPreviewIndex = 0;
                 renderAdminTable();
                 renderTicker();
-                updatePreview(); // Rafraîchit immédiatement l'affichage central
+                updatePreview();
             }
         });
 
