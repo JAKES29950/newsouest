@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -627,8 +628,8 @@
             <div class="preview-body">
                 <div class="preview-icon-box" id="previewBigIcon"></div>
                 <div class="preview-content">
-                    <h2 id="previewTitle">Chargement...</h2>
-                    <p id="previewSummary">Chargement des actualités en cours...</p>
+                    <h2 id="previewTitle">Chargement des 5 articles de newsouest.fr...</h2>
+                    <p id="previewSummary">Connexion au flux en direct...</p>
                 </div>
             </div>
             <div class="preview-footer">
@@ -657,7 +658,7 @@
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                         Ajouter un article
                     </button>
-                    <button class="btn btn-danger" id="resetDataBtn">Restaurer les 5 actus du site</button>
+                    <button class="btn btn-danger" id="resetDataBtn">Recharger depuis newsouest.fr</button>
                 </div>
                 <table class="admin-table">
                     <thead>
@@ -728,8 +729,8 @@
             }
         ];
 
-        let articles = JSON.parse(localStorage.getItem('newsouest_wood_articles_v4')) || defaultArticles;
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_speed_v4')) || 30;
+        let articles = JSON.parse(localStorage.getItem('newsouest_wood_articles_v5')) || [];
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_speed_v5')) || 30;
 
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
@@ -750,6 +751,66 @@
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.12);
             } catch(e) {}
+        }
+
+        // Fonction de lecture automatique des 5 premiers articles de newsouest.fr au démarrage
+        async function fetchNewsOuestLive() {
+            try {
+                const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://newsouest.fr/');
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error("Erreur réseau");
+                const htmlText = await response.text();
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlText, 'text/html');
+                
+                // Recherche des articles à la une sur le site
+                const rawCards = doc.querySelectorAll('article, .post, .news-item, h2 a');
+                let extracted = [];
+
+                rawCards.forEach(el => {
+                    let titleEl = el.tagName === 'A' ? el : el.querySelector('h2, h3, a');
+                    if (titleEl && titleEl.textContent.trim().length > 10) {
+                        let title = titleEl.textContent.trim();
+                        let textSnippet = el.querySelector('p') ? el.querySelector('p').textContent.trim() : "Actualité sportive en direct du Finistère.";
+                        let cat = "FOOTBALL";
+                        let upper = title.toUpperCase();
+                        if (upper.includes("HAND") || upper.includes("HBC")) cat = "HANDBALL";
+                        else if (upper.includes("BASKET") || upper.includes("BELIERS")) cat = "BASKET";
+                        else if (upper.includes("RUGBY")) cat = "RUGBY";
+                        else if (upper.includes("VOLLEY")) cat = "VOLLEY";
+                        else if (upper.includes("CYCL")) cat = "CYCLISME";
+
+                        if (!extracted.some(item => item.title === title) && extracted.length < 5) {
+                            extracted.push({
+                                category: cat,
+                                title: title,
+                                summary: textSnippet.substring(0, 120) + '...',
+                                source: "newsouest.fr"
+                            });
+                        }
+                    }
+                });
+
+                if (extracted.length >= 5) {
+                    articles = extracted;
+                } else {
+                    // Complète avec les articles par défaut si le site renvoie moins de 5 éléments
+                    articles = defaultArticles;
+                }
+            } catch (err) {
+                console.warn("Chargement distant impossible, utilisation des articles mémorisés ou par défaut.", err);
+                if (articles.length === 0) {
+                    articles = defaultArticles;
+                }
+            }
+
+            localStorage.setItem('newsouest_wood_articles_v5', JSON.stringify(articles));
+            renderTicker();
+            updatePreview();
+            if (document.getElementById('adminModal').classList.contains('active')) {
+                renderAdminTable();
+            }
         }
 
         function renderTicker() {
@@ -778,7 +839,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_speed_v4', tickerSpeed);
+            localStorage.setItem('newsouest_wood_speed_v5', tickerSpeed);
             renderTicker();
         });
 
@@ -855,7 +916,7 @@
                 articles[index].source = target.value;
             }
 
-            localStorage.setItem('newsouest_wood_articles_v4', JSON.stringify(articles));
+            localStorage.setItem('newsouest_wood_articles_v5', JSON.stringify(articles));
             renderTicker();
             
             const row = document.querySelector(`tr[data-index="${index}"]`);
@@ -889,7 +950,7 @@
                     } else if (field === 'summary') {
                         articles[index].summary = transcript;
                     }
-                    localStorage.setItem('newsouest_wood_articles_v4', JSON.stringify(articles));
+                    localStorage.setItem('newsouest_wood_articles_v5', JSON.stringify(articles));
                     renderAdminTable();
                     renderTicker();
                 };
@@ -918,7 +979,7 @@
 
             if (confirm("Supprimer cet article ?")) {
                 articles.splice(index, 1);
-                localStorage.setItem('newsouest_wood_articles_v4', JSON.stringify(articles));
+                localStorage.setItem('newsouest_wood_articles_v5', JSON.stringify(articles));
                 renderAdminTable();
                 renderTicker();
             }
@@ -931,7 +992,7 @@
                 summary: "Résumé des temps forts et de l'ambiance sur les terrains bretons.",
                 source: "newsouest.fr"
             });
-            localStorage.setItem('newsouest_wood_articles_v4', JSON.stringify(articles));
+            localStorage.setItem('newsouest_wood_articles_v5', JSON.stringify(articles));
             renderAdminTable();
             renderTicker();
         });
@@ -950,13 +1011,8 @@
         });
 
         document.getElementById('resetDataBtn').addEventListener('click', () => {
-            if (confirm('Restaurer les 5 derniers articles par défaut de NewsOuest ?')) {
-                articles = JSON.parse(JSON.stringify(defaultArticles));
-                localStorage.setItem('newsouest_wood_articles_v4', JSON.stringify(articles));
-                currentPreviewIndex = 0;
-                renderAdminTable();
-                renderTicker();
-                updatePreview();
+            if (confirm('Recharger les 5 derniers articles en direct de newsouest.fr ?')) {
+                fetchNewsOuestLive();
             }
         });
 
@@ -969,8 +1025,8 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            renderTicker();
-            updatePreview();
+            // Lancement immédiat de la lecture des articles de newsouest.fr au démarrage
+            fetchNewsOuestLive();
 
             setInterval(() => {
                 updatePreview();
