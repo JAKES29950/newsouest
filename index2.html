@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Clubizz Studio - Générateur d'Annonces Magiques </title>
+    <title>Clubizz Studio - Générateur d'Annonces Magiques</title>
     <!-- Favicon universel (Haut-parleur SVG en Data URI) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23dc2626' d='M215.4 96L140.1 192H48C21.5 192 0 213.5 0 240v32c0 26.5 21.5 48 48 48h92.1l75.3 96c14.7 18.8 42.6 21.8 61.4 7c7.1-5.6 11.2-14.1 11.2-23V112c0-23.7-19.3-43-43-43-8.9 0-17.4 4.1-23 11.2zm216.7 34.3l-28.3 28.3C425.4 186.7 448 219.1 448 256s-22.6 69.3-44.2 97.4l28.3 28.3C462.3 338.5 496 299 496 256s-33.7-82.5-63.9-125.7z'/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23dc2626' d='M215.4 96L140.1 192H48C21.5 192 0 213.5 0 240v32c0 26.5 21.5 48 48 48h92.1l75.3 96c14.7 18.8 42.6 21.8 61.4 7c7.1-5.6 11.2-14.1 11.2-23V112c0-23.7-19.3-43-43-43-8.9 0-17.4 4.1-23 11.2zm216.7 34.3l-28.3 28.3C425.4 186.7 448 219.1 448 256s-22.6 69.3-44.2 97.4l28.3 28.3C462.3 338.5 496 299 496 256s-33.7-82.5-63.9-125.7z'/%3E%3C/svg%3E">
@@ -89,7 +89,6 @@
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.35);
         }
 
-        /* Style Tableau Noir & Craie */
         .chalkboard {
             background-color: #1e293b;
             background-image: radial-gradient(#334155 0.75px, transparent 0.75px);
@@ -131,7 +130,7 @@
             </p>
             <div id="install-instructions" class="bg-rose-50 p-4 rounded-2xl text-left text-xs sm:text-sm text-gray-700 mb-6 space-y-2 border border-rose-200">
                 <p class="font-bold text-red-600 mb-1"><i class="fa-solid fa-circle-info mr-1"></i> Astuce d'installation :</p>
-                <p id="install-guide-text">Appuyez sur le menu du navigateur (les 3 points en haut à droite) puis sélectionnez <b>"Ajouter à l'écran d'accueil"</b>.</p>
+                <p id="install-guide-text">Appuyez sur le menu du navigateur (les 3 points en haut à droite) puis sélectionnez <b>« Ajouter à l'écran d'accueil »</b>.</p>
             </div>
             <div class="flex flex-col sm:flex-row gap-3">
                 <button id="btn-install-pwa" class="pixar-btn bg-red-600 hover:bg-red-700 text-white py-3 px-5 text-sm flex-1 hidden items-center justify-center gap-2">
@@ -231,7 +230,7 @@
 
         </div>
 
-        <!-- Section Résultat (Tableau Noir / Craie & Synthèse Vocale) -->
+        <!-- Section Résultat -->
         <section class="pixar-card p-4 sm:p-8 hidden w-full max-w-full" id="result-section">
             <div class="flex items-center justify-between mb-4 flex-wrap gap-2 border-b pb-3">
                 <div class="flex items-center gap-3">
@@ -246,22 +245,18 @@
                 <span class="px-3 py-1 rounded-full text-xs font-bold bg-red-600 text-white shadow-sm" id="badge-type">Joueur</span>
             </div>
 
-            <!-- Affichage Tableau Noir avec Police Effet Craie -->
+            <!-- Affichage Tableau Noir -->
             <div class="mb-5">
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-xs sm:text-sm font-semibold text-gray-700">Annonce sur le tableau noir :</label>
-                    <!-- Bouton Écouter l'annonce (Voix féminine IA) -->
                     <button onclick="lireAnnonceVocalement()" class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-md transition transform active:scale-95">
                         <i class="fa-solid fa-volume-high animate-bounce"></i> Écouter l'annonce (Voix IA)
                     </button>
                 </div>
                 
                 <div class="chalkboard p-5 sm:p-8 relative">
-                    <!-- Cadre intérieur aspect craie -->
                     <div class="absolute top-2 right-3 text-slate-500 text-xs font-mono opacity-60">Clubizz Audio AI v1.0</div>
-                    <div id="tableauNoirTexte" class="chalk-text text-amber-100 text-base sm:text-lg min-h-[140px] whitespace-pre-wrap outline-none focus:ring-2 focus:ring-amber-300/40 rounded-lg p-2" contenteditable="true" spellcheck="false">
-                        <!-- Le texte généré apparaîtra ici en écriture craie et éditable -->
-                    </div>
+                    <div id="tableauNoirTexte" class="chalk-text text-amber-100 text-base sm:text-lg min-h-[140px] whitespace-pre-wrap outline-none focus:ring-2 focus:ring-amber-300/40 rounded-lg p-2" contenteditable="true" spellcheck="false"></div>
                     <div class="mt-3 pt-2 border-t border-slate-700 text-[11px] text-slate-400 italic text-right">
                         💡 Astuce : Vous pouvez aussi modifier directement le texte ci-dessus.
                     </div>
@@ -315,7 +310,6 @@
         let currentCategory = 'joueur';
         let deferredPrompt = null;
 
-        // Gestion de l'installation PWA / Mobile
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -324,7 +318,10 @@
         });
 
         function verifierAffichageModalInstall() {
-            // Afficher la popup d'installation si ce n'est pas déjà fermé dans la session
+            // Ne pas afficher la popup si l'application est déjà lancée en mode autonome (installée)
+            const estInstalleeEnModeAutonome = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            if (estInstalleeEnModeAutonome) return;
+
             const dejaFerme = sessionStorage.getItem('clubizz_install_dismissed');
             if (!dejaFerme) {
                 setTimeout(() => {
@@ -338,16 +335,15 @@
             sessionStorage.setItem('clubizz_install_dismissed', 'true');
         }
 
-        // Détection du type d'appareil pour adapter le guide
         function adapterGuideInstallation() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             const guideText = document.getElementById('install-guide-text');
             const installBtn = document.getElementById('btn-install-pwa');
 
             if (/android/i.test(ua)) {
-                guideText.innerHTML = `Sur Android : Appuyez sur le menu (les 3 points verticaux <b>⋮</b> en haut à droite) puis touchez <b>"Ajouter à l'écran d'accueil"</b> ou <b>"Installer l'application"</b>.`;
+                guideText.innerHTML = `Sur Android : Appuyez sur le menu (les 3 points verticaux <b>⋮</b> en haut à droite) puis touchez <b>« Ajouter à l'écran d'accueil »</b> ou <b>« Installer l'application »</b>.`;
             } else if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
-                guideText.innerHTML = `Sur iPhone / iPad : Appuyez sur le bouton de partage <b><i class="fa-solid fa-arrow-up-from-bracket"></i></b> en bas de votre écran Safari, puis faites défiler et touchez <b>"Sur l'écran d'accueil"</b>.`;
+                guideText.innerHTML = `Sur iPhone / iPad : Appuyez sur le bouton de partage <b><i class="fa-solid fa-arrow-up-from-bracket"></i></b> en bas de votre écran Safari, puis faites défiler et touchez <b>« Sur l'écran d'accueil »</b>.`;
             } else {
                 guideText.innerHTML = `Cliquez sur le bouton d'installation ci-dessous ou sur l'icône dans la barre d'adresse de votre navigateur.`;
             }
@@ -534,14 +530,13 @@
             showToast("✨ Annonce générée !", "success");
         }
 
-        // Fonction de synthèse vocale (Voix féminine IA)
         function lireAnnonceVocalement() {
             if (!('speechSynthesis' in window)) {
                 showToast("La synthèse vocale n'est pas supportée par votre navigateur.", "error");
                 return;
             }
 
-            window.speechSynthesis.cancel(); // Arrêter toute lecture en cours
+            window.speechSynthesis.cancel();
 
             const texteAlea = document.getElementById('tableauNoirTexte').innerText;
             if (!texteAlea) return;
@@ -549,16 +544,14 @@
             const utterance = new SpeechSynthesisUtterance(texteAlea);
             utterance.lang = 'fr-FR';
             utterance.rate = 1.0;
-            utterance.pitch = 1.1; // Voix légèrement plus aiguë/féminine
+            utterance.pitch = 1.1;
 
-            // Sélectionner une voix féminine française si disponible
             const voices = window.speechSynthesis.getVoices();
             const voixFeminine = voices.find(v => v.lang.startsWith('fr') && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('hortense') || v.name.toLowerCase().includes('amelie') || v.name.toLowerCase().includes('marie') || v.name.toLowerCase().includes('google français')));
             
             if (voixFeminine) {
                 utterance.voice = voixFeminine;
             } else {
-                // S'assurer de prendre une voix française par défaut
                 const voixFr = voices.find(v => v.lang.startsWith('fr'));
                 if (voixFr) utterance.voice = voixFr;
             }
@@ -574,7 +567,6 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // Charger les voix au chargement pour éviter le délai
         if ('speechSynthesis' in window) {
             window.speechSynthesis.onvoiceschanged = () => {
                 window.speechSynthesis.getVoices();
