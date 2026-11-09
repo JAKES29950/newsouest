@@ -9,8 +9,8 @@
         :root {
             --pixar-amber: #f59e0b;
             --pixar-orange: #ea580c;
-            --film-dark: #120904;
-            --film-border: #451a03;
+            --film-dark: #000000;
+            --film-border: #78350f;
             --text-main: #fef3c7;
             --text-muted: #fcd34d;
         }
@@ -25,19 +25,7 @@
         html, body {
             width: 100%;
             height: 100%;
-            background-color: #261307;
-            background-image: 
-                linear-gradient(90deg, 
-                    rgba(10, 5, 2, 0.9) 0%, 
-                    rgba(60, 30, 12, 0.3) 25%, 
-                    rgba(25, 12, 5, 0.8) 50%, 
-                    rgba(60, 30, 12, 0.3) 75%, 
-                    rgba(10, 5, 2, 0.9) 100%),
-                repeating-linear-gradient(0deg, 
-                    transparent, 
-                    transparent 35px, 
-                    rgba(0, 0, 0, 0.3) 35px, 
-                    rgba(0, 0, 0, 0.3) 38px);
+            background-color: #1a0c04;
             color: var(--text-main);
             overflow-x: hidden;
         }
@@ -49,13 +37,13 @@
         }
 
         header {
-            background: linear-gradient(135deg, rgba(56, 30, 15, 0.98) 0%, rgba(20, 9, 3, 0.98) 100%);
+            background: linear-gradient(135deg, #451a03 0%, #1a0c04 100%);
             border-bottom: 4px solid var(--pixar-amber);
             padding: 0.75rem 1rem;
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.9);
             z-index: 10;
         }
 
@@ -124,7 +112,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: rgba(15, 7, 2, 0.9);
+            background: rgba(10, 4, 2, 0.9);
             padding: 0.35rem 0.75rem;
             border-radius: 0.5rem;
             border: 1px solid var(--film-border);
@@ -178,67 +166,67 @@
             box-shadow: 0 6px 0 #450a0a, 0 10px 15px rgba(0,0,0,0.6);
         }
 
-        /* --- VUE PELLICULE PHOTO ARGENTIQUE --- */
+        /* --- VUE PELLICULE PHOTO ARGENTIQUE MARQUÉE --- */
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem 0.5rem;
+            padding: 1.5rem 0.5rem;
             width: 100%;
         }
 
         .film-strip {
-            background: #0a0402;
-            border-top: 6px solid #1f0b04;
-            border-bottom: 6px solid #1f0b04;
+            background: #000000;
+            border-top: 8px solid #270e02;
+            border-bottom: 8px solid #270e02;
             width: 100%;
-            max-width: 900px;
-            box-shadow: 0 25px 40px rgba(0,0,0,0.85);
+            max-width: 920px;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.95);
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* Perforations de la pellicule en haut et en bas */
+        /* Perforations de la pellicule haut et bas bien visibles */
         .film-perforations {
-            height: 24px;
+            height: 32px;
             background-color: #050201;
             background-image: repeating-linear-gradient(90deg, 
                 transparent, 
-                transparent 20px, 
-                #261307 20px, 
-                #261307 42px);
-            border-top: 1px solid #3b1b0a;
-            border-bottom: 1px solid #3b1b0a;
+                transparent 18px, 
+                #1a0c04 18px, 
+                #1a0c04 40px);
+            border-top: 2px solid #572304;
+            border-bottom: 2px solid #572304;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 10px;
+            justify-content: space-around;
+            padding: 0 5px;
         }
 
         .perforation-hole {
-            width: 18px;
-            height: 12px;
-            background: #1a0c05;
-            border-radius: 2px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.9), 0 1px 0 rgba(255,255,255,0.05);
+            width: 22px;
+            height: 16px;
+            background: #000000;
+            border-radius: 3px;
+            border: 1px solid #78350f;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.95), 0 0 4px rgba(245, 158, 11, 0.2);
         }
 
         .preview-card {
-            background: rgba(38, 19, 7, 0.95);
+            background: linear-gradient(145deg, #2d1508, #140803);
             border: 4px solid var(--pixar-amber);
-            border-radius: 0.5rem;
-            margin: 10px 16px;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 10px 25px rgba(0,0,0,0.6);
+            border-radius: 0.75rem;
+            margin: 12px 20px;
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.9), 0 12px 30px rgba(0,0,0,0.8);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
         }
 
         .preview-card-header {
-            background: rgba(15, 7, 2, 0.95);
+            background: rgba(10, 4, 2, 0.98);
             padding: 0.75rem 1.25rem;
             display: flex;
             justify-content: space-between;
@@ -280,7 +268,7 @@
             width: 80px;
             height: 80px;
             border-radius: 0.75rem;
-            background: linear-gradient(135deg, #421b05, #140702);
+            background: linear-gradient(135deg, #572304, #140702);
             border: 2px solid var(--pixar-amber);
             display: flex;
             justify-content: center;
@@ -314,7 +302,7 @@
 
         .preview-footer {
             padding: 0.75rem 1.25rem;
-            background: rgba(15, 7, 2, 0.95);
+            background: rgba(10, 4, 2, 0.98);
             border-top: 2px solid var(--film-border);
             display: flex;
             justify-content: space-between;
@@ -324,7 +312,7 @@
         }
 
         .tv-ticker-container {
-            background: linear-gradient(to bottom, #1f0b04, #0a0402);
+            background: linear-gradient(to bottom, #1f0b04, #000000);
             border-top: 4px solid var(--pixar-amber);
             border-bottom: 3px solid var(--film-border);
             width: 100%;
@@ -442,7 +430,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 4, 2, 0.9);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(6px);
             display: flex;
             justify-content: center;
@@ -460,7 +448,7 @@
         }
 
         .modal-content {
-            background: linear-gradient(160deg, #261307, #0a0402);
+            background: linear-gradient(160deg, #1a0c04, #000000);
             border: 4px solid var(--pixar-amber);
             border-radius: 1rem;
             width: 100%;
@@ -468,7 +456,7 @@
             height: 92vh;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 25px 0 rgba(5, 2, 1, 0.9), 0 35px 60px rgba(0, 0, 0, 0.95);
+            box-shadow: 0 25px 0 rgba(0, 0, 0, 0.95), 0 35px 60px rgba(0, 0, 0, 0.95);
         }
 
         .modal-header {
@@ -477,7 +465,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #0a0402;
+            background: #000000;
             border-top-left-radius: 0.75rem;
             border-top-right-radius: 0.75rem;
         }
@@ -521,7 +509,7 @@
         }
 
         .admin-table th {
-            background-color: #0a0402;
+            background-color: #000000;
             font-size: 0.75rem;
             text-transform: uppercase;
             color: var(--pixar-amber);
@@ -537,7 +525,7 @@
 
         .admin-input {
             width: 100%;
-            background-color: #0a0402;
+            background-color: #000000;
             border: 1px solid var(--film-border);
             border-radius: 0.375rem;
             padding: 0.5rem 0.75rem;
@@ -588,7 +576,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #0a0402;
+            background: #000000;
             border-radius: 6px;
             border: 1px solid var(--pixar-amber);
             color: var(--pixar-amber);
@@ -653,7 +641,7 @@
         <div class="film-strip">
             <!-- Perforations haut -->
             <div class="film-perforations">
-                <div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div>
+                <div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div>
             </div>
 
             <div class="preview-card">
@@ -676,7 +664,7 @@
 
             <!-- Perforations bas -->
             <div class="film-perforations">
-                <div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div>
+                <div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div><div class="perforation-hole"></div>
             </div>
         </div>
     </main>
@@ -771,18 +759,17 @@
             }
         ];
 
-        const STORAGE_KEY = 'newsouest_film_articles_v1';
+        const STORAGE_KEY = 'newsouest_film_articles_v2';
         let articles = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!articles || articles.length === 0) {
             articles = freshArticles;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
         }
 
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_film_speed_v1')) || 30;
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_film_speed_v2')) || 30;
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
 
-        // Synthèse audio d'un déclic d'appareil photo argentique (clic-clac réaliste)
         function playCameraClick() {
             if (!document.getElementById('soundToggle').checked) return;
             try {
@@ -790,8 +777,6 @@
                 if (audioCtx.state === 'suspended') { audioCtx.resume(); }
 
                 const now = audioCtx.currentTime;
-
-                // 1. Bruit sec d'obturation (bref bruit blanc filtré)
                 const bufferSize = audioCtx.sampleRate * 0.04;
                 const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
                 const output = buffer.getChannelData(0);
@@ -816,7 +801,6 @@
                 gain.connect(audioCtx.destination);
                 whiteNoise.start(now);
 
-                // 2. Claquement mécanique de fin (clic bas)
                 const osc = audioCtx.createOscillator();
                 const oscGain = audioCtx.createGain();
                 osc.type = 'triangle';
@@ -830,7 +814,6 @@
                 oscGain.connect(audioCtx.destination);
                 osc.start(now + 0.03);
                 osc.stop(now + 0.07);
-
             } catch(e) {}
         }
 
@@ -860,7 +843,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_film_speed_v1', tickerSpeed);
+            localStorage.setItem('newsouest_film_speed_v2', tickerSpeed);
             renderTicker();
         });
 
@@ -881,9 +864,7 @@
             const dateStr = now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
             document.getElementById('previewTime').textContent = dateStr;
 
-            // Déclenchement du bruit d'appareil photo à chaque changement de vue
             playCameraClick();
-
             currentPreviewIndex = (currentPreviewIndex + 1) % articles.length;
         }
 
@@ -964,29 +945,19 @@
                 const recognition = new SpeechRecognition();
                 recognition.lang = 'fr-FR';
                 recognition.interimResults = false;
-
                 micBtn.classList.add('listening');
 
                 recognition.onresult = (event) => {
                     const transcript = event.results[0][0].transcript;
-                    if (field === 'title') {
-                        articles[index].title = transcript;
-                    } else if (field === 'summary') {
-                        articles[index].summary = transcript;
-                    }
+                    if (field === 'title') articles[index].title = transcript;
+                    else if (field === 'summary') articles[index].summary = transcript;
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
                     renderAdminTable();
                     renderTicker();
                 };
 
-                recognition.onerror = () => {
-                    micBtn.classList.remove('listening');
-                };
-
-                recognition.onend = () => {
-                    micBtn.classList.remove('listening');
-                };
-
+                recognition.onerror = () => micBtn.classList.remove('listening');
+                recognition.onend = () => micBtn.classList.remove('listening');
                 recognition.start();
                 return;
             }
@@ -1057,7 +1028,6 @@
             renderTicker();
             updatePreview();
 
-            // Rotation automatique toutes les 6 secondes avec son de déclic photo
             setInterval(() => {
                 updatePreview();
             }, 6000);
