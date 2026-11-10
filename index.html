@@ -21,7 +21,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, «Segoe UI», Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -130,14 +130,14 @@
             color: var(--text-muted);
         }
 
-        .speed-control input[type="range"] {
+        .speed-control input[type=range] {
             accent-color: var(--pixar-amber);
             cursor: pointer;
             width: 65px;
         }
 
         @media(min-width: 480px) {
-            .speed-control input[type="range"] { width: 80px; }
+            .speed-control input[type=range] { width: 80px; }
         }
 
         .btn {
@@ -783,80 +783,80 @@
 
     <script>
         const sportSvgs = {
-            "FOOTBALL": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>`,
-            "CYCLISME": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 17.5l-3-7-4 3 2 4"/><path d="M12 10.5l3.5-3.5L19 11"/></svg>`,
-            "HANDBALL": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 0 20M2 12h20"/></svg>`,
-            "BASKET": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>`,
-            "RUGBY": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="9" ry="6" transform="rotate(-45 12 12)"/><path d="M7 12h10M12 7v10"/></svg>`,
-            "VOLLEY": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 0 0 20M6 6l12 12"/></svg>`,
-            "TENNIS DE TABLE": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>`,
-            "OMNISPORTS": `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>`,
-            "GIROPHARE": `<svg class="gyrophare-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18v4M19.07 19.07l-2.83-2.83M22 12h-4M19.07 4.93l-2.83 2.83"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>`
+            «FOOTBALL»: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>`,
+            «CYCLISME»: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 17.5l-3-7-4 3 2 4"/><path d="M12 10.5l3.5-3.5L19 11"/></svg>`,
+            «HANDBALL»: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 0 20M2 12h20"/></svg>`,
+            «BASKET»: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/></svg>`,
+            «RUGBY»: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="9" ry="6" transform="rotate(-45 12 12)"/><path d="M7 12h10M12 7v10"/></svg>`,
+            «VOLLEY»: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 0 0 20M6 6l12 12"/></svg>`,
+            «TENNIS DE TABLE»: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>`,
+            «OMNISPORTS»: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>`,
+            «GIROPHARE»: `<svg class="gyrophare-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18v4M19.07 19.07l-2.83-2.83M22 12h-4M19.07 4.93l-2.83 2.83"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>`
         };
 
         function getSportSvg(art) {
-            if (art && art.isBreaking) return sportSvgs["GIROPHARE"];
-            const upper = (art && art.category ? art.category : "").toUpperCase();
+            if (art && art.isBreaking) return sportSvgs[«GIROPHARE»];
+            const upper = (art && art.category ? art.category : «»).toUpperCase();
             for (let key in sportSvgs) {
-                if (key !== "GIROPHARE" && upper.includes(key)) return sportSvgs[key];
+                if (key !== «GIROPHARE» && upper.includes(key)) return sportSvgs[key];
             }
-            return sportSvgs["OMNISPORTS"];
+            return sportSvgs[«OMNISPORTS»];
         }
 
         const freshArticles = [
             {
-                category: "FOOTBALL",
-                title: "Premier pas en avant pour l'AEG, l'US Fouesnant rentre dans le rang",
-                summary: "Les Fouesnantais restaient sur deux défaites consécutives en championnat dans le derby face à l'US Saint-Evarzec.",
-                source: "newsouest.fr",
+                category: «FOOTBALL»,
+                title: «Premier pas en avant pour l'AEG, l'US Fouesnant rentre dans le rang»,
+                summary: «Les Fouesnantais restaient sur deux défaites consécutives en championnat dans le derby face à l'US Saint-Evarzec.»,
+                source: «newsouest.fr»,
                 isBreaking: false
             },
             {
-                category: "HANDBALL",
-                title: "Le HBC Briec a préservé son invincibilité à domicile face au Goelo HB",
-                summary: "L'invincibilité à Besson a été prolongée ce samedi soir avec une pointe de déception.",
-                source: "newsouest.fr",
+                category: «HANDBALL»,
+                title: «Le HBC Briec a préservé son invincibilité à domicile face au Goelo HB»,
+                summary: «L'invincibilité à Besson a été prolongée ce samedi soir avec une pointe de déception.»,
+                source: «newsouest.fr»,
                 isBreaking: false
             },
             {
-                category: "VOLLEY",
-                title: "Le Quimper Volley 29 cède au bout du suspense face à Sens",
-                summary: "Au terme d'un marathon de cinq sets au Complexe Roger Breton, les Quimpéroises se sont inclinées au tie-break.",
-                source: "newsouest.fr",
+                category: «VOLLEY»,
+                title: «Le Quimper Volley 29 cède au bout du suspense face à Sens»,
+                summary: «Au terme d'un marathon de cinq sets au Complexe Roger Breton, les Quimpéroises se sont inclinées au tie-break.»,
+                source: «newsouest.fr»,
                 isBreaking: false
             },
             {
-                category: "BASKET",
-                title: "Les Béliers de Kemper rugissent en fin de match face à Blois",
-                summary: "Dans une ambiance survoltée et explosive en toute fin de match, Quimper s'est offert un succès spectaculaire.",
-                source: "newsouest.fr",
+                category: «BASKET»,
+                title: «Les Béliers de Kemper rugissent en fin de match face à Blois»,
+                summary: «Dans une ambiance survoltée et explosive en toute fin de match, Quimper s'est offert un succès spectaculaire.»,
+                source: «newsouest.fr»,
                 isBreaking: false
             },
             {
-                category: "FOOTBALL",
-                title: "Le tirage complet du 4ème tour du trophée du Morbihan",
-                summary: "En complément de la coupe de Bretagne et Chaton, le district a officialisé les oppositions.",
-                source: "newsouest.fr",
+                category: «FOOTBALL»,
+                title: «Le tirage complet du 4ème tour du trophée du Morbihan»,
+                summary: «En complément de la coupe de Bretagne et Chaton, le district a officialisé les oppositions.»,
+                source: «newsouest.fr»,
                 isBreaking: false
             }
         ];
 
-        const STORAGE_KEY = 'newsouest_wood_lux_v4';
+        const STORAGE_KEY = «newsouest_wood_lux_v5»;
         let articles = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!articles || articles.length === 0) {
             articles = freshArticles;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
         }
 
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v4')) || 30;
-        document.getElementById('speedRange').value = tickerSpeed;
-        document.getElementById('speedValue').textContent = tickerSpeed + 's';
+        let tickerSpeed = parseInt(localStorage.getItem(«newsouest_wood_lux_speed_v5»)) || 30;
+        document.getElementById(«speedRange»).value = tickerSpeed;
+        document.getElementById(«speedValue»).textContent = tickerSpeed + «s»;
 
         function playRoosterCrow() {
-            if (!document.getElementById('soundToggle').checked) return;
+            if (!document.getElementById(«soundToggle»).checked) return;
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+                if (audioCtx.state === «suspended») { audioCtx.resume(); }
 
                 const now = audioCtx.currentTime;
                 const notes = [
@@ -869,7 +869,7 @@
                 notes.forEach(n => {
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
-                    osc.type = 'sawtooth';
+                    osc.type = «sawtooth»;
                     osc.frequency.setValueAtTime(n.freq, now + n.start);
                     
                     gain.gain.setValueAtTime(0.18, now + n.start);
@@ -884,17 +884,17 @@
         }
 
         function playCameraClickWithFlash() {
-            if (!document.getElementById('soundToggle').checked) return;
+            if (!document.getElementById(«soundToggle»).checked) return;
 
-            const card = document.getElementById('previewCard');
+            const card = document.getElementById(«previewCard»);
             if (card) {
-                card.classList.add('flash');
-                setTimeout(() => card.classList.remove('flash'), 180);
+                card.classList.add(«flash»);
+                setTimeout(() => card.classList.remove(«flash»), 180);
             }
 
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+                if (audioCtx.state === «suspended») { audioCtx.resume(); }
 
                 const now = audioCtx.currentTime;
                 const bufferSize = audioCtx.sampleRate * 0.04;
@@ -908,7 +908,7 @@
                 whiteNoise.buffer = buffer;
 
                 const filter = audioCtx.createBiquadFilter();
-                filter.type = 'bandpass';
+                filter.type = «bandpass»;
                 filter.frequency.setValueAtTime(1400, now);
                 filter.Q.setValueAtTime(3, now);
 
@@ -924,7 +924,7 @@
         }
 
         function renderTicker() {
-            const track = document.getElementById('tickerTrack');
+            const track = document.getElementById(«tickerTrack»);
             if (!track) return;
             const createItemsHtml = () => {
                 return articles.map((art) => {
@@ -932,24 +932,24 @@
                     return `
                         <div class="ticker-item">
                             <span class="ticker-icon">${svgIcon}</span>
-                            <span class="ticker-category" ${art.isBreaking ? 'style="background: #dc2626; color: white; border-color: #f87171;"' : ''}>${escapeHtml(art.category)}</span>
+                            <span class="ticker-category" ${art.isBreaking ? «style="background: #dc2626; color: white; border-color: #f87171;"» : «»}>${escapeHtml(art.category)}</span>
                             <span class="ticker-title">${escapeHtml(art.title)}</span>
-                            <span style="color: var(--text-muted); font-size: 0.8rem;">— ${escapeHtml(art.summary)}</span>
-                            <span style="color: var(--pixar-amber); font-size: 0.75rem; opacity: 0.9;">[${escapeHtml(art.source || 'newsouest.fr')}]</span>
+                            <span style="color: var(--text-muted); font-size: 0,8rem;">— ${escapeHtml(art.summary)}</span>
+                            <span style="color: var(--pixar-amber); font-size: 0,75rem; opacity: 0,9;">[${escapeHtml(art.source || «newsouest.fr»)}]</span>
                             <span class="ticker-separator">///</span>
                         </div>
                     `;
-                }).join('');
+                }).join(«»);
             };
 
             track.innerHTML = createItemsHtml() + createItemsHtml();
             track.style.animation = `scrollTicker ${tickerSpeed}s linear infinite`;
         }
 
-        document.getElementById('speedRange').addEventListener('input', (e) => {
+        document.getElementById(«speedRange»).addEventListener(«input», (e) => {
             tickerSpeed = parseInt(e.target.value);
-            document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_lux_speed_v4', tickerSpeed);
+            document.getElementById(«speedValue»).textContent = tickerSpeed + «s»;
+            localStorage.setItem(«newsouest_wood_lux_speed_v5», tickerSpeed);
             renderTicker();
         });
 
@@ -959,23 +959,23 @@
             if (currentPreviewIndex >= articles.length) currentPreviewIndex = 0;
             const art = articles[currentPreviewIndex];
             
-            document.getElementById('previewCatName').textContent = art.category;
-            document.getElementById('previewTitle').textContent = art.title;
-            document.getElementById('previewSummary').textContent = art.summary;
-            document.getElementById('previewSource').textContent = `Source : ${art.source || 'newsouest.fr'}`;
-            document.getElementById('previewCounter').textContent = `Article ${currentPreviewIndex + 1} / ${articles.length}`;
-            document.getElementById('previewBigIcon').innerHTML = getSportSvg(art);
+            document.getElementById(«previewCatName»).textContent = art.category;
+            document.getElementById(«previewTitle»).textContent = art.title;
+            document.getElementById(«previewSummary»).textContent = art.summary;
+            document.getElementById(«previewSource»).textContent = `Source : ${art.source || «newsouest.fr»}`;
+            document.getElementById(«previewCounter»).textContent = `Article ${currentPreviewIndex + 1} / ${articles.length}`;
+            document.getElementById(«previewBigIcon»).innerHTML = getSportSvg(art);
 
             const now = new Date();
-            const dateStr = now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
-            document.getElementById('previewTime').textContent = dateStr;
+            const dateStr = now.toLocaleDateString(«fr-FR») + « à » + now.toLocaleTimeString(«fr-FR», {hour: «2-digit», minute:«2-digit»});
+            document.getElementById(«previewTime»).textContent = dateStr;
 
             playCameraClickWithFlash();
             currentPreviewIndex = (currentPreviewIndex + 1) % articles.length;
         }
 
         function renderAdminTable() {
-            const tbody = document.getElementById('adminTableBody');
+            const tbody = document.getElementById(«adminTableBody»);
             if (!tbody) return;
             
             tbody.innerHTML = articles.map((art, index) => {
@@ -994,40 +994,40 @@
                                 <button type="button" class="mic-btn speech-btn" data-field="summary" data-index="${index}" title="Saisie vocale">🎤</button>
                             </div>
                             <label class="breaking-checkbox-label">
-                                <input type="checkbox" class="breaking-input" data-index="${index}" ${art.isBreaking ? 'checked' : ''}>
+                                <input type="checkbox" class="breaking-input" data-index="${index}" ${art.isBreaking ? «checked» : «»}>
                                 🚨 Dernière minute (Coq & Gyrophare clignotant)
                             </label>
                         </td>
-                        <td><input type="text" class="admin-input source-input" value="${escapeHtml(art.source || 'newsouest.fr')}" data-index="${index}" placeholder="Source"></td>
+                        <td><input type="text" class="admin-input source-input" value="${escapeHtml(art.source || «newsouest.fr»)}" data-index="${index}" placeholder="Source"></td>
                         <td>
-                            <button class="btn btn-danger delete-btn" data-index="${index}" title="Supprimer" style="padding: 0.25rem 0.4rem; box-shadow: 0 2px 0 #450a0a;">&times;</button>
+                            <button class="btn btn-danger delete-btn" data-index="${index}" title="Supprimer" style="padding: 0,25rem 0,4rem; box-shadow: 0 2px 0 #450a0a;">&times;</button>
                         </td>
                     </tr>
                 `;
-            }).join('');
+            }).join(«»);
         }
 
         function escapeHtml(text) {
-            return (text || "")
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+            return (text || «»)
+                .replace(/&/g, «&amp;»)
+                .replace(/</g, «&lt;»)
+                .replace(/>/g, «&gt;»)
+                .replace(/"/g, «&quot;»)
+                .replace(/'/g, «&#039;»);
         }
 
-        document.getElementById('adminTableBody').addEventListener('input', (e) => {
+        document.getElementById(«adminTableBody»).addEventListener(«input», (e) => {
             const target = e.target;
-            const index = parseInt(target.getAttribute('data-index'));
+            const index = parseInt(target.getAttribute(«data-index»));
             if (isNaN(index)) return;
 
-            if (target.classList.contains('cat-input')) {
+            if (target.classList.contains(«cat-input»)) {
                 articles[index].category = target.value.toUpperCase();
-            } else if (target.classList.contains('title-input')) {
+            } else if (target.classList.contains(«title-input»)) {
                 articles[index].title = target.value;
-            } else if (target.classList.contains('summary-input')) {
+            } else if (target.classList.contains(«summary-input»)) {
                 articles[index].summary = target.value;
-            } else if (target.classList.contains('source-input')) {
+            } else if (target.classList.contains(«source-input»)) {
                 articles[index].source = target.value;
             }
 
@@ -1036,24 +1036,29 @@
             
             const row = document.querySelector(`tr[data-index="${index}"]`);
             if (row) {
-                row.querySelector('.admin-thumb').innerHTML = getSportSvg(articles[index]);
+                row.querySelector(«.admin-thumb»).innerHTML = getSportSvg(articles[index]);
             }
         });
 
-        document.getElementById('adminTableBody').addEventListener('change', (e) => {
+        document.getElementById(«adminTableBody»).addEventListener(«change», (e) => {
             const target = e.target;
-            if (target.classList.contains('breaking-input')) {
-                const index = parseInt(target.getAttribute('data-index'));
+            if (target.classList.contains(«breaking-input»)) {
+                const index = parseInt(target.getAttribute(«data-index»));
                 if (isNaN(index)) return;
 
                 const isChecked = target.checked;
-                articles[index].isBreaking = isChecked;
 
                 if (isChecked) {
+                    // Désactiver 'isBreaking' sur tous les autres articles (exclusivité)
+                    articles.forEach(art => art.isBreaking = false);
+                    articles[index].isBreaking = true;
+
                     playRoosterCrow();
                     const movedItem = articles.splice(index, 1)[0];
                     articles.unshift(movedItem);
                     currentPreviewIndex = 0;
+                } else {
+                    articles[index].isBreaking = false;
                 }
 
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
@@ -1063,49 +1068,49 @@
             }
         });
 
-        document.getElementById('adminTableBody').addEventListener('click', (e) => {
-            const micBtn = e.target.closest('.speech-btn');
+        document.getElementById(«adminTableBody»).addEventListener(«click», (e) => {
+            const micBtn = e.target.closest(«.speech-btn»);
             if (micBtn) {
-                const index = parseInt(micBtn.getAttribute('data-index'));
-                const field = micBtn.getAttribute('data-field');
+                const index = parseInt(micBtn.getAttribute(«data-index»));
+                const field = micBtn.getAttribute(«data-field»);
                 
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 if (!SpeechRecognition) {
-                    alert("La saisie vocale n'est pas prise en charge par ce navigateur.");
+                    alert(«La saisie vocale n'est pas prise en charge par ce navigateur.»);
                     return;
                 }
 
                 const recognition = new SpeechRecognition();
-                recognition.lang = 'fr-FR';
+                recognition.lang = «fr-FR»;
                 recognition.interimResults = false;
-                micBtn.classList.add('listening');
+                micBtn.classList.add(«listening»);
 
                 recognition.onresult = (event) => {
                     const transcript = event.results[0][0].transcript;
-                    if (field === 'title') articles[index].title = transcript;
-                    else if (field === 'summary') articles[index].summary = transcript;
+                    if (field === «title») articles[index].title = transcript;
+                    else if (field === «summary») articles[index].summary = transcript;
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
                     renderAdminTable();
                     renderTicker();
                 };
 
-                recognition.onerror = () => micBtn.classList.remove('listening');
-                recognition.onend = () => micBtn.classList.remove('listening');
+                recognition.onerror = () => micBtn.classList.remove(«listening»);
+                recognition.onend = () => micBtn.classList.remove(«listening»);
                 recognition.start();
                 return;
             }
 
-            const btn = e.target.closest('.delete-btn');
+            const btn = e.target.closest(«.delete-btn»);
             if (!btn) return;
-            const index = parseInt(btn.getAttribute('data-index'));
+            const index = parseInt(btn.getAttribute(«data-index»));
             if (isNaN(index)) return;
 
             if (articles.length <= 1) {
-                alert("Conservez au moins un article dans le bandeau.");
+                alert(«Conservez au moins un article dans le bandeau.»);
                 return;
             }
 
-            if (confirm("Supprimer cet article ?")) {
+            if (confirm(«Supprimer cet article ?»)) {
                 articles.splice(index, 1);
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
                 renderAdminTable();
@@ -1113,12 +1118,12 @@
             }
         });
 
-        document.getElementById('addArticleBtn').addEventListener('click', () => {
+        document.getElementById(«addArticleBtn»).addEventListener(«click», () => {
             articles.push({
-                category: "FOOTBALL",
-                title: "Nouvel article d'actualité sportive en Finistère",
-                summary: "Résumé des temps forts et de l'ambiance sur les terrains bretons.",
-                source: "newsouest.fr",
+                category: «FOOTBALL»,
+                title: «Nouvel article d'actualité sportive en Finistère»,
+                summary: «Résumé des temps forts et de l'ambiance sur les terrains bretons.»,
+                source: «newsouest.fr»,
                 isBreaking: false
             });
             localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
@@ -1126,21 +1131,21 @@
             renderTicker();
         });
 
-        const modal = document.getElementById('adminModal');
-        document.getElementById('openAdminBtn').addEventListener('click', () => {
+        const modal = document.getElementById(«adminModal»);
+        document.getElementById(«openAdminBtn»).addEventListener(«click», () => {
             renderAdminTable();
-            modal.classList.add('active');
+            modal.classList.add(«active»);
             playCameraClickWithFlash();
         });
-        document.getElementById('closeAdminBtn').addEventListener('click', () => {
-            modal.classList.remove('active');
+        document.getElementById(«closeAdminBtn»).addEventListener(«click», () => {
+            modal.classList.remove(«active»);
         });
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) modal.classList.remove('active');
+        modal.addEventListener(«click», (e) => {
+            if (e.target === modal) modal.classList.remove(«active»);
         });
 
-        document.getElementById('resetDataBtn').addEventListener('click', () => {
-            if (confirm('Restaurer les articles de référence ?')) {
+        document.getElementById(«resetDataBtn»).addEventListener(«click», () => {
+            if (confirm(«Restaurer les articles de référence ?»)) {
                 articles = JSON.parse(JSON.stringify(freshArticles));
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
                 currentPreviewIndex = 0;
@@ -1150,15 +1155,15 @@
             }
         });
 
-        const tickerTrack = document.getElementById('tickerTrack');
-        const tickerContainer = document.getElementById('tickerContainer');
+        const tickerTrack = document.getElementById(«tickerTrack»);
+        const tickerContainer = document.getElementById(«tickerContainer»);
         if (tickerContainer && tickerTrack) {
-            tickerContainer.addEventListener('mouseenter', () => tickerTrack.classList.add('paused'));
-            tickerContainer.addEventListener('mouseleave', () => tickerTrack.classList.remove('paused'));
-            tickerContainer.addEventListener('touchstart', () => tickerTrack.classList.toggle('paused'));
+            tickerContainer.addEventListener(«mouseenter», () => tickerTrack.classList.add(«paused»));
+            tickerContainer.addEventListener(«mouseleave», () => tickerTrack.classList.remove(«paused»));
+            tickerContainer.addEventListener(«touchstart», () => tickerTrack.classList.toggle(«paused»));
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener(«DOMContentLoaded», () => {
             renderTicker();
             updatePreview();
 
