@@ -841,14 +841,14 @@
             }
         ];
 
-        const STORAGE_KEY = 'newsouest_wood_lux_v6';
+        const STORAGE_KEY = 'newsouest_wood_lux_v7';
         let articles = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (!articles || articles.length === 0) {
+        if (!articles || !Array.isArray(articles) || articles.length === 0) {
             articles = freshArticles;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
         }
 
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v6')) || 30;
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v7')) || 30;
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
 
@@ -949,7 +949,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_lux_speed_v6', tickerSpeed);
+            localStorage.setItem('newsouest_wood_lux_speed_v7', tickerSpeed);
             renderTicker();
         });
 
