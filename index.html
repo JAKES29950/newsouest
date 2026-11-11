@@ -876,18 +876,25 @@
 
         function loadArticlesFromCloud() {
             try {
+                // Forçage de la version officielle pour purger le cache divergent
+                const versionKey = 'newsouest_version_v13';
+                const currentVersion = localStorage.getItem(versionKey);
+                
+                if (!currentVersion) {
+                    localStorage.setItem(versionKey, '13');
+                    localStorage.setItem('newsouest_local_backup', JSON.stringify(freshArticles));
+                }
+
                 const saved = localStorage.getItem('newsouest_local_backup');
                 if (saved) {
                     const parsed = JSON.parse(saved);
-                    if (Array.isArray(parsed) && parsed.length >= 6) {
+                    if (Array.isArray(parsed) && parsed.length > 0) {
                         articles = parsed;
                     } else {
                         articles = freshArticles;
-                        localStorage.setItem('newsouest_local_backup', JSON.stringify(articles));
                     }
                 } else {
                     articles = freshArticles;
-                    localStorage.setItem('newsouest_local_backup', JSON.stringify(articles));
                 }
             } catch(e) {
                 articles = freshArticles;
