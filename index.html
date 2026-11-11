@@ -517,8 +517,8 @@
             border: 3px solid var(--pixar-amber);
             border-radius: 0.75rem;
             width: 100%;
-            max-width: 1000px;
-            height: 95vh;
+            max-width: 900px;
+            height: 80vh;
             display: flex;
             flex-direction: column;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.95);
@@ -541,19 +541,16 @@
             font-weight: 900;
         }
 
-        @media(min-width: 640px) {
-            .modal-header h3 { font-size: 1.1rem; }
-        }
-
         .modal-body {
-            padding: 0.75rem;
+            padding: 1rem;
             overflow-y: auto;
             flex: 1;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        @media(min-width: 640px) {
-            .modal-body { padding: 1.25rem; }
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
         }
 
         .close-btn {
@@ -562,105 +559,6 @@
             color: var(--text-muted);
             font-size: 1.75rem;
             cursor: pointer;
-        }
-
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 0.5rem;
-        }
-
-        .admin-table th, .admin-table td {
-            padding: 0.4rem;
-            text-align: left;
-            border-bottom: 1px solid #572304;
-            vertical-align: middle;
-            font-size: 0.85rem;
-        }
-
-        .admin-table th {
-            background-color: #0d0301;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: var(--pixar-amber);
-        }
-
-        .input-group {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            margin-bottom: 4px;
-        }
-
-        .admin-input {
-            width: 100%;
-            background-color: #0d0301;
-            border: 1px solid #572304;
-            border-radius: 0.3rem;
-            padding: 0.4rem 0.6rem;
-            color: var(--text-main);
-            font-size: 0.85rem;
-        }
-
-        .admin-input:focus {
-            outline: none;
-            border-color: var(--pixar-amber);
-        }
-
-        .mic-btn {
-            background: linear-gradient(to bottom, #572304, #231106);
-            border: 1px solid var(--pixar-amber);
-            color: var(--pixar-amber);
-            border-radius: 0.3rem;
-            padding: 0.4rem 0.5rem;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .mic-btn.listening {
-            background: #dc2626;
-            color: white;
-            animation: pulseMic 1s infinite;
-        }
-
-        @keyframes pulseMic {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .admin-thumb {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0d0301;
-            border-radius: 4px;
-            border: 1px solid var(--pixar-amber);
-            color: var(--pixar-amber);
-            overflow: hidden;
-            padding: 2px;
-        }
-
-        .admin-thumb svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .action-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 0.75rem;
-        }
-
-        @media(min-width: 640px) {
-            .action-bar {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                flex-wrap: wrap;
-            }
         }
 
         .audio-toggle {
@@ -676,24 +574,6 @@
         .audio-toggle input {
             cursor: pointer;
             accent-color: var(--pixar-amber);
-        }
-
-        .breaking-checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.8rem;
-            color: #f87171;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 4px;
-        }
-
-        .breaking-checkbox-label input {
-            cursor: pointer;
-            accent-color: #dc2626;
-            width: 16px;
-            height: 16px;
         }
 
         @keyframes strobeLight {
@@ -713,7 +593,7 @@
 
     <header>
         <div class="logo-area">
-            <div class="live-badge">Lux Live v16</div>
+            <div class="live-badge">Sheets Live v18</div>
             <h1>NewsOuest <span>Pellicule Mobile</span></h1>
         </div>
         <div class="header-controls">
@@ -727,8 +607,8 @@
                 <input type="checkbox" id="soundToggle" checked> Clic & Flash 📸
             </label>
             <button class="btn" id="openAdminBtn">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                Gérer
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                Info Google Sheets
             </button>
         </div>
     </header>
@@ -745,7 +625,7 @@
 
             <div class="preview-card" id="previewCard">
                 <div class="preview-card-header">
-                    <div class="sport-tag" id="previewCatName">FOOTBALL</div>
+                    <div class="sport-tag" id="previewCatName">CHARGEMENT...</div>
                     <div style="color: var(--text-muted);" id="previewTime">—</div>
                 </div>
                 <div class="preview-body">
@@ -753,13 +633,13 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
                     </div>
                     <div class="preview-content">
-                        <h2 id="previewTitle">Premier pas en avant pour l'AEG</h2>
-                        <p id="previewSummary">Les Fouesnantais restaient sur deux défaites consécutives.</p>
+                        <h2 id="previewTitle">Connexion au Google Sheets en cours...</h2>
+                        <p id="previewSummary">Veuillez patienter pendant la synchronisation des données.</p>
                     </div>
                 </div>
                 <div class="preview-footer">
                     <div id="previewSource">Source : newsouest.fr</div>
-                    <div style="font-weight: 700; color: var(--pixar-amber);" id="previewCounter">Article 1 / 6</div>
+                    <div style="font-weight: 700; color: var(--pixar-amber);" id="previewCounter">Article 1 / 1</div>
                 </div>
             </div>
 
@@ -783,32 +663,19 @@
     <div class="modal-overlay" id="adminModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Gestion des Articles et Sources NewsOuest</h3>
+                <h3>Synchronisation Automatique Google Sheets</h3>
                 <button class="close-btn" id="closeAdminBtn">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="action-bar">
-                    <button class="btn btn-success" id="addArticleBtn">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                        Ajouter un article
-                    </button>
-                    <button class="btn btn-info" id="exportJsonBtn">💾 Exporter JSON</button>
-                    <button class="btn btn-info" id="importJsonBtn">📂 Importer JSON</button>
-                    <input type="file" id="importFile" accept=".json" style="display: none;">
-                    <button class="btn btn-danger" id="resetDataBtn">Restaurer les 6 articles</button>
-                </div>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 35px;">Sp.</th>
-                            <th style="width: 95px;">Catégorie</th>
-                            <th>Titre & Résumé (avec saisie vocale 🎤)</th>
-                            <th style="width: 110px;">Source</th>
-                            <th style="width: 35px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminTableBody"></tbody>
-                </table>
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #fef3c7;">
+                    ✨ <strong>Mode synchro actif !</strong> Vos articles sont désormais pilotés en direct depuis votre tableur Google Sheets. 
+                </p>
+                <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+                    Pour ajouter, modifier ou supprimer un article, faites-le directement dans votre Google Sheets. Les modifications s'appliqueront instantanément sur tous vos écrans et tablettes au prochain rafraîchissement de la page.
+                </p>
+                <a href="https://docs.google.com/spreadsheets/u/0/" target="_blank" class="btn btn-success" style="padding: 0.75rem 1.5rem; font-size: 0.95rem; text-decoration: none;">
+                    📊 Ouvrir mon Google Sheets
+                </a>
             </div>
         </div>
     </div>
@@ -827,7 +694,7 @@
         };
 
         function getSportSvg(art) {
-            if (art && art.isBreaking) return sportSvgs["GIROPHARE"];
+            if (art && (art.isBreaking === true || art.isBreaking === 'TRUE' || art.isBreaking === 'true')) return sportSvgs["GIROPHARE"];
             const upper = (art && art.category ? art.category : "").toUpperCase();
             for (let key in sportSvgs) {
                 if (key !== "GIROPHARE" && upper.includes(key)) return sportSvgs[key];
@@ -835,117 +702,41 @@
             return sportSvgs["OMNISPORTS"];
         }
 
-        const freshArticles = [
-            {
-                category: "FOOTBALL",
-                title: "Premier pas en avant pour l'AEG, l'US Fouesnant rentre dans le rang",
-                summary: "Les Fouesnantais restaient sur deux défaites consécutives en championnat dans le derby face à l'US Saint-Evarzec.",
-                source: "newsouest.fr",
-                isBreaking: false
-            },
-            {
-                category: "HANDBALL",
-                title: "Le HBC Briec a préservé son invincibilité à domicile face au Goelo HB",
-                summary: "L'invincibilité à Besson a été prolongée ce samedi soir avec une pointe de déception.",
-                source: "newsouest.fr",
-                isBreaking: false
-            },
-            {
-                category: "VOLLEY",
-                title: "Le Quimper Volley 29 cède au bout du suspense face à Sens",
-                summary: "Au terme d'un marathon de cinq sets au Complexe Roger Breton, les Quimpéroises se sont inclinées au tie-break.",
-                source: "newsouest.fr",
-                isBreaking: false
-            },
-            {
-                category: "BASKET",
-                title: "Les Béliers de Kemper rugissent en fin de match face à Blois",
-                summary: "Dans une ambiance survoltée et explosive en toute fin de match, Quimper s'est offert un succès spectaculaire.",
-                source: "newsouest.fr",
-                isBreaking: false
-            },
-            {
-                category: "FOOTBALL",
-                title: "Le tirage complet du 4ème tour du trophée du Morbihan",
-                summary: "En complément de la coupe de Bretagne et Chaton, le district a officialisé les oppositions.",
-                source: "newsouest.fr",
-                isBreaking: false
-            },
-            {
-                category: "CYCLISME",
-                title: "Grand Prix cycliste de Pleuven : les engagés et le parcours",
-                summary: "Les coureurs s'élanceront pour une boucle exigeante à travers les routes du Pays Fouesnantais.",
-                source: "newsouest.fr",
-                isBreaking: false
-            }
-        ];
-
         let articles = [];
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v16')) || 30;
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v18')) || 30;
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
 
-        function loadArticlesFromCloud() {
-            try {
-                const versionKey = 'newsouest_version_v16';
-                const currentVersion = localStorage.getItem(versionKey);
-                
-                if (!currentVersion) {
-                    localStorage.setItem(versionKey, '16');
-                    localStorage.setItem('newsouest_local_backup', JSON.stringify(freshArticles));
-                }
+        // URL de ton Web App Google Apps Script
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfWirpuuJ11vvQJ9W9immYgS2yKp783WhYpGpLc0YSvrVAbj1GpmohvzXQHe5GpGw1/exec";
 
-                const saved = localStorage.getItem('newsouest_local_backup');
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        articles = parsed;
+        async function loadArticlesFromSheets() {
+            try {
+                const response = await fetch(SCRIPT_URL);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (Array.isArray(data) && data.length > 0) {
+                        articles = data;
                     } else {
-                        articles = freshArticles;
+                        throw new Error("Tableau vide");
                     }
                 } else {
-                    articles = freshArticles;
+                    throw new Error("Erreur réseau");
                 }
             } catch(e) {
-                articles = freshArticles;
+                console.warn("Impossible de charger Google Sheets, utilisation de secours.", e);
+                articles = [
+                    {
+                        category: "FOOTBALL",
+                        title: "Erreur de connexion au Google Sheets",
+                        summary: "Vérifiez votre connexion internet ou le déploiement du script Apps Script.",
+                        source: "newsouest.fr",
+                        isBreaking: false
+                    }
+                ];
             }
             renderTicker();
             updatePreview();
-        }
-
-        function saveAndSyncCloud() {
-            localStorage.setItem('newsouest_local_backup', JSON.stringify(articles));
-        }
-
-        function playRoosterCrow() {
-            if (!document.getElementById('soundToggle').checked) return;
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-
-                const now = audioCtx.currentTime;
-                const notes = [
-                    { freq: 440, start: 0, duration: 0.12 },
-                    { freq: 587, start: 0.13, duration: 0.15 },
-                    { freq: 523, start: 0.30, duration: 0.25 },
-                    { freq: 440, start: 0.58, duration: 0.35 }
-                ];
-
-                notes.forEach(n => {
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(n.freq, now + n.start);
-                    
-                    gain.gain.setValueAtTime(0.18, now + n.start);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + n.start + n.duration);
-
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    osc.start(now + n.start);
-                    osc.stop(now + n.start + n.duration);
-                });
-            } catch(e) {}
         }
 
         function playCameraClickWithFlash() {
@@ -994,10 +785,11 @@
             const createItemsHtml = () => {
                 return articles.map((art) => {
                     const svgIcon = getSportSvg(art);
+                    const isBrk = (art.isBreaking === true || art.isBreaking === 'TRUE' || art.isBreaking === 'true');
                     return `
                         <div class="ticker-item">
                             <span class="ticker-icon">${svgIcon}</span>
-                            <span class="ticker-category" ${art.isBreaking ? 'style="background: #dc2626; color: white; border-color: #f87171;"' : ''}>${escapeHtml(art.category)}</span>
+                            <span class="ticker-category" ${isBrk ? 'style="background: #dc2626; color: white; border-color: #f87171;"' : ''}>${escapeHtml(art.category)}</span>
                             <span class="ticker-title">${escapeHtml(art.title)}</span>
                             <span style="color: var(--text-muted); font-size: 0.8rem;">— ${escapeHtml(art.summary)}</span>
                             <span style="color: var(--pixar-amber); font-size: 0.75rem; opacity: 0.9;">[${escapeHtml(art.source || 'newsouest.fr')}]</span>
@@ -1014,7 +806,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_lux_speed_v16', tickerSpeed);
+            localStorage.setItem('newsouest_wood_lux_speed_v18', tickerSpeed);
             renderTicker();
         });
 
@@ -1039,41 +831,9 @@
             currentPreviewIndex = (currentPreviewIndex + 1) % articles.length;
         }
 
-        function renderAdminTable() {
-            const tbody = document.getElementById('adminTableBody');
-            if (!tbody) return;
-            
-            tbody.innerHTML = articles.map((art, index) => {
-                const svgIcon = getSportSvg(art);
-                return `
-                    <tr data-index="${index}">
-                        <td><div class="admin-thumb">${svgIcon}</div></td>
-                        <td><input type="text" class="admin-input cat-input" value="${escapeHtml(art.category)}" data-index="${index}"></td>
-                        <td>
-                            <div class="input-group">
-                                <input type="text" class="admin-input title-input" value="${escapeHtml(art.title)}" data-index="${index}" placeholder="Titre">
-                                <button type="button" class="mic-btn speech-btn" data-field="title" data-index="${index}" title="Saisie vocale">🎤</button>
-                            </div>
-                            <div class="input-group">
-                                <input type="text" class="admin-input summary-input" value="${escapeHtml(art.summary)}" data-index="${index}" placeholder="Résumé">
-                                <button type="button" class="mic-btn speech-btn" data-field="summary" data-index="${index}" title="Saisie vocale">🎤</button>
-                            </div>
-                            <label class="breaking-checkbox-label">
-                                <input type="checkbox" class="breaking-input" data-index="${index}" ${art.isBreaking ? 'checked' : ''}>
-                                FLASH
-                            </label>
-                        </td>
-                        <td><input type="text" class="admin-input source-input" value="${escapeHtml(art.source || 'newsouest.fr')}" data-index="${index}" placeholder="Source"></td>
-                        <td>
-                            <button class="btn btn-danger delete-btn" data-index="${index}" title="Supprimer" style="padding: 0.25rem 0.4rem; box-shadow: 0 2px 0 #450a0a;">&times;</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
         function escapeHtml(text) {
             return (text || "")
+                .toString()
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
@@ -1081,162 +841,8 @@
                 .replace(/'/g, "&#039;");
         }
 
-        document.getElementById('adminTableBody').addEventListener('input', (e) => {
-            const target = e.target;
-            const index = parseInt(target.getAttribute('data-index'));
-            if (isNaN(index)) return;
-
-            if (target.classList.contains('cat-input')) {
-                articles[index].category = target.value.toUpperCase();
-            } else if (target.classList.contains('title-input')) {
-                articles[index].title = target.value;
-            } else if (target.classList.contains('summary-input')) {
-                articles[index].summary = target.value;
-            } else if (target.classList.contains('source-input')) {
-                articles[index].source = target.value;
-            }
-
-            saveAndSyncCloud();
-            renderTicker();
-            
-            const row = document.querySelector(`tr[data-index="${index}"]`);
-            if (row) {
-                row.querySelector('.admin-thumb').innerHTML = getSportSvg(articles[index]);
-            }
-        });
-
-        document.getElementById('adminTableBody').addEventListener('change', (e) => {
-            const target = e.target;
-            if (target.classList.contains('breaking-input')) {
-                const index = parseInt(target.getAttribute('data-index'));
-                if (isNaN(index)) return;
-
-                const isChecked = target.checked;
-
-                if (isChecked) {
-                    articles.forEach(art => art.isBreaking = false);
-                    articles[index].isBreaking = true;
-
-                    playRoosterCrow();
-                    const movedItem = articles.splice(index, 1)[0];
-                    articles.unshift(movedItem);
-                    currentPreviewIndex = 0;
-                } else {
-                    articles[index].isBreaking = false;
-                }
-
-                saveAndSyncCloud();
-                renderAdminTable();
-                renderTicker();
-                updatePreview();
-            }
-        });
-
-        document.getElementById('adminTableBody').addEventListener('click', (e) => {
-            const micBtn = e.target.closest('.speech-btn');
-            if (micBtn) {
-                const index = parseInt(micBtn.getAttribute('data-index'));
-                const field = micBtn.getAttribute('data-field');
-                
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                if (!SpeechRecognition) {
-                    alert("La saisie vocale n'est pas prise en charge par ce navigateur.");
-                    return;
-                }
-
-                const recognition = new SpeechRecognition();
-                recognition.lang = 'fr-FR';
-                recognition.interimResults = false;
-                micBtn.classList.add('listening');
-
-                recognition.onresult = (event) => {
-                    const transcript = event.results[0][0].transcript;
-                    if (field === 'title') articles[index].title = transcript;
-                    else if (field === 'summary') articles[index].summary = transcript;
-                    saveAndSyncCloud();
-                    renderAdminTable();
-                    renderTicker();
-                };
-
-                recognition.onerror = () => micBtn.classList.remove('listening');
-                recognition.onend = () => micBtn.classList.remove('listening');
-                recognition.start();
-                return;
-            }
-
-            const btn = e.target.closest('.delete-btn');
-            if (!btn) return;
-            const index = parseInt(btn.getAttribute('data-index'));
-            if (isNaN(index)) return;
-
-            if (articles.length <= 1) {
-                alert("Conservez au moins un article dans le bandeau.");
-                return;
-            }
-
-            if (confirm("Supprimer cet article ?")) {
-                articles.splice(index, 1);
-                saveAndSyncCloud();
-                renderAdminTable();
-                renderTicker();
-            }
-        });
-
-        document.getElementById('addArticleBtn').addEventListener('click', () => {
-            articles.push({
-                category: "FOOTBALL",
-                title: "Nouvel article d'actualité sportive en Finistère",
-                summary: "Résumé des temps forts et de l'ambiance sur les terrains bretons.",
-                source: "newsouest.fr",
-                isBreaking: false
-            });
-            saveAndSyncCloud();
-            renderAdminTable();
-            renderTicker();
-        });
-
-        // Gestion Export / Import JSON
-        document.getElementById('exportJsonBtn').addEventListener('click', () => {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(articles, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "newsouest_articles.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        });
-
-        document.getElementById('importJsonBtn').addEventListener('click', () => {
-            document.getElementById('importFile').click();
-        });
-
-        document.getElementById('importFile').addEventListener('change', (e) => {
-            const fileReader = new FileReader();
-            if (e.target.files[0]) {
-                fileReader.readAsText(e.target.files[0], "UTF-8");
-                fileReader.onload = (event) => {
-                    try {
-                        const imported = JSON.parse(event.target.result);
-                        if (Array.isArray(imported) && imported.length > 0) {
-                            articles = imported;
-                            saveAndSyncCloud();
-                            renderAdminTable();
-                            renderTicker();
-                            updatePreview();
-                            alert("Importation réussie !");
-                        } else {
-                            alert("Format de fichier invalide.");
-                        }
-                    } catch (err) {
-                        alert("Erreur lors de la lecture du fichier JSON.");
-                    }
-                };
-            }
-        });
-
         const modal = document.getElementById('adminModal');
         document.getElementById('openAdminBtn').addEventListener('click', () => {
-            renderAdminTable();
             modal.classList.add('active');
             playCameraClickWithFlash();
         });
@@ -1245,17 +851,6 @@
         });
         modal.addEventListener('click', (e) => {
             if (e.target === modal) modal.classList.remove('active');
-        });
-
-        document.getElementById('resetDataBtn').addEventListener('click', () => {
-            if (confirm('Restaurer les 6 articles de référence ?')) {
-                articles = JSON.parse(JSON.stringify(freshArticles));
-                saveAndSyncCloud();
-                currentPreviewIndex = 0;
-                renderAdminTable();
-                renderTicker();
-                updatePreview();
-            }
         });
 
         const tickerTrack = document.getElementById('tickerTrack');
@@ -1267,7 +862,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            loadArticlesFromCloud();
+            loadArticlesFromSheets();
 
             setInterval(() => {
                 updatePreview();
