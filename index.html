@@ -42,7 +42,6 @@
             justify-content: space-between;
         }
 
-        /* --- EN-TÊTE BOIS NOBLE --- */
         header {
             background: linear-gradient(180deg, #572304 0%, #271003 100%);
             border-bottom: 4px solid var(--pixar-amber);
@@ -174,7 +173,6 @@
             box-shadow: 0 4px 0 #450a0a;
         }
 
-        /* --- PELLICULE PHOTO RESPONSIVE --- */
         main {
             flex: 1;
             display: flex;
@@ -369,7 +367,6 @@
             .preview-footer { padding: 0,75rem 1,25rem; font-size: 0,8rem; }
         }
 
-        /* --- BANDEAU DÉFILANT INFÉRIEUR --- */
         .tv-ticker-container {
             background: linear-gradient(to bottom, #2e1205, #0d0301);
             border-top: 4px solid var(--pixar-amber);
@@ -486,7 +483,6 @@
             margin-left: 1,2rem;
         }
 
-        /* --- FENÊTRE MODALE D'ADMINISTRATION --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -746,10 +742,12 @@
                     <div style="color: var(--text-muted);" id="previewTime">—</div>
                 </div>
                 <div class="preview-body">
-                    <div class="preview-icon-box" id="previewBigIcon"></div>
+                    <div class="preview-icon-box" id="previewBigIcon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15,3 15,3 0 0 1 4 10 15,3 15,3 0 0 1-4 10 15,3 15,3 0 0 1-4-10 15,3 15,3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                    </div>
                     <div class="preview-content">
-                        <h2 id="previewTitle">Chargement...</h2>
-                        <p id="previewSummary">Actualités sportives en direct du Finistère.</p>
+                        <h2 id="previewTitle">Premier pas en avant pour l'AEG</h2>
+                        <p id="previewSummary">Les Fouesnantais restaient sur deux défaites consécutives.</p>
                     </div>
                 </div>
                 <div class="preview-footer">
