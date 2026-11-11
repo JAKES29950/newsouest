@@ -754,7 +754,7 @@
                 </div>
                 <div class="preview-footer">
                     <div id="previewSource">Source : newsouest.fr</div>
-                    <div style="font-weight: 700; color: var(--pixar-amber);" id="previewCounter">Article 1 / 5</div>
+                    <div style="font-weight: 700; color: var(--pixar-amber);" id="previewCounter">Article 1 / 6</div>
                 </div>
             </div>
 
@@ -862,6 +862,13 @@
                 summary: "En complément de la coupe de Bretagne et Chaton, le district a officialisé les oppositions.",
                 source: "newsouest.fr",
                 isBreaking: false
+            },
+            {
+                category: "CYCLISME",
+                title: "Grand Prix cycliste de Pleuven : les engagés et le parcours",
+                summary: "Les coureurs s'élanceront pour une boucle exigeante à travers les routes du Pays Fouesnantais.",
+                source: "newsouest.fr",
+                isBreaking: false
             }
         ];
 
@@ -870,7 +877,6 @@
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
 
-        // Chargement direct sécurisé via localStorage (zéro erreur CORS sur mobile)
         function loadArticlesFromCloud() {
             try {
                 const saved = localStorage.getItem('newsouest_local_backup');
