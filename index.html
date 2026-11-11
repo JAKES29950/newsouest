@@ -693,7 +693,6 @@
             height: 16px;
         }
 
-        /* Animation Gyrophare clignotant Rouge/Bleu */
         @keyframes strobeLight {
             0% { color: #ef4444; filter: drop-shadow(0 0 8px #ef4444); }
             50% { color: #3b82f6; filter: drop-shadow(0 0 8px #3b82f6); }
@@ -704,6 +703,19 @@
             animation: strobeLight 0.6s infinite;
             width: 100%;
             height: 100%;
+        }
+
+        .share-banner {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px dashed var(--pixar-amber);
+            padding: 0.6rem;
+            border-radius: 0.4rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
         }
     </style>
 </head>
@@ -726,7 +738,7 @@
             </label>
             <button class="btn" id="openAdminBtn">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                Gérer
+                Gérer & Partager
             </button>
         </div>
     </header>
@@ -779,10 +791,14 @@
     <div class="modal-overlay" id="adminModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Gestion des Articles et Sources NewsOuest</h3>
+                <h3>Gestion et Partage des Articles en Direct</h3>
                 <button class="close-btn" id="closeAdminBtn">&times;</button>
             </div>
             <div class="modal-body">
+                <div class="share-banner">
+                    <span>🔗 <b>Partage instantané :</b> Chaque modification crée une URL unique à copier-coller pour vos lecteurs.</span>
+                    <button class="btn btn-success" id="copyShareUrlBtn" style="padding: 0.3rem 0.6rem;">Copier le lien direct</button>
+                </div>
                 <div class="action-bar">
                     <button class="btn btn-success" id="addArticleBtn">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -866,14 +882,41 @@
             }
         ];
 
-        const STORAGE_KEY = 'newsouest_wood_lux_v9';
-        let articles = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (!articles || !Array.isArray(articles) || articles.length === 0) {
-            articles = freshArticles;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+        // Charger depuis l'URL (si l'URL contient des données partagées) ou localStorage
+        function loadArticles() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const dataParam = params.get('data');
+                if (dataParam) {
+                    const decoded = JSON.parse(decodeURIComponent(escape(window.atob(dataParam))));
+                    if (Array.isArray(decoded) && decoded.length > 0) {
+                        return decoded;
+                    }
+                }
+            } catch(e) {}
+
+            const saved = localStorage.getItem('newsouest_wood_lux_v10');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                } catch(e) {}
+            }
+            return freshArticles;
         }
 
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v9')) || 30;
+        let articles = loadArticles();
+
+        function saveAndSync() {
+            localStorage.setItem('newsouest_wood_lux_v10', JSON.stringify(articles));
+            try {
+                const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(articles))));
+                const newUrl = window.location.pathname + '?data=' + encoded;
+                window.history.replaceState({}, '', newUrl);
+            } catch(e) {}
+        }
+
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v10')) || 30;
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
 
@@ -974,7 +1017,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_lux_speed_v9', tickerSpeed);
+            localStorage.setItem('newsouest_wood_lux_speed_v10', tickerSpeed);
             renderTicker();
         });
 
@@ -1056,7 +1099,7 @@
                 articles[index].source = target.value;
             }
 
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+            saveAndSync();
             renderTicker();
             
             const row = document.querySelector(`tr[data-index="${index}"]`);
@@ -1085,7 +1128,7 @@
                     articles[index].isBreaking = false;
                 }
 
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+                saveAndSync();
                 renderAdminTable();
                 renderTicker();
                 updatePreview();
@@ -1113,7 +1156,7 @@
                     const transcript = event.results[0][0].transcript;
                     if (field === 'title') articles[index].title = transcript;
                     else if (field === 'summary') articles[index].summary = transcript;
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+                    saveAndSync();
                     renderAdminTable();
                     renderTicker();
                 };
@@ -1136,7 +1179,7 @@
 
             if (confirm("Supprimer cet article ?")) {
                 articles.splice(index, 1);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+                saveAndSync();
                 renderAdminTable();
                 renderTicker();
             }
@@ -1150,9 +1193,17 @@
                 source: "newsouest.fr",
                 isBreaking: false
             });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+            saveAndSync();
             renderAdminTable();
             renderTicker();
+        });
+
+        document.getElementById('copyShareUrlBtn').addEventListener('click', () => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert("Lien direct copié dans le presse-papier ! Vous pouvez le partager à tous vos lecteurs.");
+            }).catch(() => {
+                prompt("Copiez ce lien pour le partager :", window.location.href);
+            });
         });
 
         const modal = document.getElementById('adminModal');
@@ -1171,7 +1222,7 @@
         document.getElementById('resetDataBtn').addEventListener('click', () => {
             if (confirm('Restaurer les articles de référence ?')) {
                 articles = JSON.parse(JSON.stringify(freshArticles));
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+                saveAndSync();
                 currentPreviewIndex = 0;
                 renderAdminTable();
                 renderTicker();
