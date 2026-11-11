@@ -705,7 +705,7 @@
 
     <header>
         <div class="logo-area">
-            <div class="live-badge">Lux Live</div>
+            <div class="live-badge">Lux Live v14</div>
             <h1>NewsOuest <span>Pellicule Mobile</span></h1>
         </div>
         <div class="header-controls">
@@ -870,18 +870,18 @@
         ];
 
         let articles = [];
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v12')) || 30;
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v14')) || 30;
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
 
         function loadArticlesFromCloud() {
             try {
-                // Forçage de la version officielle pour purger le cache divergent
-                const versionKey = 'newsouest_version_v13';
+                // Forçage absolu de la synchronisation par défaut avec freshArticles si la version change
+                const versionKey = 'newsouest_version_v14';
                 const currentVersion = localStorage.getItem(versionKey);
                 
                 if (!currentVersion) {
-                    localStorage.setItem(versionKey, '13');
+                    localStorage.setItem(versionKey, '14');
                     localStorage.setItem('newsouest_local_backup', JSON.stringify(freshArticles));
                 }
 
@@ -1004,7 +1004,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_lux_speed_v12', tickerSpeed);
+            localStorage.setItem('newsouest_wood_lux_speed_v14', tickerSpeed);
             renderTicker();
         });
 
