@@ -840,7 +840,7 @@
             },
             {
                 category: "HANDBALL",
-                title: "Le HBC Briec a préservé son invincibilité à domicile face au Goelo HB",
+                title: "Le HBC Briec a préservé son invincibilité à domicile face ao Goelo HB",
                 summary: "L'invincibilité à Besson a été prolongée ce samedi soir avec une pointe de déception.",
                 source: "newsouest.fr",
                 isBreaking: false
@@ -875,10 +875,9 @@
 
         async function loadArticlesFromCloud() {
             try {
-                const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                const targetUrl = encodeURIComponent(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`);
-                
-                const response = await fetch(proxyUrl + targetUrl, {
+                // Utilisation de corsproxy.io pour éviter les blocages de prévol OPTIONS et headers
+                const targetUrl = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+                const response = await fetch(`https://corsproxy.io/?` + encodeURIComponent(targetUrl), {
                     headers: { 'X-Master-Key': API_KEY }
                 });
                 const data = await response.json();
@@ -897,7 +896,8 @@
 
         async function saveAndSyncCloud() {
             try {
-                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                const targetUrl = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+                await fetch(`https://corsproxy.io/?` + encodeURIComponent(targetUrl), {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
