@@ -875,12 +875,16 @@
 
         async function loadArticlesFromCloud() {
             try {
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const targetUrl = encodeURIComponent(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`);
+                
+                const response = await fetch(proxyUrl + targetUrl, {
                     headers: { 'X-Master-Key': API_KEY }
                 });
                 const data = await response.json();
-                if (data && data.record && Array.isArray(data.record) && data.record.length > 0) {
-                    articles = data.record;
+                const records = data.record || data;
+                if (Array.isArray(records) && records.length > 0) {
+                    articles = records;
                 } else {
                     articles = freshArticles;
                 }
