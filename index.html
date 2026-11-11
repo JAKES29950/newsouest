@@ -165,20 +165,6 @@
             box-shadow: 0 4px 0 #052e16;
         }
 
-        .btn-danger {
-            background: linear-gradient(to bottom, #dc2626, #7f1d1d);
-            border-color: #f87171;
-            color: #fee2e2;
-            box-shadow: 0 4px 0 #450a0a;
-        }
-
-        .btn-info {
-            background: linear-gradient(to bottom, #0284c7, #0369a1);
-            border-color: #38bdf8;
-            color: #e0f2fe;
-            box-shadow: 0 4px 0 #0c4a6e;
-        }
-
         main {
             flex: 1;
             display: flex;
@@ -593,7 +579,7 @@
 
     <header>
         <div class="logo-area">
-            <div class="live-badge">Sheets Live v18</div>
+            <div class="live-badge">Sheets Live v19</div>
             <h1>NewsOuest <span>Pellicule Mobile</span></h1>
         </div>
         <div class="header-controls">
@@ -703,11 +689,10 @@
         }
 
         let articles = [];
-        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v18')) || 30;
+        let tickerSpeed = parseInt(localStorage.getItem('newsouest_wood_lux_speed_v19')) || 30;
         document.getElementById('speedRange').value = tickerSpeed;
         document.getElementById('speedValue').textContent = tickerSpeed + 's';
 
-        // URL de ton Web App Google Apps Script
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfWirpuuJ11vvQJ9W9immYgS2yKp783WhYpGpLc0YSvrVAbj1GpmohvzXQHe5GpGw1/exec";
 
         async function loadArticlesFromSheets() {
@@ -716,7 +701,14 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (Array.isArray(data) && data.length > 0) {
-                        articles = data;
+                        // Mapping ultra-souple pour accepter toutes les variantes de clés possibles
+                        articles = data.map(item => ({
+                            category: item.category || item.categorie || item.CATEGORIE || "OMNISPORTS",
+                            title: item.title || item.titre || item.TITRE || "",
+                            summary: item.summary || item.resume || item.résumé || item.RESUME || "",
+                            source: item.source || item.SOURCE || "newsouest.fr",
+                            isBreaking: item.isBreaking || item.isbreaking || item.flash || item.FLASH || false
+                        }));
                     } else {
                         throw new Error("Tableau vide");
                     }
@@ -724,12 +716,12 @@
                     throw new Error("Erreur réseau");
                 }
             } catch(e) {
-                console.warn("Impossible de charger Google Sheets, utilisation de secours.", e);
+                console.warn("Erreur de chargement Google Sheets :", e);
                 articles = [
                     {
                         category: "FOOTBALL",
-                        title: "Erreur de connexion au Google Sheets",
-                        summary: "Vérifiez votre connexion internet ou le déploiement du script Apps Script.",
+                        title: "Erreur de chargement des données",
+                        summary: "Vérifiez le déploiement ou l'accès à l'API Google Apps Script.",
                         source: "newsouest.fr",
                         isBreaking: false
                     }
@@ -785,7 +777,7 @@
             const createItemsHtml = () => {
                 return articles.map((art) => {
                     const svgIcon = getSportSvg(art);
-                    const isBrk = (art.isBreaking === true || art.isBreaking === 'TRUE' || art.isBreaking === 'true');
+                    const isBrk = (art.isBreaking === true || art.isBreaking === 'TRUE' || art.isBreaking === 'true' || art.isBreaking === 1);
                     return `
                         <div class="ticker-item">
                             <span class="ticker-icon">${svgIcon}</span>
@@ -806,7 +798,7 @@
         document.getElementById('speedRange').addEventListener('input', (e) => {
             tickerSpeed = parseInt(e.target.value);
             document.getElementById('speedValue').textContent = tickerSpeed + 's';
-            localStorage.setItem('newsouest_wood_lux_speed_v18', tickerSpeed);
+            localStorage.setItem('newsouest_wood_lux_speed_v19', tickerSpeed);
             renderTicker();
         });
 
